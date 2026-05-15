@@ -1,0 +1,32 @@
+# BasicAbilityFlow
+
+main: kit: flow: BasicAbilityFlow:
+{
+  entity: "ability",
+  kind: "basic",
+  name: "BasicAbilityFlow",
+  step: [
+    {
+      input: {
+        ref: "ability_ref01",
+        srcdatavar: "ability_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "ability01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-ability_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAbilityFlow"
+}

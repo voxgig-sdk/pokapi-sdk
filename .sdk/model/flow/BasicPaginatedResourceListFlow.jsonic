@@ -1,0 +1,9 @@
+# BasicPaginatedResourceListFlow
+
+main: kit: flow: BasicPaginatedResourceListFlow:
+{
+  entity: "paginated_resource_list",
+  kind: "basic",
+  name: "BasicPaginatedResourceListFlow",
+  "key$": "BasicPaginatedResourceListFlow"
+}

@@ -1,0 +1,46 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 5
+  metrics: count: path: 6
+  metrics: count: method: 6
+
+  entity: ability: {
+    path: "/ability/{idOrName}": {
+      rename: param: "idOrName": *"id"
+      op: load: method: *GET
+    }
+  }
+
+  entity: paginated_resource_list: {
+  }
+
+  entity: pokemon: {
+    path: "/pokemon": {
+      op: list: method: *GET
+    }
+    path: "/pokemon/{idOrName}": {
+      rename: param: "idOrName": *"id"
+      op: load: method: *GET
+    }
+    path: "/pokemon/{id}/encounters": {
+      action: "encounter": {}
+      op: list: method: *GET
+    }
+  }
+
+  entity: pokemon_species: {
+    path: "/pokemon-species/{idOrName}": {
+      rename: param: "idOrName": *"id"
+      op: load: method: *GET
+    }
+  }
+
+  entity: type: {
+    path: "/type/{idOrName}": {
+      rename: param: "idOrName": *"id"
+      op: load: method: *GET
+    }
+  }
+
+}

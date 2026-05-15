@@ -1,0 +1,28 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      contact: {
+        name: "PokéAPI"
+        url: "https://pokeapi.co/"
+      }
+      description: "An open RESTful API for Pokémon data. A full RESTful API linked to an extensive database detailing everything about the Pokémon main game series. We've covered everything from Pokémon to Berry Flavors."
+      license: {
+        name: "Open Source"
+        url: "https://pokeapi.co/"
+      }
+      servers: [
+        {
+          description: "Production API Server"
+          url: "https://pokeapi.co/api/v2"
+        }
+      ]
+      title: "PokéAPI"
+      version: "2.0.0"
+    }
+  }
+}
+
+}

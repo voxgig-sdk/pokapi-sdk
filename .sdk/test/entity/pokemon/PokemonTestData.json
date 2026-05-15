@@ -1,0 +1,97 @@
+{
+  "existing": {
+    "pokemon": {
+      "POKEMON00": {
+        "ability": [],
+        "base_experience": "sc9",
+        "form": [],
+        "game_index": [],
+        "height": "scc",
+        "held_item": [],
+        "id": "POKEMON00",
+        "is_default": false,
+        "location_area": {},
+        "location_area_encounter": "sd1",
+        "mof": [],
+        "name": "sd3",
+        "order": "sd4",
+        "species": {},
+        "sprite": {},
+        "stat": [],
+        "type": [],
+        "url": "sd9",
+        "version_detail": [],
+        "weight": "sdb"
+      },
+      "POKEMON01": {
+        "ability": [],
+        "base_experience": "s191",
+        "form": [],
+        "game_index": [],
+        "height": "s194",
+        "held_item": [],
+        "id": "POKEMON01",
+        "is_default": false,
+        "location_area": {},
+        "location_area_encounter": "s199",
+        "mof": [],
+        "name": "s19b",
+        "order": "s19c",
+        "species": {},
+        "sprite": {},
+        "stat": [],
+        "type": [],
+        "url": "s1a1",
+        "version_detail": [],
+        "weight": "s1a3"
+      },
+      "POKEMON02": {
+        "ability": [],
+        "base_experience": "s259",
+        "form": [],
+        "game_index": [],
+        "height": "s25c",
+        "held_item": [],
+        "id": "POKEMON02",
+        "is_default": false,
+        "location_area": {},
+        "location_area_encounter": "s261",
+        "mof": [],
+        "name": "s263",
+        "order": "s264",
+        "species": {},
+        "sprite": {},
+        "stat": [],
+        "type": [],
+        "url": "s269",
+        "version_detail": [],
+        "weight": "s26b"
+      }
+    }
+  },
+  "new": {
+    "pokemon": {
+      "pokemon_ref01": {
+        "ability": [],
+        "base_experience": "s321",
+        "form": [],
+        "game_index": [],
+        "height": "s324",
+        "held_item": [],
+        "is_default": false,
+        "location_area": {},
+        "location_area_encounter": "s329",
+        "mof": [],
+        "name": "s32b",
+        "order": "s32c",
+        "species": {},
+        "sprite": {},
+        "stat": [],
+        "type": [],
+        "url": "s331",
+        "version_detail": [],
+        "weight": "s333"
+      }
+    }
+  }
+}

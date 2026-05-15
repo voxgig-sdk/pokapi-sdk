@@ -1,0 +1,41 @@
+{
+  "existing": {
+    "ability": {
+      "ABILITY00": {
+        "effect_entry": [],
+        "generation": {},
+        "id": "ABILITY00",
+        "is_main_series": false,
+        "name": "s40",
+        "pokemon": []
+      },
+      "ABILITY01": {
+        "effect_entry": [],
+        "generation": {},
+        "id": "ABILITY01",
+        "is_main_series": false,
+        "name": "s7c",
+        "pokemon": []
+      },
+      "ABILITY02": {
+        "effect_entry": [],
+        "generation": {},
+        "id": "ABILITY02",
+        "is_main_series": false,
+        "name": "sb8",
+        "pokemon": []
+      }
+    }
+  },
+  "new": {
+    "ability": {
+      "ability_ref01": {
+        "effect_entry": [],
+        "generation": {},
+        "is_main_series": false,
+        "name": "sf4",
+        "pokemon": []
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+# Entity: pokemon_species
+
+main: kit: entity: pokemon_species: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "base_happiness"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "capture_rate"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "forms_switchable"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "gender_rate"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "has_gender_difference"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "hatch_counter"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "is_baby"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_legendary"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_mythical"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "order"
+      req: false
+      type: "`$INTEGER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "pokemon_species"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id_or_name"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pokemon-species/{idOrName}"
+          parts: [
+            "pokemon-species"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              idOrName: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

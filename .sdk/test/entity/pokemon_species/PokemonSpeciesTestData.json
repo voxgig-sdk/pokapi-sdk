@@ -1,0 +1,65 @@
+{
+  "existing": {
+    "pokemon_species": {
+      "POKEMON_SPECIES00": {
+        "base_happiness": "s78",
+        "capture_rate": "s79",
+        "forms_switchable": true,
+        "gender_rate": "s7b",
+        "has_gender_difference": true,
+        "hatch_counter": "s7d",
+        "id": "POKEMON_SPECIES00",
+        "is_baby": false,
+        "is_legendary": true,
+        "is_mythical": false,
+        "name": "s82",
+        "order": "s83"
+      },
+      "POKEMON_SPECIES01": {
+        "base_happiness": "sf0",
+        "capture_rate": "sf1",
+        "forms_switchable": true,
+        "gender_rate": "sf3",
+        "has_gender_difference": true,
+        "hatch_counter": "sf5",
+        "id": "POKEMON_SPECIES01",
+        "is_baby": false,
+        "is_legendary": true,
+        "is_mythical": false,
+        "name": "sfa",
+        "order": "sfb"
+      },
+      "POKEMON_SPECIES02": {
+        "base_happiness": "s168",
+        "capture_rate": "s169",
+        "forms_switchable": true,
+        "gender_rate": "s16b",
+        "has_gender_difference": true,
+        "hatch_counter": "s16d",
+        "id": "POKEMON_SPECIES02",
+        "is_baby": false,
+        "is_legendary": true,
+        "is_mythical": false,
+        "name": "s172",
+        "order": "s173"
+      }
+    }
+  },
+  "new": {
+    "pokemon_species": {
+      "pokemon_species_ref01": {
+        "base_happiness": "s1e0",
+        "capture_rate": "s1e1",
+        "forms_switchable": true,
+        "gender_rate": "s1e3",
+        "has_gender_difference": true,
+        "hatch_counter": "s1e5",
+        "is_baby": false,
+        "is_legendary": true,
+        "is_mythical": false,
+        "name": "s1ea",
+        "order": "s1eb"
+      }
+    }
+  }
+}

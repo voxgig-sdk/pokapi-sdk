@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "type": {
+      "TYPE00": {
+        "damage_relation": {},
+        "game_index": [],
+        "generation": {},
+        "id": "TYPE00",
+        "move_damage_class": {},
+        "name": "s4b",
+        "pokemon": []
+      },
+      "TYPE01": {
+        "damage_relation": {},
+        "game_index": [],
+        "generation": {},
+        "id": "TYPE01",
+        "move_damage_class": {},
+        "name": "s91",
+        "pokemon": []
+      },
+      "TYPE02": {
+        "damage_relation": {},
+        "game_index": [],
+        "generation": {},
+        "id": "TYPE02",
+        "move_damage_class": {},
+        "name": "sd7",
+        "pokemon": []
+      }
+    }
+  },
+  "new": {
+    "type": {
+      "type_ref01": {
+        "damage_relation": {},
+        "game_index": [],
+        "generation": {},
+        "move_damage_class": {},
+        "name": "s11d",
+        "pokemon": []
+      }
+    }
+  }
+}

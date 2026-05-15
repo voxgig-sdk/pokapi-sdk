@@ -1,0 +1,94 @@
+# Entity: type
+
+main: kit: entity: type: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "damage_relation"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "game_index"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "generation"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "move_damage_class"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "pokemon"
+      req: false
+      type: "`$ARRAY`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "type"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id_or_name"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/type/{idOrName}"
+          parts: [
+            "type"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              idOrName: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

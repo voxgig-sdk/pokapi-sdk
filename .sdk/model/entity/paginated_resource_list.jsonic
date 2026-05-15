@@ -1,0 +1,10 @@
+# Entity: paginated_resource_list
+
+main: kit: entity: paginated_resource_list: {
+
+  alias: field: {}
+
+  name: "paginated_resource_list"
+
+
+}

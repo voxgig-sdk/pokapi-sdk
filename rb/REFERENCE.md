@@ -1,0 +1,410 @@
+# Pokapi Ruby SDK Reference
+
+Complete API reference for the Pokapi Ruby SDK.
+
+
+## PokapiSDK
+
+### Constructor
+
+```ruby
+require_relative 'pokapi_sdk'
+
+client = PokapiSDK.new(options)
+```
+
+Create a new SDK client instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `options` | `Hash` | SDK configuration options. |
+| `options["apikey"]` | `String` | API key for authentication. |
+| `options["base"]` | `String` | Base URL for API requests. |
+| `options["prefix"]` | `String` | URL prefix appended after base. |
+| `options["suffix"]` | `String` | URL suffix appended after path. |
+| `options["headers"]` | `Hash` | Custom headers for all requests. |
+| `options["feature"]` | `Hash` | Feature configuration. |
+| `options["system"]` | `Hash` | System overrides (e.g. custom fetch). |
+
+
+### Static Methods
+
+#### `PokapiSDK.test(testopts = nil, sdkopts = nil)`
+
+Create a test client with mock features active. Both arguments may be `nil`.
+
+```ruby
+client = PokapiSDK.test
+```
+
+
+### Instance Methods
+
+#### `Ability(data = nil)`
+
+Create a new `Ability` entity instance. Pass `nil` for no initial data.
+
+#### `PaginatedResourceList(data = nil)`
+
+Create a new `PaginatedResourceList` entity instance. Pass `nil` for no initial data.
+
+#### `Pokemon(data = nil)`
+
+Create a new `Pokemon` entity instance. Pass `nil` for no initial data.
+
+#### `PokemonSpecies(data = nil)`
+
+Create a new `PokemonSpecies` entity instance. Pass `nil` for no initial data.
+
+#### `Type(data = nil)`
+
+Create a new `Type` entity instance. Pass `nil` for no initial data.
+
+#### `options_map -> Hash`
+
+Return a deep copy of the current SDK options.
+
+#### `get_utility -> Utility`
+
+Return a copy of the SDK utility object.
+
+#### `direct(fetchargs = {}) -> Hash, err`
+
+Make a direct HTTP request to any API endpoint.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `fetchargs["path"]` | `String` | URL path with optional `{param}` placeholders. |
+| `fetchargs["method"]` | `String` | HTTP method (default: `"GET"`). |
+| `fetchargs["params"]` | `Hash` | Path parameter values for `{param}` substitution. |
+| `fetchargs["query"]` | `Hash` | Query string parameters. |
+| `fetchargs["headers"]` | `Hash` | Request headers (merged with defaults). |
+| `fetchargs["body"]` | `any` | Request body (hashes are JSON-serialized). |
+| `fetchargs["ctrl"]` | `Hash` | Control options (e.g. `{ "explain" => true }`). |
+
+**Returns:** `Hash, err`
+
+#### `prepare(fetchargs = {}) -> Hash, err`
+
+Prepare a fetch definition without sending the request. Accepts the
+same parameters as `direct()`.
+
+**Returns:** `Hash, err`
+
+
+---
+
+## AbilityEntity
+
+```ruby
+ability = client.Ability
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `effect_entry` | ``$ARRAY`` | No |  |
+| `generation` | ``$OBJECT`` | No |  |
+| `id` | ``$INTEGER`` | No |  |
+| `is_main_series` | ``$BOOLEAN`` | No |  |
+| `name` | ``$STRING`` | No |  |
+| `pokemon` | ``$ARRAY`` | No |  |
+
+### Operations
+
+#### `load(reqmatch, ctrl = nil) -> result, err`
+
+Load a single entity matching the given criteria.
+
+```ruby
+result, err = client.Ability.load({ "id" => "ability_id" })
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `AbilityEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## PaginatedResourceListEntity
+
+```ruby
+paginated_resource_list = client.PaginatedResourceList
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `PaginatedResourceListEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## PokemonEntity
+
+```ruby
+pokemon = client.Pokemon
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `ability` | ``$ARRAY`` | No |  |
+| `base_experience` | ``$INTEGER`` | No |  |
+| `form` | ``$ARRAY`` | No |  |
+| `game_index` | ``$ARRAY`` | No |  |
+| `height` | ``$INTEGER`` | No |  |
+| `held_item` | ``$ARRAY`` | No |  |
+| `id` | ``$INTEGER`` | No |  |
+| `is_default` | ``$BOOLEAN`` | No |  |
+| `location_area` | ``$OBJECT`` | No |  |
+| `location_area_encounter` | ``$STRING`` | No |  |
+| `mof` | ``$ARRAY`` | No |  |
+| `name` | ``$STRING`` | No |  |
+| `order` | ``$INTEGER`` | No |  |
+| `species` | ``$OBJECT`` | No |  |
+| `sprite` | ``$OBJECT`` | No |  |
+| `stat` | ``$ARRAY`` | No |  |
+| `type` | ``$ARRAY`` | No |  |
+| `url` | ``$STRING`` | No |  |
+| `version_detail` | ``$ARRAY`` | No |  |
+| `weight` | ``$INTEGER`` | No |  |
+
+### Operations
+
+#### `list(reqmatch, ctrl = nil) -> result, err`
+
+List entities matching the given criteria. Returns an array.
+
+```ruby
+results, err = client.Pokemon.list(nil)
+```
+
+#### `load(reqmatch, ctrl = nil) -> result, err`
+
+Load a single entity matching the given criteria.
+
+```ruby
+result, err = client.Pokemon.load({ "id" => "pokemon_id" })
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `PokemonEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## PokemonSpeciesEntity
+
+```ruby
+pokemon_species = client.PokemonSpecies
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `base_happiness` | ``$INTEGER`` | No |  |
+| `capture_rate` | ``$INTEGER`` | No |  |
+| `forms_switchable` | ``$BOOLEAN`` | No |  |
+| `gender_rate` | ``$INTEGER`` | No |  |
+| `has_gender_difference` | ``$BOOLEAN`` | No |  |
+| `hatch_counter` | ``$INTEGER`` | No |  |
+| `id` | ``$INTEGER`` | No |  |
+| `is_baby` | ``$BOOLEAN`` | No |  |
+| `is_legendary` | ``$BOOLEAN`` | No |  |
+| `is_mythical` | ``$BOOLEAN`` | No |  |
+| `name` | ``$STRING`` | No |  |
+| `order` | ``$INTEGER`` | No |  |
+
+### Operations
+
+#### `load(reqmatch, ctrl = nil) -> result, err`
+
+Load a single entity matching the given criteria.
+
+```ruby
+result, err = client.PokemonSpecies.load({ "id" => "pokemon_species_id" })
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `PokemonSpeciesEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## TypeEntity
+
+```ruby
+type = client.Type
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `damage_relation` | ``$OBJECT`` | No |  |
+| `game_index` | ``$ARRAY`` | No |  |
+| `generation` | ``$OBJECT`` | No |  |
+| `id` | ``$INTEGER`` | No |  |
+| `move_damage_class` | ``$OBJECT`` | No |  |
+| `name` | ``$STRING`` | No |  |
+| `pokemon` | ``$ARRAY`` | No |  |
+
+### Operations
+
+#### `load(reqmatch, ctrl = nil) -> result, err`
+
+Load a single entity matching the given criteria.
+
+```ruby
+result, err = client.Type.load({ "id" => "type_id" })
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `TypeEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## Features
+
+| Feature | Version | Description |
+| --- | --- | --- |
+| `test` | 0.0.1 | In-memory mock transport for testing without a live server |
+
+
+Features are activated via the `feature` option:
+
+```ruby
+client = PokapiSDK.new({
+  "feature" => {
+    "test" => { "active" => true },
+  },
+})
+```
+

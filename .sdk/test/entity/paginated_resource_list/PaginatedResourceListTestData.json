@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "paginated_resource_list": {
+      "PAGINATED_RESOURCE_LIST00": {},
+      "PAGINATED_RESOURCE_LIST01": {},
+      "PAGINATED_RESOURCE_LIST02": {}
+    }
+  },
+  "new": {
+    "paginated_resource_list": {
+      "paginated_resource_list_ref01": {}
+    }
+  }
+}

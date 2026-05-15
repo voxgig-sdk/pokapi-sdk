@@ -1,0 +1,89 @@
+# Entity: ability
+
+main: kit: entity: ability: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "effect_entry"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "generation"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "is_main_series"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "pokemon"
+      req: false
+      type: "`$ARRAY`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "ability"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id_or_name"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/ability/{idOrName}"
+          parts: [
+            "ability"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              idOrName: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

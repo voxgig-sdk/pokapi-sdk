@@ -1,0 +1,32 @@
+# BasicPokemonSpeciesFlow
+
+main: kit: flow: BasicPokemonSpeciesFlow:
+{
+  entity: "pokemon_species",
+  kind: "basic",
+  name: "BasicPokemonSpeciesFlow",
+  step: [
+    {
+      input: {
+        ref: "pokemon_species_ref01",
+        srcdatavar: "pokemon_species_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "pokemon_species01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-pokemon_species_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPokemonSpeciesFlow"
+}
