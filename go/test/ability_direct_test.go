@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	sdk "github.com/voxgig-sdk/pokapi-sdk"
-	"github.com/voxgig-sdk/pokapi-sdk/core"
+	sdk "github.com/voxgig-sdk/pokapi-sdk/go"
+	"github.com/voxgig-sdk/pokapi-sdk/go/core"
 )
 
 func TestAbilityDirect(t *testing.T) {

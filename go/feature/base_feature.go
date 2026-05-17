@@ -1,7 +1,7 @@
 package feature
 
 import (
-	"github.com/voxgig-sdk/pokapi-sdk/core"
+	"github.com/voxgig-sdk/pokapi-sdk/go/core"
 )
 
 type BaseFeature struct {

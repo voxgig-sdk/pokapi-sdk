@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/voxgig-sdk/pokapi-sdk"
-	"github.com/voxgig-sdk/pokapi-sdk/core"
+	sdk "github.com/voxgig-sdk/pokapi-sdk/go"
+	"github.com/voxgig-sdk/pokapi-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/pokapi-sdk/go/utility/struct"
 )
 
 func TestAbilityEntity(t *testing.T) {
