@@ -15,9 +15,6 @@ module PokapiConfig
       },
       "options" => {
         "base" => "https://pokeapi.co/api/v2",
-        "auth" => {
-          "prefix" => "Bearer",
-        },
         "headers" => {
           "content-type" => "application/json",
         },

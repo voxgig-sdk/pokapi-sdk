@@ -123,7 +123,6 @@ func typeBasicSetup(extra map[string]any) *entityTestSetup {
 		"POKAPI_TEST_TYPE_ENTID": idmap,
 		"POKAPI_TEST_LIVE":      "FALSE",
 		"POKAPI_TEST_EXPLAIN":   "FALSE",
-		"POKAPI_APIKEY":         "NONE",
 	})
 
 	idmapResolved := core.ToMapAny(env["POKAPI_TEST_TYPE_ENTID"])
@@ -134,7 +133,6 @@ func typeBasicSetup(extra map[string]any) *entityTestSetup {
 	if env["POKAPI_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
-				"apikey": env["POKAPI_APIKEY"],
 			},
 			extra,
 		})

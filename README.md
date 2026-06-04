@@ -1,9 +1,98 @@
 # Pokapi SDK
 
+Open, read-only REST API for Pokemon data: species, abilities, types, moves, items and more
 
+> TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI, an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
 
-Available for [Golang](go/) and [Go CLI](go-cli/) and [Go MCP server](go-mcp/) and [Lua](lua/) and [PHP](php/) and [Python](py/) and [Ruby](rb/) and [TypeScript](ts/).
+## About PokéAPI
 
+[PokeAPI](https://pokeapi.co/) is a community-run, consumption-only REST API that serves data about the Pokemon franchise. It is widely used as an educational tool for learning to consume HTTP APIs and has been online since 2014.
+
+What you get from the API:
+
+- Pokemon entries with stats, abilities, moves, sprites, held items and per-version data
+- Species-level information including evolution chains, growth rates, habitats and breeding details
+- Elemental types and the damage relations that govern battle matchups
+- Abilities and their effects, plus supporting resources such as moves, items, regions, generations and pokedexes
+- Paginated resource lists at each top-level endpoint for browsing the full catalogue
+
+Operational notes: no API key or authentication is required. Formal rate limits were removed when the API moved to static hosting in late 2018, but clients are expected to cache responses locally and behave responsibly — sustained abuse can result in a permanent IP ban. All endpoints live under `https://pokeapi.co/api/v2/`.
+
+## Try it
+
+**TypeScript**
+```bash
+npm install pokapi
+```
+
+**Python**
+```bash
+pip install pokapi-sdk
+```
+
+**PHP**
+```bash
+composer require voxgig/pokapi-sdk
+```
+
+**Golang**
+```bash
+go get github.com/voxgig-sdk/pokapi-sdk/go
+```
+
+**Ruby**
+```bash
+gem install pokapi-sdk
+```
+
+**Lua**
+```bash
+luarocks install pokapi-sdk
+```
+
+## 30-second quickstart
+
+### TypeScript
+
+```ts
+import { PokapiSDK } from 'pokapi'
+
+const client = new PokapiSDK({})
+
+```
+
+See the [TypeScript README](ts/README.md) for the
+full guide, or scroll down for the same example in other languages.
+
+## What's in the box
+
+| Surface | Use it for | Path |
+| --- | --- | --- |
+| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | App integration | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
+| **CLI** | Scripts, CI, ops, one-off API calls | `go-cli/` |
+| **MCP server** | AI agents (Claude, Cursor, Cline) | `go-mcp/` |
+
+## Use it from an AI agent (MCP)
+
+The generated MCP server exposes every operation in this SDK as an
+[MCP](https://modelcontextprotocol.io) tool that Claude, Cursor or Cline
+can call directly. Build and register it:
+
+```bash
+cd go-mcp && go build -o pokapi-mcp .
+```
+
+Then add it to your agent's MCP config (Claude Desktop, Cursor, etc.):
+
+```json
+{
+  "mcpServers": {
+    "pokapi": {
+      "command": "/abs/path/to/pokapi-mcp"
+    }
+  }
+}
+```
 
 ## Entities
 
@@ -11,79 +100,28 @@ The API exposes 5 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Ability** |  | `/ability/{idOrName}` |
-| **PaginatedResourceList** |  | `` |
-| **Pokemon** |  | `/pokemon` |
-| **PokemonSpecies** |  | `/pokemon-species/{idOrName}` |
-| **Type** |  | `/type/{idOrName}` |
+| **Ability** | A passive effect a Pokemon can have in battle or the overworld; served at `/api/v2/ability/{id or name}/`. | `/ability/{idOrName}` |
+| **PaginatedResourceList** | The generic paginated index returned by each top-level resource endpoint (for example `/api/v2/pokemon/`), with `count`, `next`, `previous` and `results` fields for browsing the catalogue. | `` |
+| **Pokemon** | An individual Pokemon variety with its stats, types, abilities, moves, sprites and per-game data; served at `/api/v2/pokemon/{id or name}/`. | `/pokemon` |
+| **PokemonSpecies** | The species-level grouping that ties Pokemon varieties together, including evolution chains, growth rates, habitat and breeding information; served at `/api/v2/pokemon-species/{id or name}/`. | `/pokemon-species/{idOrName}` |
+| **Type** | An elemental type that determines move effectiveness and matchups; served at `/api/v2/type/{id or name}/`. | `/type/{idOrName}` |
 
-Each entity supports the following operations where available: **load**, **list**, **create**,
-**update**, and **remove**.
+Each entity supports the following operations where available: **load**,
+**list**, **create**, **update**, and **remove**.
 
+## Quickstart in other languages
 
-## Architecture
+### Python
 
-### Entity-operation model
+```python
+from pokapi_sdk import PokapiSDK
 
-Every SDK call follows the same pipeline:
-
-1. **Point** — resolve the API endpoint from the operation definition.
-2. **Spec** — build the HTTP specification (URL, method, headers, body).
-3. **Request** — send the HTTP request.
-4. **Response** — receive and parse the response.
-5. **Result** — extract the result data for the caller.
-
-At each stage a feature hook fires (e.g. `PrePoint`, `PreSpec`,
-`PreRequest`), allowing features to inspect or modify the pipeline.
-
-### Features
-
-Features are hook-based middleware that extend SDK behaviour.
-
-| Feature | Purpose |
-| --- | --- |
-| **TestFeature** | In-memory mock transport for testing without a live server |
-
-You can add custom features by passing them in the `extend` option at
-construction time.
-
-### Direct and Prepare
-
-For endpoints not covered by the entity model, use the low-level methods:
-
-- **`direct(fetchargs)`** — build and send an HTTP request in one step.
-- **`prepare(fetchargs)`** — build the request without sending it.
-
-Both accept a map with `path`, `method`, `params`, `query`, `headers`,
-and `body`.
+client = PokapiSDK({})
 
 
-## Quick start
-
-### Golang
-
-```go
-import sdk "github.com/voxgig-sdk/pokapi-sdk/go"
-
-client := sdk.NewPokapiSDK(map[string]any{
-    "apikey": os.Getenv("POKAPI_APIKEY"),
-})
-
-```
-
-### Lua
-
-```lua
-local sdk = require("pokapi_sdk")
-
-local client = sdk.new({
-  apikey = os.getenv("POKAPI_APIKEY"),
-})
-
-
--- Load a specific ability
-local ability, err = client:Ability(nil):load(
-  { id = "example_id" }, nil
+# Load a specific ability
+ability, err = client.Ability(None).load(
+    {"id": "example_id"}, None
 )
 ```
 
@@ -93,9 +131,7 @@ local ability, err = client:Ability(nil):load(
 <?php
 require_once 'pokapi_sdk.php';
 
-$client = new PokapiSDK([
-    "apikey" => getenv("POKAPI_APIKEY"),
-]);
+$client = new PokapiSDK([]);
 
 
 // Load a specific ability
@@ -104,21 +140,13 @@ $client = new PokapiSDK([
 );
 ```
 
-### Python
+### Golang
 
-```python
-import os
-from pokapi_sdk import PokapiSDK
+```go
+import sdk "github.com/voxgig-sdk/pokapi-sdk/go"
 
-client = PokapiSDK({
-    "apikey": os.environ.get("POKAPI_APIKEY"),
-})
+client := sdk.NewPokapiSDK(map[string]any{})
 
-
-# Load a specific ability
-ability, err = client.Ability(None).load(
-    {"id": "example_id"}, None
-)
 ```
 
 ### Ruby
@@ -126,9 +154,7 @@ ability, err = client.Ability(None).load(
 ```ruby
 require_relative "Pokapi_sdk"
 
-client = PokapiSDK.new({
-  "apikey" => ENV["POKAPI_APIKEY"],
-})
+client = PokapiSDK.new({})
 
 
 # Load a specific ability
@@ -137,38 +163,39 @@ ability, err = client.Ability(nil).load(
 )
 ```
 
-### TypeScript
-
-```ts
-import { PokapiSDK } from 'pokapi'
-
-const client = new PokapiSDK({
-  apikey: process.env.POKAPI_APIKEY,
-})
-
-```
-
-
-## Testing
-
-Both SDKs provide a test mode that replaces the HTTP transport with an
-in-memory mock, so tests run without a network connection.
-
-### Golang
-
-```go
-client := sdk.TestSDK(nil, nil)
-result, err := client.Ability(nil).Load(
-    map[string]any{"id": "test01"}, nil,
-)
-```
-
 ### Lua
 
 ```lua
-local client = sdk.test(nil, nil)
-local result, err = client:Ability(nil):load(
-  { id = "test01" }, nil
+local sdk = require("pokapi_sdk")
+
+local client = sdk.new({})
+
+
+-- Load a specific ability
+local ability, err = client:Ability(nil):load(
+  { id = "example_id" }, nil
+)
+```
+
+## Unit testing in offline mode
+
+Every SDK ships a test mode that swaps the HTTP transport for an
+in-memory mock, so unit tests run offline.
+
+### TypeScript
+
+```ts
+const client = PokapiSDK.test()
+const result = await client.Ability().load({ id: 'test01' })
+// result.ok === true, result.data contains mock data
+```
+
+### Python
+
+```python
+client = PokapiSDK.test(None, None)
+result, err = client.Ability(None).load(
+    {"id": "test01"}, None
 )
 ```
 
@@ -181,12 +208,12 @@ $client = PokapiSDK::test(null, null);
 );
 ```
 
-### Python
+### Golang
 
-```python
-client = PokapiSDK.test(None, None)
-result, err = client.Ability(None).load(
-    {"id": "test01"}, None
+```go
+client := sdk.TestSDK(nil, nil)
+result, err := client.Ability(nil).Load(
+    map[string]any{"id": "test01"}, nil,
 )
 ```
 
@@ -199,14 +226,46 @@ result, err = client.Ability(nil).load(
 )
 ```
 
-### TypeScript
+### Lua
 
-```ts
-const client = PokapiSDK.test()
-const result = await client.Ability().load({ id: 'test01' })
-// result.ok === true, result.data contains mock data
+```lua
+local client = sdk.test(nil, nil)
+local result, err = client:Ability(nil):load(
+  { id = "test01" }, nil
+)
 ```
 
+## How it works
+
+Every SDK call runs the same five-stage pipeline:
+
+1. **Point** — resolve the API endpoint from the operation definition.
+2. **Spec** — build the HTTP specification (URL, method, headers, body).
+3. **Request** — send the HTTP request.
+4. **Response** — receive and parse the response.
+5. **Result** — extract the result data for the caller.
+
+A feature hook fires at each stage (e.g. `PrePoint`, `PreSpec`,
+`PreRequest`), so features can inspect or modify the pipeline without
+forking the SDK.
+
+### Features
+
+| Feature | Purpose |
+| --- | --- |
+| **TestFeature** | In-memory mock transport for testing without a live server |
+
+Pass custom features via the `extend` option at construction time.
+
+### Direct and Prepare
+
+For endpoints the entity model doesn't cover, use the low-level methods:
+
+- **`direct(fetchargs)`** — build and send an HTTP request in one step.
+- **`prepare(fetchargs)`** — build the request without sending it.
+
+Both accept a map with `path`, `method`, `params`, `query`,
+`headers`, and `body`. See the [How-to guides](#how-to-guides) below.
 
 ## How-to guides
 
@@ -214,21 +273,22 @@ const result = await client.Ability().load({ id: 'test01' })
 
 When the entity interface does not cover an endpoint, use `direct`:
 
-**Go:**
-```go
-result, err := client.Direct(map[string]any{
-    "path":   "/api/resource/{id}",
-    "method": "GET",
-    "params": map[string]any{"id": "example"},
+**TypeScript:**
+```ts
+const result = await client.direct({
+  path: '/api/resource/{id}',
+  method: 'GET',
+  params: { id: 'example' },
 })
+console.log(result.data)
 ```
 
-**Lua:**
-```lua
-local result, err = client:direct({
-  path = "/api/resource/{id}",
-  method = "GET",
-  params = { id = "example" },
+**Python:**
+```python
+result, err = client.direct({
+    "path": "/api/resource/{id}",
+    "method": "GET",
+    "params": {"id": "example"},
 })
 ```
 
@@ -241,12 +301,12 @@ local result, err = client:direct({
 ]);
 ```
 
-**Python:**
-```python
-result, err = client.direct({
-    "path": "/api/resource/{id}",
+**Go:**
+```go
+result, err := client.Direct(map[string]any{
+    "path":   "/api/resource/{id}",
     "method": "GET",
-    "params": {"id": "example"},
+    "params": map[string]any{"id": "example"},
 })
 ```
 
@@ -259,25 +319,34 @@ result, err = client.direct({
 })
 ```
 
-**TypeScript:**
-```ts
-const result = await client.direct({
-  path: '/api/resource/{id}',
-  method: 'GET',
-  params: { id: 'example' },
+**Lua:**
+```lua
+local result, err = client:direct({
+  path = "/api/resource/{id}",
+  method = "GET",
+  params = { id = "example" },
 })
-console.log(result.data)
 ```
 
+## Per-language documentation
 
-## Language-specific documentation
+- [TypeScript](ts/README.md)
+- [Python](py/README.md)
+- [PHP](php/README.md)
+- [Golang](go/README.md)
+- [Ruby](rb/README.md)
+- [Lua](lua/README.md)
 
-- [Golang SDK](go/README.md)
-- [Go CLI SDK](go-cli/README.md)
-- [Go MCP server SDK](go-mcp/README.md)
-- [Lua SDK](lua/README.md)
-- [PHP SDK](php/README.md)
-- [Python SDK](py/README.md)
-- [Ruby SDK](rb/README.md)
-- [TypeScript SDK](ts/README.md)
+## Using the PokéAPI
 
+- Upstream: [https://pokeapi.co/](https://pokeapi.co/)
+- API docs: [https://pokeapi.co/docs/v2](https://pokeapi.co/docs/v2)
+
+- PokeAPI is a free, open public API maintained by community contributors
+- No authentication required; resources are fully open and read-only
+- Fair use policy: locally cache responses to reduce server load, do not abuse the service, and report security issues responsibly
+- Pokemon data and trademarks are owned by Nintendo, Game Freak and The Pokemon Company; PokeAPI is an unofficial educational project
+
+---
+
+Generated from the PokéAPI OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).

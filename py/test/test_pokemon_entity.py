@@ -102,7 +102,6 @@ def _pokemon_basic_setup(extra):
         "POKAPI_TEST_POKEMON_ENTID": idmap,
         "POKAPI_TEST_LIVE": "FALSE",
         "POKAPI_TEST_EXPLAIN": "FALSE",
-        "POKAPI_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -113,7 +112,6 @@ def _pokemon_basic_setup(extra):
     if env.get("POKAPI_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("POKAPI_APIKEY"),
             },
             extra or {},
         ])
