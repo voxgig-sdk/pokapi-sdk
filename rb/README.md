@@ -10,13 +10,13 @@ The Ruby SDK for the Pokapi API — an entity-oriented client using idiomatic Ru
 
 ## Install
 ```bash
-gem install pokapi-sdk
+gem install voxgig-sdk-pokapi
 ```
 
 Or add to your `Gemfile`:
 
 ```ruby
-gem "pokapi-sdk"
+gem "voxgig-sdk-pokapi"
 ```
 
 Then run:

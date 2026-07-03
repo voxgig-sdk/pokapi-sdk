@@ -10,7 +10,7 @@ The Python SDK for the Pokapi API — an entity-oriented client following Python
 
 ## Install
 ```bash
-pip install pokapi-sdk
+pip install voxgig-sdk-pokapi
 ```
 
 Or install from source:

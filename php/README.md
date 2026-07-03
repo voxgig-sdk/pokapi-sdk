@@ -10,7 +10,7 @@ The PHP SDK for the Pokapi API — an entity-oriented client using PHP conventio
 
 ## Install
 ```bash
-composer require voxgig/pokapi-sdk
+composer require voxgig-sdk/pokapi
 ```
 
 

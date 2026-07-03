@@ -10,7 +10,7 @@ The TypeScript SDK for the Pokapi API — a type-safe, entity-oriented client wi
 
 ## Install
 ```bash
-npm install pokapi
+npm install @voxgig-sdk/pokapi
 ```
 ## Tutorial: your first API call
 
