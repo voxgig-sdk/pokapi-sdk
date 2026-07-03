@@ -30,12 +30,12 @@ Create a new SDK client instance.
 
 ### Static Methods
 
-#### `sdk.test(testopts, sdkopts)`
+#### `sdk.test(testopts?, sdkopts?)`
 
-Create a test client with mock features active. Both arguments may be `nil`.
+Create a test client with mock features active. Both arguments are optional.
 
 ```lua
-local client = sdk.test(nil, nil)
+local client = sdk.test()
 ```
 
 
@@ -121,7 +121,7 @@ local ability = client:Ability(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Ability(nil):load({ id = "ability_id" }, nil)
+local result, err = client:Ability():load({ id = "ability_id" })
 ```
 
 ### Common Methods
@@ -228,7 +228,7 @@ local pokemon = client:Pokemon(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Pokemon(nil):list(nil, nil)
+local results, err = client:Pokemon():list()
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -236,7 +236,7 @@ local results, err = client:Pokemon(nil):list(nil, nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Pokemon(nil):load({ id = "pokemon_id" }, nil)
+local result, err = client:Pokemon():load({ id = "pokemon_id" })
 ```
 
 ### Common Methods
@@ -299,7 +299,7 @@ local pokemon_species = client:PokemonSpecies(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:PokemonSpecies(nil):load({ id = "pokemon_species_id" }, nil)
+local result, err = client:PokemonSpecies():load({ id = "pokemon_species_id" })
 ```
 
 ### Common Methods
@@ -357,7 +357,7 @@ local type = client:Type(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Type(nil):load({ id = "type_id" }, nil)
+local result, err = client:Type():load({ id = "type_id" })
 ```
 
 ### Common Methods

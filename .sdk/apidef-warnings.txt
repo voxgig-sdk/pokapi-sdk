@@ -1,6 +1,6 @@
 {
   point: "warning"
-  when: 1780581058368
+  when: 1783054541011
   note: "No paths defined for entity=paginated_resource_list"
   entm: {
     name: "paginated_resource_list"

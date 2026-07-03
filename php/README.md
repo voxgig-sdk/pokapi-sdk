@@ -1,6 +1,11 @@
 # Pokapi PHP SDK
 
-The PHP SDK for the Pokapi API. Provides an entity-oriented interface using PHP conventions.
+
+
+The PHP SDK for the Pokapi API — an entity-oriented client using PHP conventions.
+
+> Other languages, the CLI, and MCP server live alongside this one — see
+> the [top-level README](../README.md).
 
 
 ## Install
@@ -20,13 +25,15 @@ loading a specific record.
 <?php
 require_once 'pokapi_sdk.php';
 
-$client = new PokapiSDK([]);
+$client = new PokapiSDK([
+    "apikey" => getenv("POKAPI_APIKEY"),
+]);
 ```
 
 ### 3. Load a ability
 
 ```php
-[$result, $err] = $client->Ability(null)->load(["id" => "example_id"], null);
+[$result, $err] = $client->Ability()->load(["id" => "example_id"]);
 if ($err) { throw new \Exception($err); }
 print_r($result);
 ```
@@ -72,11 +79,9 @@ print_r($fetchdef["headers"]);
 Create a mock client for unit testing — no server required:
 
 ```php
-$client = PokapiSDK::test(null, null);
+$client = PokapiSDK::test();
 
-[$result, $err] = $client->Pokapi(null)->load(
-    ["id" => "test01"], null
-);
+[$result, $err] = $client->Pokapi()->load(["id" => "test01"]);
 // $result contains mock response data
 ```
 
@@ -111,6 +116,7 @@ Create a `.env.local` file at the project root:
 
 ```
 POKAPI_TEST_LIVE=TRUE
+POKAPI_APIKEY=<your-key>
 ```
 
 Then run:
@@ -133,6 +139,7 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |

@@ -1,22 +1,8 @@
 # Pokapi SDK
 
-Open, read-only REST API for Pokemon data: species, abilities, types, moves, items and more
+PokéAPI client, generated from the OpenAPI spec.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI, an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
-
-## About PokéAPI
-
-[PokeAPI](https://pokeapi.co/) is a community-run, consumption-only REST API that serves data about the Pokemon franchise. It is widely used as an educational tool for learning to consume HTTP APIs and has been online since 2014.
-
-What you get from the API:
-
-- Pokemon entries with stats, abilities, moves, sprites, held items and per-version data
-- Species-level information including evolution chains, growth rates, habitats and breeding details
-- Elemental types and the damage relations that govern battle matchups
-- Abilities and their effects, plus supporting resources such as moves, items, regions, generations and pokedexes
-- Paginated resource lists at each top-level endpoint for browsing the full catalogue
-
-Operational notes: no API key or authentication is required. Formal rate limits were removed when the API moved to static hosting in late 2018, but clients are expected to cache responses locally and behave responsibly — sustained abuse can result in a permanent IP ban. All endpoints live under `https://pokeapi.co/api/v2/`.
 
 ## Try it
 
@@ -50,27 +36,31 @@ gem install pokapi-sdk
 luarocks install pokapi-sdk
 ```
 
-## 30-second quickstart
+## Quickstart
 
 ### TypeScript
 
 ```ts
 import { PokapiSDK } from 'pokapi'
 
-const client = new PokapiSDK({})
+const client = new PokapiSDK({
+  apikey: process.env.POKAPI_APIKEY,
+})
 
+// Load ability data
+const ability = await client.Ability().load({})
+console.log(ability.data)
 ```
 
-See the [TypeScript README](ts/README.md) for the
-full guide, or scroll down for the same example in other languages.
+See the [TypeScript README](ts/README.md) for the full guide.
 
-## What's in the box
+## Surfaces
 
-| Surface | Use it for | Path |
-| --- | --- | --- |
-| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | App integration | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
-| **CLI** | Scripts, CI, ops, one-off API calls | `go-cli/` |
-| **MCP server** | AI agents (Claude, Cursor, Cline) | `go-mcp/` |
+| Surface | Path |
+| --- | --- |
+| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
+| **CLI** | `go-cli/` |
+| **MCP server** | `go-mcp/` |
 
 ## Use it from an AI agent (MCP)
 
@@ -100,11 +90,11 @@ The API exposes 5 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Ability** | A passive effect a Pokemon can have in battle or the overworld; served at `/api/v2/ability/{id or name}/`. | `/ability/{idOrName}` |
-| **PaginatedResourceList** | The generic paginated index returned by each top-level resource endpoint (for example `/api/v2/pokemon/`), with `count`, `next`, `previous` and `results` fields for browsing the catalogue. | `` |
-| **Pokemon** | An individual Pokemon variety with its stats, types, abilities, moves, sprites and per-game data; served at `/api/v2/pokemon/{id or name}/`. | `/pokemon` |
-| **PokemonSpecies** | The species-level grouping that ties Pokemon varieties together, including evolution chains, growth rates, habitat and breeding information; served at `/api/v2/pokemon-species/{id or name}/`. | `/pokemon-species/{idOrName}` |
-| **Type** | An elemental type that determines move effectiveness and matchups; served at `/api/v2/type/{id or name}/`. | `/type/{idOrName}` |
+| **Ability** |  | `/ability/{idOrName}` |
+| **PaginatedResourceList** |  | `` |
+| **Pokemon** |  | `/pokemon` |
+| **PokemonSpecies** |  | `/pokemon-species/{idOrName}` |
+| **Type** |  | `/type/{idOrName}` |
 
 Each entity supports the following operations where available: **load**,
 **list**, **create**, **update**, and **remove**.
@@ -114,15 +104,17 @@ Each entity supports the following operations where available: **load**,
 ### Python
 
 ```python
+import os
 from pokapi_sdk import PokapiSDK
 
-client = PokapiSDK({})
+client = PokapiSDK({
+    "apikey": os.environ.get("POKAPI_APIKEY"),
+})
 
 
 # Load a specific ability
-ability, err = client.Ability(None).load(
-    {"id": "example_id"}, None
-)
+ability, err = client.Ability().load({"id": "example_id"})
+print(ability)
 ```
 
 ### PHP
@@ -131,13 +123,14 @@ ability, err = client.Ability(None).load(
 <?php
 require_once 'pokapi_sdk.php';
 
-$client = new PokapiSDK([]);
+$client = new PokapiSDK([
+    "apikey" => getenv("POKAPI_APIKEY"),
+]);
 
 
 // Load a specific ability
-[$ability, $err] = $client->Ability(null)->load(
-    ["id" => "example_id"], null
-);
+[$ability, $err] = $client->Ability()->load(["id" => "example_id"]);
+print_r($ability);
 ```
 
 ### Golang
@@ -145,8 +138,13 @@ $client = new PokapiSDK([]);
 ```go
 import sdk "github.com/voxgig-sdk/pokapi-sdk/go"
 
-client := sdk.NewPokapiSDK(map[string]any{})
+client := sdk.NewPokapiSDK(map[string]any{
+    "apikey": os.Getenv("POKAPI_APIKEY"),
+})
 
+// Load ability data
+ability, err := client.Ability(nil).Load(map[string]any{}, nil)
+fmt.Println(ability)
 ```
 
 ### Ruby
@@ -154,13 +152,14 @@ client := sdk.NewPokapiSDK(map[string]any{})
 ```ruby
 require_relative "Pokapi_sdk"
 
-client = PokapiSDK.new({})
+client = PokapiSDK.new({
+  "apikey" => ENV["POKAPI_APIKEY"],
+})
 
 
 # Load a specific ability
-ability, err = client.Ability(nil).load(
-  { "id" => "example_id" }, nil
-)
+ability, err = client.Ability().load({ "id" => "example_id" })
+puts ability
 ```
 
 ### Lua
@@ -168,13 +167,14 @@ ability, err = client.Ability(nil).load(
 ```lua
 local sdk = require("pokapi_sdk")
 
-local client = sdk.new({})
+local client = sdk.new({
+  apikey = os.getenv("POKAPI_APIKEY"),
+})
 
 
 -- Load a specific ability
-local ability, err = client:Ability(nil):load(
-  { id = "example_id" }, nil
-)
+local ability, err = client:Ability():load({ id = "example_id" })
+print(ability)
 ```
 
 ## Unit testing in offline mode
@@ -193,25 +193,21 @@ const result = await client.Ability().load({ id: 'test01' })
 ### Python
 
 ```python
-client = PokapiSDK.test(None, None)
-result, err = client.Ability(None).load(
-    {"id": "test01"}, None
-)
+client = PokapiSDK.test()
+result, err = client.Ability().load({"id": "test01"})
 ```
 
 ### PHP
 
 ```php
-$client = PokapiSDK::test(null, null);
-[$result, $err] = $client->Ability(null)->load(
-    ["id" => "test01"], null
-);
+$client = PokapiSDK::test();
+[$result, $err] = $client->Ability()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
-client := sdk.TestSDK(nil, nil)
+client := sdk.Test()
 result, err := client.Ability(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
@@ -220,19 +216,15 @@ result, err := client.Ability(nil).Load(
 ### Ruby
 
 ```ruby
-client = PokapiSDK.test(nil, nil)
-result, err = client.Ability(nil).load(
-  { "id" => "test01" }, nil
-)
+client = PokapiSDK.test
+result, err = client.Ability().load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
-local client = sdk.test(nil, nil)
-local result, err = client:Ability(nil):load(
-  { id = "test01" }, nil
-)
+local client = sdk.test()
+local result, err = client:Ability():load({ id = "test01" })
 ```
 
 ## How it works
@@ -336,16 +328,6 @@ local result, err = client:direct({
 - [Golang](go/README.md)
 - [Ruby](rb/README.md)
 - [Lua](lua/README.md)
-
-## Using the PokéAPI
-
-- Upstream: [https://pokeapi.co/](https://pokeapi.co/)
-- API docs: [https://pokeapi.co/docs/v2](https://pokeapi.co/docs/v2)
-
-- PokeAPI is a free, open public API maintained by community contributors
-- No authentication required; resources are fully open and read-only
-- Fair use policy: locally cache responses to reduce server load, do not abuse the service, and report security issues responsibly
-- Pokemon data and trademarks are owned by Nintendo, Game Freak and The Pokemon Company; PokeAPI is an unofficial educational project
 
 ---
 

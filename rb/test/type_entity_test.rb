@@ -86,6 +86,7 @@ def type_basic_setup(extra)
     "POKAPI_TEST_TYPE_ENTID" => idmap,
     "POKAPI_TEST_LIVE" => "FALSE",
     "POKAPI_TEST_EXPLAIN" => "FALSE",
+    "POKAPI_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -97,6 +98,7 @@ def type_basic_setup(extra)
   if env["POKAPI_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
+        "apikey" => env["POKAPI_APIKEY"],
       },
       extra || {},
     ])

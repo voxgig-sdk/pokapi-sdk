@@ -106,6 +106,7 @@ function basicSetup(extra?: any) {
     'POKAPI_TEST_PAGINATED_RESOURCE_LIST_ENTID': idmap,
     'POKAPI_TEST_LIVE': 'FALSE',
     'POKAPI_TEST_EXPLAIN': 'FALSE',
+    'POKAPI_APIKEY': 'NONE',
   })
 
   idmap = env['POKAPI_TEST_PAGINATED_RESOURCE_LIST_ENTID']
@@ -115,6 +116,7 @@ function basicSetup(extra?: any) {
   if (live) {
     client = new PokapiSDK(merge([
       {
+        apikey: env.POKAPI_APIKEY,
       },
       extra
     ]))

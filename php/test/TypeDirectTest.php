@@ -77,12 +77,14 @@ function type_direct_setup($mockres)
     $env = Runner::env_override([
         "POKAPI_TEST_TYPE_ENTID" => [],
         "POKAPI_TEST_LIVE" => "FALSE",
+        "POKAPI_APIKEY" => "NONE",
     ]);
 
     $live = $env["POKAPI_TEST_LIVE"] === "TRUE";
 
     if ($live) {
         $merged_opts = [
+            "apikey" => $env["POKAPI_APIKEY"],
         ];
         $client = new PokapiSDK($merged_opts);
         return [

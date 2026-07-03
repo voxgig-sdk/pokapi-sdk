@@ -116,12 +116,14 @@ def pokemon_direct_setup(mockres)
   env = Runner.env_override({
     "POKAPI_TEST_POKEMON_ENTID" => {},
     "POKAPI_TEST_LIVE" => "FALSE",
+    "POKAPI_APIKEY" => "NONE",
   })
 
   live = env["POKAPI_TEST_LIVE"] == "TRUE"
 
   if live
     merged_opts = {
+      "apikey" => env["POKAPI_APIKEY"],
     }
     client = PokapiSDK.new(merged_opts)
     return {

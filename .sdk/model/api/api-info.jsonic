@@ -21,33 +21,7 @@ main: {
       ]
       title: "PokéAPI"
       version: "2.0.0"
-      tagline: "Open, read-only REST API for Pokemon data: species, abilities, types, moves, items and more"
-      homepage: "https://pokeapi.co/"
-      docs_url: "https://pokeapi.co/docs/v2"
-      license_short: "Open source; free public use under the PokeAPI fair use policy"
-      license_md: `- PokeAPI is a free, open public API maintained by community contributors
-- No authentication required; resources are fully open and read-only
-- Fair use policy: locally cache responses to reduce server load, do not abuse the service, and report security issues responsibly
-- Pokemon data and trademarks are owned by Nintendo, Game Freak and The Pokemon Company; PokeAPI is an unofficial educational project`
-      about_md: `[PokeAPI](https://pokeapi.co/) is a community-run, consumption-only REST API that serves data about the Pokemon franchise. It is widely used as an educational tool for learning to consume HTTP APIs and has been online since 2014.
-
-What you get from the API:
-
-- Pokemon entries with stats, abilities, moves, sprites, held items and per-version data
-- Species-level information including evolution chains, growth rates, habitats and breeding details
-- Elemental types and the damage relations that govern battle matchups
-- Abilities and their effects, plus supporting resources such as moves, items, regions, generations and pokedexes
-- Paginated resource lists at each top-level endpoint for browsing the full catalogue
-
-Operational notes: no API key or authentication is required. Formal rate limits were removed when the API moved to static hosting in late 2018, but clients are expected to cache responses locally and behave responsibly — sustained abuse can result in a permanent IP ban. All endpoints live under \`https://pokeapi.co/api/v2/\`.`
-      entity_desc: {
-        ability: "A passive effect a Pokemon can have in battle or the overworld; served at `/api/v2/ability/{id or name}/`."
-        paginated_resource_list: "The generic paginated index returned by each top-level resource endpoint (for example `/api/v2/pokemon/`), with `count`, `next`, `previous` and `results` fields for browsing the catalogue."
-        pokemon: "An individual Pokemon variety with its stats, types, abilities, moves, sprites and per-game data; served at `/api/v2/pokemon/{id or name}/`."
-        pokemon_species: "The species-level grouping that ties Pokemon varieties together, including evolution chains, growth rates, habitat and breeding information; served at `/api/v2/pokemon-species/{id or name}/`."
-        type: "An elemental type that determines move effectiveness and matchups; served at `/api/v2/type/{id or name}/`."
-      }
-      auth: false
     }
   }
 }
+

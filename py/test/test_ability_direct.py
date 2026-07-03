@@ -69,12 +69,14 @@ def _ability_direct_setup(mockres):
     env = runner.env_override({
         "POKAPI_TEST_ABILITY_ENTID": {},
         "POKAPI_TEST_LIVE": "FALSE",
+        "POKAPI_APIKEY": "NONE",
     })
 
     live = env.get("POKAPI_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
+            "apikey": env.get("POKAPI_APIKEY"),
         }
         client = PokapiSDK(merged_opts)
         return {
