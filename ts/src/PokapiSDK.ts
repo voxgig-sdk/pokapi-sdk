@@ -208,70 +208,35 @@ class PokapiSDK {
 
 
 
-  _ability?: AbilityEntity
-
-  // Idiomatic facade: `client.ability.list()` / `client.ability.load({ id })`.
-  get ability(): AbilityEntity {
-    return (this._ability ??= new AbilityEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.ability` instead. */
+  // Entity access: `client.Ability().list()` / `client.Ability().load({ id })`.
   Ability(data?: any) {
     const self = this
     return new AbilityEntity(self,data)
   }
 
 
-  _paginated_resource_list?: PaginatedResourceListEntity
-
-  // Idiomatic facade: `client.paginated_resource_list.list()` / `client.paginated_resource_list.load({ id })`.
-  get paginated_resource_list(): PaginatedResourceListEntity {
-    return (this._paginated_resource_list ??= new PaginatedResourceListEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.paginated_resource_list` instead. */
+  // Entity access: `client.PaginatedResourceList().list()` / `client.PaginatedResourceList().load({ id })`.
   PaginatedResourceList(data?: any) {
     const self = this
     return new PaginatedResourceListEntity(self,data)
   }
 
 
-  _pokemon?: PokemonEntity
-
-  // Idiomatic facade: `client.pokemon.list()` / `client.pokemon.load({ id })`.
-  get pokemon(): PokemonEntity {
-    return (this._pokemon ??= new PokemonEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.pokemon` instead. */
+  // Entity access: `client.Pokemon().list()` / `client.Pokemon().load({ id })`.
   Pokemon(data?: any) {
     const self = this
     return new PokemonEntity(self,data)
   }
 
 
-  _pokemon_species?: PokemonSpeciesEntity
-
-  // Idiomatic facade: `client.pokemon_species.list()` / `client.pokemon_species.load({ id })`.
-  get pokemon_species(): PokemonSpeciesEntity {
-    return (this._pokemon_species ??= new PokemonSpeciesEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.pokemon_species` instead. */
+  // Entity access: `client.PokemonSpecies().list()` / `client.PokemonSpecies().load({ id })`.
   PokemonSpecies(data?: any) {
     const self = this
     return new PokemonSpeciesEntity(self,data)
   }
 
 
-  _type?: TypeEntity
-
-  // Idiomatic facade: `client.type.list()` / `client.type.load({ id })`.
-  get type(): TypeEntity {
-    return (this._type ??= new TypeEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.type` instead. */
+  // Entity access: `client.Type().list()` / `client.Type().load({ id })`.
   Type(data?: any) {
     const self = this
     return new TypeEntity(self,data)

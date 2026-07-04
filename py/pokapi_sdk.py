@@ -220,89 +220,39 @@ class PokapiSDK:
         }
 
 
-    @property
-    def ability(self):
-        """Idiomatic facade: client.ability.list() / client.ability.load({"id": ...})."""
-        from entity.ability_entity import AbilityEntity
-        cached = getattr(self, "_ability", None)
-        if cached is None:
-            cached = AbilityEntity(self, None)
-            self._ability = cached
-        return cached
-
-    def Ability(self, data=None):
-        # Deprecated: use client.ability instead.
+    def Ability(self, data=None) -> "AbilityEntity":
+        """Entity factory: client.Ability().list({}) / client.Ability().load({"id": ...})."""
         from entity.ability_entity import AbilityEntity
         return AbilityEntity(self, data)
 
 
-    @property
-    def paginated_resource_list(self):
-        """Idiomatic facade: client.paginated_resource_list.list() / client.paginated_resource_list.load({"id": ...})."""
-        from entity.paginated_resource_list_entity import PaginatedResourceListEntity
-        cached = getattr(self, "_paginated_resource_list", None)
-        if cached is None:
-            cached = PaginatedResourceListEntity(self, None)
-            self._paginated_resource_list = cached
-        return cached
-
-    def PaginatedResourceList(self, data=None):
-        # Deprecated: use client.paginated_resource_list instead.
+    def PaginatedResourceList(self, data=None) -> "PaginatedResourceListEntity":
+        """Entity factory: client.PaginatedResourceList().list({}) / client.PaginatedResourceList().load({"id": ...})."""
         from entity.paginated_resource_list_entity import PaginatedResourceListEntity
         return PaginatedResourceListEntity(self, data)
 
 
-    @property
-    def pokemon(self):
-        """Idiomatic facade: client.pokemon.list() / client.pokemon.load({"id": ...})."""
-        from entity.pokemon_entity import PokemonEntity
-        cached = getattr(self, "_pokemon", None)
-        if cached is None:
-            cached = PokemonEntity(self, None)
-            self._pokemon = cached
-        return cached
-
-    def Pokemon(self, data=None):
-        # Deprecated: use client.pokemon instead.
+    def Pokemon(self, data=None) -> "PokemonEntity":
+        """Entity factory: client.Pokemon().list({}) / client.Pokemon().load({"id": ...})."""
         from entity.pokemon_entity import PokemonEntity
         return PokemonEntity(self, data)
 
 
-    @property
-    def pokemon_species(self):
-        """Idiomatic facade: client.pokemon_species.list() / client.pokemon_species.load({"id": ...})."""
-        from entity.pokemon_species_entity import PokemonSpeciesEntity
-        cached = getattr(self, "_pokemon_species", None)
-        if cached is None:
-            cached = PokemonSpeciesEntity(self, None)
-            self._pokemon_species = cached
-        return cached
-
-    def PokemonSpecies(self, data=None):
-        # Deprecated: use client.pokemon_species instead.
+    def PokemonSpecies(self, data=None) -> "PokemonSpeciesEntity":
+        """Entity factory: client.PokemonSpecies().list({}) / client.PokemonSpecies().load({"id": ...})."""
         from entity.pokemon_species_entity import PokemonSpeciesEntity
         return PokemonSpeciesEntity(self, data)
 
 
-    @property
-    def type(self):
-        """Idiomatic facade: client.type.list() / client.type.load({"id": ...})."""
-        from entity.type_entity import TypeEntity
-        cached = getattr(self, "_type", None)
-        if cached is None:
-            cached = TypeEntity(self, None)
-            self._type = cached
-        return cached
-
-    def Type(self, data=None):
-        # Deprecated: use client.type instead.
+    def Type(self, data=None) -> "TypeEntity":
+        """Entity factory: client.Type().list({}) / client.Type().load({"id": ...})."""
         from entity.type_entity import TypeEntity
         return TypeEntity(self, data)
 
 
 
     @classmethod
-    def test(cls, testopts=None, sdkopts=None):
+    def test(cls, testopts=None, sdkopts=None) -> "PokapiSDK":
         if sdkopts is None:
             sdkopts = {}
         sdkopts = vs.clone(sdkopts)
@@ -322,3 +272,13 @@ class PokapiSDK:
         sdk.mode = "test"
 
         return sdk
+
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from entity.ability_entity import AbilityEntity
+    from entity.paginated_resource_list_entity import PaginatedResourceListEntity
+    from entity.pokemon_entity import PokemonEntity
+    from entity.pokemon_species_entity import PokemonSpeciesEntity
+    from entity.type_entity import TypeEntity

@@ -30,11 +30,14 @@ const client = new PokapiSDK()
 
 ### 3. Load an ability
 
-```ts
-const result = await client.ability.load({ id: 'example_id' })
+`load()` returns the entity directly and throws on failure:
 
-if (result.ok) {
-  console.log(result.data)
+```ts
+try {
+  const ability = await client.Ability().load({ id: 'example_id' })
+  console.log(ability)
+} catch (err) {
+  console.error('load failed:', err)
 }
 ```
 
@@ -52,6 +55,9 @@ const result = await client.direct({
   params: { id: 'example' },
 })
 
+if (result instanceof Error) {
+  throw result
+}
 if (result.ok) {
   console.log(result.status)  // 200
   console.log(result.data)    // response body
@@ -80,9 +86,9 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = PokapiSDK.test()
 
-const result = await client.ability.load({ id: 'test01' })
-// result.ok === true
-// result.data contains mock response data
+const ability = await client.Ability().load({ id: 'test01' })
+// ability is a bare entity populated with mock response data
+console.log(ability)
 ```
 
 You can also use the instance method:
@@ -97,7 +103,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.ability
+const entity = client.Ability()
 
 // First call sets internal match
 await entity.load({ id: 'example' })
@@ -175,7 +181,7 @@ new PokapiSDK(options?: {
 | `utility()` | `Utility` | Deep copy of the SDK utility object. |
 | `prepare(fetchargs?)` | `Promise<FetchDef>` | Build an HTTP request definition without sending it. |
 | `direct(fetchargs?)` | `Promise<DirectResult>` | Build and send an HTTP request. |
-| `Ability(data?)` | `AbilityEntity` | Create a Ability entity instance. |
+| `Ability(data?)` | `AbilityEntity` | Create an Ability entity instance. |
 | `PaginatedResourceList(data?)` | `PaginatedResourceListEntity` | Create a PaginatedResourceList entity instance. |
 | `Pokemon(data?)` | `PokemonEntity` | Create a Pokemon entity instance. |
 | `PokemonSpecies(data?)` | `PokemonSpeciesEntity` | Create a PokemonSpecies entity instance. |
@@ -196,29 +202,30 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `load(reqmatch?, ctrl?): Promise<Result>` | Load a single entity by match criteria. |
-| `list` | `list(reqmatch?, ctrl?): Promise<Result>` | List entities matching the criteria. |
-| `create` | `create(reqdata?, ctrl?): Promise<Result>` | Create a new entity. |
-| `update` | `update(reqdata?, ctrl?): Promise<Result>` | Update an existing entity. |
-| `remove` | `remove(reqmatch?, ctrl?): Promise<Result>` | Remove an entity. |
+| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria. |
+| `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria. |
+| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity. |
+| `update` | `update(reqdata?, ctrl?): Promise<Entity>` | Update an existing entity. |
+| `remove` | `remove(reqmatch?, ctrl?): Promise<void>` | Remove an entity. |
 | `data` | `data(data?): any` | Get or set entity data. |
 | `match` | `match(match?): any` | Get or set entity match criteria. |
 | `make` | `make(): Entity` | Create a new instance with the same options. |
 | `client` | `client(): PokapiSDK` | Return the parent SDK client. |
 | `entopts` | `entopts(): object` | Return a copy of the entity options. |
 
-#### Result shape
+#### Return values
 
-All entity operations return a Result object:
+Entity operations resolve to the entity data directly — there is no
+result envelope:
 
-```ts
-{
-  ok: boolean      // true if the HTTP status is 2xx
-  status: number   // HTTP status code
-  headers: object  // response headers
-  data: any        // parsed JSON response body
-}
-```
+- `load`, `create` and `update` resolve to a single entity object.
+- `list` resolves to an **array** of entity objects (iterate it directly;
+  there is no `.data` and no `.ok`).
+- `remove` resolves to `void`.
+
+On a failed request these methods **throw**, so wrap calls in
+`try`/`catch` to handle errors. Only `direct()` returns the result
+envelope described below.
 
 ### DirectResult shape
 
@@ -347,7 +354,7 @@ API path: `/type/{idOrName}`
 
 ### Ability
 
-Create an instance: `const ability = client.ability`
+Create an instance: `const ability = client.Ability()`
 
 #### Operations
 
@@ -369,18 +376,18 @@ Create an instance: `const ability = client.ability`
 #### Example: Load
 
 ```ts
-const ability = await client.ability.load({ id: 'ability_id' })
+const ability = await client.Ability().load({ id: 'ability_id' })
 ```
 
 
 ### PaginatedResourceList
 
-Create an instance: `const paginated_resource_list = client.paginated_resource_list`
+Create an instance: `const paginated_resource_list = client.PaginatedResourceList()`
 
 
 ### Pokemon
 
-Create an instance: `const pokemon = client.pokemon`
+Create an instance: `const pokemon = client.Pokemon()`
 
 #### Operations
 
@@ -417,19 +424,19 @@ Create an instance: `const pokemon = client.pokemon`
 #### Example: Load
 
 ```ts
-const pokemon = await client.pokemon.load({ id: 'pokemon_id' })
+const pokemon = await client.Pokemon().load({ id: 'pokemon_id' })
 ```
 
 #### Example: List
 
 ```ts
-const pokemons = await client.pokemon.list()
+const pokemons = await client.Pokemon().list()
 ```
 
 
 ### PokemonSpecies
 
-Create an instance: `const pokemon_species = client.pokemon_species`
+Create an instance: `const pokemon_species = client.PokemonSpecies()`
 
 #### Operations
 
@@ -457,13 +464,13 @@ Create an instance: `const pokemon_species = client.pokemon_species`
 #### Example: Load
 
 ```ts
-const pokemon_species = await client.pokemon_species.load({ id: 'pokemon_species_id' })
+const pokemon_species = await client.PokemonSpecies().load({ id: 'pokemon_species_id' })
 ```
 
 
 ### Type
 
-Create an instance: `const type = client.type`
+Create an instance: `const type = client.Type()`
 
 #### Operations
 
@@ -486,7 +493,7 @@ Create an instance: `const type = client.type`
 #### Example: Load
 
 ```ts
-const type = await client.type.load({ id: 'type_id' })
+const type = await client.Type().load({ id: 'type_id' })
 ```
 
 
@@ -557,7 +564,7 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const ability = client.ability
+const ability = client.Ability()
 await ability.load({ id: "example_id" })
 
 // ability.data() now returns the loaded ability data

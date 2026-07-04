@@ -233,10 +233,10 @@ class PokapiSDK
 
     private $_ability = null;
 
-    // Idiomatic facade: $client->ability()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Ability() (PHP method
-    // names are case-insensitive).
-    public function ability($data = null)
+    // Canonical facade: $client->Ability()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->ability()
+    // resolves here too.
+    public function Ability($data = null)
     {
         require_once __DIR__ . '/entity/ability_entity.php';
         if ($data === null) {
@@ -251,10 +251,10 @@ class PokapiSDK
 
     private $_paginated_resource_list = null;
 
-    // Idiomatic facade: $client->paginated_resource_list()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias PaginatedResourceList() (PHP method
-    // names are case-insensitive).
-    public function paginated_resource_list($data = null)
+    // Canonical facade: $client->PaginatedResourceList()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->paginated_resource_list()
+    // resolves here too.
+    public function PaginatedResourceList($data = null)
     {
         require_once __DIR__ . '/entity/paginated_resource_list_entity.php';
         if ($data === null) {
@@ -269,10 +269,10 @@ class PokapiSDK
 
     private $_pokemon = null;
 
-    // Idiomatic facade: $client->pokemon()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Pokemon() (PHP method
-    // names are case-insensitive).
-    public function pokemon($data = null)
+    // Canonical facade: $client->Pokemon()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->pokemon()
+    // resolves here too.
+    public function Pokemon($data = null)
     {
         require_once __DIR__ . '/entity/pokemon_entity.php';
         if ($data === null) {
@@ -287,10 +287,10 @@ class PokapiSDK
 
     private $_pokemon_species = null;
 
-    // Idiomatic facade: $client->pokemon_species()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias PokemonSpecies() (PHP method
-    // names are case-insensitive).
-    public function pokemon_species($data = null)
+    // Canonical facade: $client->PokemonSpecies()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->pokemon_species()
+    // resolves here too.
+    public function PokemonSpecies($data = null)
     {
         require_once __DIR__ . '/entity/pokemon_species_entity.php';
         if ($data === null) {
@@ -305,10 +305,10 @@ class PokapiSDK
 
     private $_type = null;
 
-    // Idiomatic facade: $client->type()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Type() (PHP method
-    // names are case-insensitive).
-    public function type($data = null)
+    // Canonical facade: $client->Type()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->type()
+    // resolves here too.
+    public function Type($data = null)
     {
         require_once __DIR__ . '/entity/type_entity.php';
         if ($data === null) {

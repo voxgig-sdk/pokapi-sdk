@@ -26,9 +26,9 @@ import { PokapiSDK } from '@voxgig-sdk/pokapi'
 
 const client = new PokapiSDK()
 
-// Load ability data
-const ability = await client.ability.load({})
-console.log(ability.data)
+// Load ability data (returns a Ability)
+const ability = await client.Ability().load()
+console.log(ability)
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -88,8 +88,8 @@ from pokapi_sdk import PokapiSDK
 client = PokapiSDK()
 
 
-# Load a specific ability
-ability = client.ability.load({"id": "example_id"})
+# Load a specific ability (returns the record, raises on error)
+ability = client.Ability().load({"id": "example_id"})
 print(ability)
 ```
 
@@ -102,8 +102,8 @@ require_once 'pokapi_sdk.php';
 $client = new PokapiSDK();
 
 
-// Load a specific ability
-$ability = $client->ability()->load(["id" => "example_id"]);
+// Load a specific ability (returns the bare record; throws on error)
+$ability = $client->Ability()->load(["id" => "example_id"]);
 print_r($ability);
 ```
 
@@ -127,8 +127,8 @@ require_relative "Pokapi_sdk"
 client = PokapiSDK.new
 
 
-# Load a specific ability
-ability = client.ability.load({ "id" => "example_id" })
+# Load a specific ability (returns the bare record; raises on error)
+ability = client.Ability.load({ "id" => "example_id" })
 puts ability
 ```
 
@@ -141,7 +141,7 @@ local client = sdk.new()
 
 
 -- Load a specific ability
-local ability, err = client:ability():load({ id = "example_id" })
+local ability, err = client:Ability():load({ id = "example_id" })
 print(ability)
 ```
 
@@ -154,22 +154,27 @@ in-memory mock, so unit tests run offline.
 
 ```ts
 const client = PokapiSDK.test()
-const result = await client.ability.load({ id: 'test01' })
-// result.ok === true, result.data contains mock data
+const ability = await client.Ability().load({ id: 1 })
+// ability is a bare Ability populated with mock data
+console.log(ability)
 ```
 
 ### Python
 
 ```python
 client = PokapiSDK.test()
-result = client.ability.load({"id": "test01"})
+ability = client.Ability().load({"id": "test01"})
+print(ability)
 ```
 
 ### PHP
 
 ```php
-$client = PokapiSDK::test();
-$result = $client->ability()->load(["id" => "test01"]);
+// Seed fixture data so offline calls resolve without a live server.
+$client = PokapiSDK::test([
+    "entity" => ["ability" => ["test01" => ["id" => "test01"]]],
+]);
+$ability = $client->Ability()->load(["id" => "test01"]);
 ```
 
 ### Golang
@@ -184,15 +189,18 @@ result, err := client.Ability(nil).Load(
 ### Ruby
 
 ```ruby
-client = PokapiSDK.test
-result = client.ability.load({ "id" => "test01" })
+# Seed fixture data so offline calls resolve without a live server.
+client = PokapiSDK.test({
+  "entity" => { "ability" => { "test01" => { "id" => "test01" } } },
+})
+ability = client.Ability.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:ability():load({ id = "test01" })
+local result, err = client:Ability():load({ id = "test01" })
 ```
 
 ## How it works
@@ -240,6 +248,9 @@ const result = await client.direct({
   method: 'GET',
   params: { id: 'example' },
 })
+if (result instanceof Error) {
+  throw result
+}
 console.log(result.data)
 ```
 

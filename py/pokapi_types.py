@@ -4,100 +4,94 @@
 # params (op.<name>.points[].args.params[]). Field/param types come from the
 # canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 # @voxgig/apidef VALID_CANON). Do not edit by hand.
+#
+# These are TypedDicts, not dataclasses: the SDK ops return/accept plain dicts
+# at runtime, and a TypedDict IS a dict shape, so the types match the runtime.
+# Optional (req:false) keys are modelled as TypedDict key-optionality
+# (total=False), split into a required base + total=False subclass when a type
+# has both required and optional keys.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Optional, Any
+from typing import TypedDict, Any
 
 
-@dataclass
-class Ability:
-    effect_entry: Optional[list] = None
-    generation: Optional[dict] = None
-    id: Optional[int] = None
-    is_main_series: Optional[bool] = None
-    name: Optional[str] = None
-    pokemon: Optional[list] = None
+class Ability(TypedDict, total=False):
+    effect_entry: list
+    generation: dict
+    id: int
+    is_main_series: bool
+    name: str
+    pokemon: list
 
 
-@dataclass
-class AbilityLoadMatch:
+class AbilityLoadMatch(TypedDict):
     id: str
 
 
-@dataclass
-class PaginatedResourceList:
+class PaginatedResourceList(TypedDict):
     pass
 
 
-@dataclass
-class Pokemon:
-    ability: Optional[list] = None
-    base_experience: Optional[int] = None
-    form: Optional[list] = None
-    game_index: Optional[list] = None
-    height: Optional[int] = None
-    held_item: Optional[list] = None
-    id: Optional[int] = None
-    is_default: Optional[bool] = None
-    location_area: Optional[dict] = None
-    location_area_encounter: Optional[str] = None
-    mof: Optional[list] = None
-    name: Optional[str] = None
-    order: Optional[int] = None
-    species: Optional[dict] = None
-    sprite: Optional[dict] = None
-    stat: Optional[list] = None
-    type: Optional[list] = None
-    url: Optional[str] = None
-    version_detail: Optional[list] = None
-    weight: Optional[int] = None
+class Pokemon(TypedDict, total=False):
+    ability: list
+    base_experience: int
+    form: list
+    game_index: list
+    height: int
+    held_item: list
+    id: int
+    is_default: bool
+    location_area: dict
+    location_area_encounter: str
+    mof: list
+    name: str
+    order: int
+    species: dict
+    sprite: dict
+    stat: list
+    type: list
+    url: str
+    version_detail: list
+    weight: int
 
 
-@dataclass
-class PokemonLoadMatch:
+class PokemonLoadMatch(TypedDict):
     id: str
 
 
-@dataclass
-class PokemonListMatch:
+class PokemonListMatch(TypedDict):
     id: int
 
 
-@dataclass
-class PokemonSpecies:
-    base_happiness: Optional[int] = None
-    capture_rate: Optional[int] = None
-    forms_switchable: Optional[bool] = None
-    gender_rate: Optional[int] = None
-    has_gender_difference: Optional[bool] = None
-    hatch_counter: Optional[int] = None
-    id: Optional[int] = None
-    is_baby: Optional[bool] = None
-    is_legendary: Optional[bool] = None
-    is_mythical: Optional[bool] = None
-    name: Optional[str] = None
-    order: Optional[int] = None
+class PokemonSpecies(TypedDict, total=False):
+    base_happiness: int
+    capture_rate: int
+    forms_switchable: bool
+    gender_rate: int
+    has_gender_difference: bool
+    hatch_counter: int
+    id: int
+    is_baby: bool
+    is_legendary: bool
+    is_mythical: bool
+    name: str
+    order: int
 
 
-@dataclass
-class PokemonSpeciesLoadMatch:
+class PokemonSpeciesLoadMatch(TypedDict):
     id: str
 
 
-@dataclass
-class Type:
-    damage_relation: Optional[dict] = None
-    game_index: Optional[list] = None
-    generation: Optional[dict] = None
-    id: Optional[int] = None
-    move_damage_class: Optional[dict] = None
-    name: Optional[str] = None
-    pokemon: Optional[list] = None
+class Type(TypedDict, total=False):
+    damage_relation: dict
+    game_index: list
+    generation: dict
+    id: int
+    move_damage_class: dict
+    name: str
+    pokemon: list
 
 
-@dataclass
-class TypeLoadMatch:
+class TypeLoadMatch(TypedDict):
     id: str
-

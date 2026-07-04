@@ -208,65 +208,35 @@ class PokapiSDK
   end
 
 
-  # Idiomatic facade: client.ability.list / client.ability.load({ "id" => ... })
-  def ability
-    require_relative 'entity/ability_entity'
-    @ability ||= AbilityEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.ability instead.
+  # Canonical facade: client.Ability.list / client.Ability.load({ "id" => ... })
   def Ability(data = nil)
     require_relative 'entity/ability_entity'
     AbilityEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.paginated_resource_list.list / client.paginated_resource_list.load({ "id" => ... })
-  def paginated_resource_list
-    require_relative 'entity/paginated_resource_list_entity'
-    @paginated_resource_list ||= PaginatedResourceListEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.paginated_resource_list instead.
+  # Canonical facade: client.PaginatedResourceList.list / client.PaginatedResourceList.load({ "id" => ... })
   def PaginatedResourceList(data = nil)
     require_relative 'entity/paginated_resource_list_entity'
     PaginatedResourceListEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.pokemon.list / client.pokemon.load({ "id" => ... })
-  def pokemon
-    require_relative 'entity/pokemon_entity'
-    @pokemon ||= PokemonEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.pokemon instead.
+  # Canonical facade: client.Pokemon.list / client.Pokemon.load({ "id" => ... })
   def Pokemon(data = nil)
     require_relative 'entity/pokemon_entity'
     PokemonEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.pokemon_species.list / client.pokemon_species.load({ "id" => ... })
-  def pokemon_species
-    require_relative 'entity/pokemon_species_entity'
-    @pokemon_species ||= PokemonSpeciesEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.pokemon_species instead.
+  # Canonical facade: client.PokemonSpecies.list / client.PokemonSpecies.load({ "id" => ... })
   def PokemonSpecies(data = nil)
     require_relative 'entity/pokemon_species_entity'
     PokemonSpeciesEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.type.list / client.type.load({ "id" => ... })
-  def type
-    require_relative 'entity/type_entity'
-    @type ||= TypeEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.type instead.
+  # Canonical facade: client.Type.list / client.Type.load({ "id" => ... })
   def Type(data = nil)
     require_relative 'entity/type_entity'
     TypeEntity.new(self, data)

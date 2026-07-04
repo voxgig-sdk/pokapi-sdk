@@ -33,9 +33,10 @@ $client = new PokapiSDK();
 
 ```php
 try {
-    $result = $client->ability()->load(["id" => "example_id"]);
-    print_r($result);
-} catch (\Exception $err) {
+    // load() returns the bare Ability record (throws on error).
+    $ability = $client->Ability()->load(["id" => "example_id"]);
+    print_r($ability);
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -81,13 +82,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = PokapiSDK::test();
+$client = PokapiSDK::test([
+    "entity" => ["ability" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->ability()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$ability = $client->Ability()->load(["id" => "test01"]);
+print_r($ability);
 ```
 
 ### Use a custom fetch function
@@ -166,7 +171,7 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `get_utility` | `(): Utility` | Copy of the SDK utility object. |
 | `prepare` | `(array $fetchargs): array` | Build an HTTP request definition without sending. |
 | `direct` | `(array $fetchargs): array` | Build and send an HTTP request. |
-| `Ability` | `($data): AbilityEntity` | Create a Ability entity instance. |
+| `Ability` | `($data): AbilityEntity` | Create an Ability entity instance. |
 | `PaginatedResourceList` | `($data): PaginatedResourceListEntity` | Create a PaginatedResourceList entity instance. |
 | `Pokemon` | `($data): PokemonEntity` | Create a Pokemon entity instance. |
 | `PokemonSpecies` | `($data): PokemonSpeciesEntity` | Create a PokemonSpecies entity instance. |
@@ -307,7 +312,7 @@ API path: `/type/{idOrName}`
 
 ### Ability
 
-Create an instance: `const ability = client.ability`
+Create an instance: `$ability = $client->Ability();`
 
 #### Operations
 
@@ -328,19 +333,20 @@ Create an instance: `const ability = client.ability`
 
 #### Example: Load
 
-```ts
-const ability = await client.ability.load({ id: 'ability_id' })
+```php
+// load() returns the bare Ability record (throws on error).
+$ability = $client->Ability()->load(["id" => "ability_id"]);
 ```
 
 
 ### PaginatedResourceList
 
-Create an instance: `const paginated_resource_list = client.paginated_resource_list`
+Create an instance: `$paginated_resource_list = $client->PaginatedResourceList();`
 
 
 ### Pokemon
 
-Create an instance: `const pokemon = client.pokemon`
+Create an instance: `$pokemon = $client->Pokemon();`
 
 #### Operations
 
@@ -376,20 +382,22 @@ Create an instance: `const pokemon = client.pokemon`
 
 #### Example: Load
 
-```ts
-const pokemon = await client.pokemon.load({ id: 'pokemon_id' })
+```php
+// load() returns the bare Pokemon record (throws on error).
+$pokemon = $client->Pokemon()->load(["id" => "pokemon_id"]);
 ```
 
 #### Example: List
 
-```ts
-const pokemons = await client.pokemon.list()
+```php
+// list() returns an array of Pokemon records (throws on error).
+$pokemons = $client->Pokemon()->list();
 ```
 
 
 ### PokemonSpecies
 
-Create an instance: `const pokemon_species = client.pokemon_species`
+Create an instance: `$pokemon_species = $client->PokemonSpecies();`
 
 #### Operations
 
@@ -416,14 +424,15 @@ Create an instance: `const pokemon_species = client.pokemon_species`
 
 #### Example: Load
 
-```ts
-const pokemon_species = await client.pokemon_species.load({ id: 'pokemon_species_id' })
+```php
+// load() returns the bare PokemonSpecies record (throws on error).
+$pokemon_species = $client->PokemonSpecies()->load(["id" => "pokemon_species_id"]);
 ```
 
 
 ### Type
 
-Create an instance: `const type = client.type`
+Create an instance: `$type = $client->Type();`
 
 #### Operations
 
@@ -445,8 +454,9 @@ Create an instance: `const type = client.type`
 
 #### Example: Load
 
-```ts
-const type = await client.type.load({ id: 'type_id' })
+```php
+// load() returns the bare Type record (throws on error).
+$type = $client->Type()->load(["id" => "type_id"]);
 ```
 
 
@@ -521,7 +531,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$ability = $client->ability();
+$ability = $client->Ability();
 $ability->load(["id" => "example_id"]);
 
 // $ability->dataGet() now returns the loaded ability data

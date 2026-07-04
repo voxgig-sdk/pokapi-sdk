@@ -102,7 +102,7 @@ same parameters as `direct()`. Raises on error.
 ## AbilityEntity
 
 ```ruby
-ability = client.ability
+ability = client.Ability
 ```
 
 ### Fields
@@ -123,7 +123,7 @@ ability = client.ability
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.ability.load({ "id" => "ability_id" })
+result = client.Ability.load({ "id" => "ability_id" })
 ```
 
 ### Common Methods
@@ -159,7 +159,7 @@ Return the entity name.
 ## PaginatedResourceListEntity
 
 ```ruby
-paginated_resource_list = client.paginated_resource_list
+paginated_resource_list = client.PaginatedResourceList
 ```
 
 ### Common Methods
@@ -195,7 +195,7 @@ Return the entity name.
 ## PokemonEntity
 
 ```ruby
-pokemon = client.pokemon
+pokemon = client.Pokemon
 ```
 
 ### Fields
@@ -230,7 +230,7 @@ pokemon = client.pokemon
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.pokemon.list(nil)
+results = client.Pokemon.list(nil)
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -238,7 +238,7 @@ results = client.pokemon.list(nil)
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.pokemon.load({ "id" => "pokemon_id" })
+result = client.Pokemon.load({ "id" => "pokemon_id" })
 ```
 
 ### Common Methods
@@ -274,7 +274,7 @@ Return the entity name.
 ## PokemonSpeciesEntity
 
 ```ruby
-pokemon_species = client.pokemon_species
+pokemon_species = client.PokemonSpecies
 ```
 
 ### Fields
@@ -301,7 +301,7 @@ pokemon_species = client.pokemon_species
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.pokemon_species.load({ "id" => "pokemon_species_id" })
+result = client.PokemonSpecies.load({ "id" => "pokemon_species_id" })
 ```
 
 ### Common Methods
@@ -337,7 +337,7 @@ Return the entity name.
 ## TypeEntity
 
 ```ruby
-type = client.type
+type = client.Type
 ```
 
 ### Fields
@@ -359,7 +359,7 @@ type = client.type
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.type.load({ "id" => "type_id" })
+result = client.Type.load({ "id" => "type_id" })
 ```
 
 ### Common Methods

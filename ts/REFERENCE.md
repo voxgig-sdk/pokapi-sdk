@@ -157,7 +157,7 @@ Alias for `PokapiSDK.test()`.
 ## AbilityEntity
 
 ```ts
-const ability = client.ability
+const ability = client.Ability()
 ```
 
 ### Fields
@@ -178,7 +178,7 @@ const ability = client.ability
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.ability.load({ id: 'ability_id' })
+const result = await client.Ability().load({ id: 'ability_id' })
 ```
 
 ### Common Methods
@@ -212,7 +212,7 @@ Return a copy of the entity options.
 ## PaginatedResourceListEntity
 
 ```ts
-const paginated_resource_list = client.paginated_resource_list
+const paginated_resource_list = client.PaginatedResourceList()
 ```
 
 ### Common Methods
@@ -246,7 +246,7 @@ Return a copy of the entity options.
 ## PokemonEntity
 
 ```ts
-const pokemon = client.pokemon
+const pokemon = client.Pokemon()
 ```
 
 ### Fields
@@ -281,7 +281,7 @@ const pokemon = client.pokemon
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.pokemon.list()
+const results = await client.Pokemon().list()
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -289,7 +289,7 @@ const results = await client.pokemon.list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.pokemon.load({ id: 'pokemon_id' })
+const result = await client.Pokemon().load({ id: 'pokemon_id' })
 ```
 
 ### Common Methods
@@ -323,7 +323,7 @@ Return a copy of the entity options.
 ## PokemonSpeciesEntity
 
 ```ts
-const pokemon_species = client.pokemon_species
+const pokemon_species = client.PokemonSpecies()
 ```
 
 ### Fields
@@ -350,7 +350,7 @@ const pokemon_species = client.pokemon_species
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.pokemon_species.load({ id: 'pokemon_species_id' })
+const result = await client.PokemonSpecies().load({ id: 'pokemon_species_id' })
 ```
 
 ### Common Methods
@@ -384,7 +384,7 @@ Return a copy of the entity options.
 ## TypeEntity
 
 ```ts
-const type = client.type
+const type = client.Type()
 ```
 
 ### Fields
@@ -406,7 +406,7 @@ const type = client.type
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.type.load({ id: 'type_id' })
+const result = await client.Type().load({ id: 'type_id' })
 ```
 
 ### Common Methods

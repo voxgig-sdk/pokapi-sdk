@@ -34,9 +34,9 @@ local client = sdk.new()
 ### 3. Load an ability
 
 ```lua
-local result, err = client:ability():load({ id = "example_id" })
+local ability, err = client:Ability():load({ id = "example_id" })
 if err then error(err) end
-print(result)
+print(ability)
 ```
 
 
@@ -82,8 +82,8 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:ability():load({ id = "test01" })
--- result contains mock response data
+local result, err = client:Ability():load({ id = "test01" })
+-- result is the loaded data; err is set on failure
 ```
 
 ### Use a custom fetch function
@@ -161,7 +161,7 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `get_utility` | `() -> Utility` | Copy of the SDK utility object. |
 | `prepare` | `(fetchargs) -> table, err` | Build an HTTP request definition without sending. |
 | `direct` | `(fetchargs) -> table, err` | Build and send an HTTP request. |
-| `Ability` | `(data) -> AbilityEntity` | Create a Ability entity instance. |
+| `Ability` | `(data) -> AbilityEntity` | Create an Ability entity instance. |
 | `PaginatedResourceList` | `(data) -> PaginatedResourceListEntity` | Create a PaginatedResourceList entity instance. |
 | `Pokemon` | `(data) -> PokemonEntity` | Create a Pokemon entity instance. |
 | `PokemonSpecies` | `(data) -> PokemonSpeciesEntity` | Create a PokemonSpecies entity instance. |
@@ -187,17 +187,22 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `(any, err)`. The first value is a
-`table` with these keys:
+Entity operations return `(value, err)`. The `value` is the operation's
+data **directly** — there is no wrapper:
 
-| Key | Type | Description |
-| --- | --- | --- |
-| `ok` | `boolean` | `true` if the HTTP status is 2xx. |
-| `status` | `number` | HTTP status code. |
-| `headers` | `table` | Response headers. |
-| `data` | `any` | Parsed JSON response body. |
+| Operation | `value` |
+| --- | --- |
+| `load` / `create` / `update` / `remove` | the entity record (a `table`) |
+| `list` | an array (`table`) of entity records |
 
-On error, `ok` is `false` and `err` contains the error value.
+Check `err` first (it is non-`nil` on failure), then use `value`:
+
+    local ability, err = client:Ability():load({ id = "example_id" })
+    if err then error(err) end
+    -- ability is the loaded record
+
+Only `direct()` returns a response envelope — a `table` with `ok`,
+`status`, `headers`, and `data` keys.
 
 ### Entities
 
@@ -298,7 +303,7 @@ API path: `/type/{idOrName}`
 
 ### Ability
 
-Create an instance: `const ability = client.ability`
+Create an instance: `local ability = client:Ability(nil)`
 
 #### Operations
 
@@ -319,19 +324,19 @@ Create an instance: `const ability = client.ability`
 
 #### Example: Load
 
-```ts
-const ability = await client.ability.load({ id: 'ability_id' })
+```lua
+local ability, err = client:Ability():load({ id = "ability_id" })
 ```
 
 
 ### PaginatedResourceList
 
-Create an instance: `const paginated_resource_list = client.paginated_resource_list`
+Create an instance: `local paginated_resource_list = client:PaginatedResourceList(nil)`
 
 
 ### Pokemon
 
-Create an instance: `const pokemon = client.pokemon`
+Create an instance: `local pokemon = client:Pokemon(nil)`
 
 #### Operations
 
@@ -367,20 +372,20 @@ Create an instance: `const pokemon = client.pokemon`
 
 #### Example: Load
 
-```ts
-const pokemon = await client.pokemon.load({ id: 'pokemon_id' })
+```lua
+local pokemon, err = client:Pokemon():load({ id = "pokemon_id" })
 ```
 
 #### Example: List
 
-```ts
-const pokemons = await client.pokemon.list()
+```lua
+local pokemons, err = client:Pokemon():list()
 ```
 
 
 ### PokemonSpecies
 
-Create an instance: `const pokemon_species = client.pokemon_species`
+Create an instance: `local pokemon_species = client:PokemonSpecies(nil)`
 
 #### Operations
 
@@ -407,14 +412,14 @@ Create an instance: `const pokemon_species = client.pokemon_species`
 
 #### Example: Load
 
-```ts
-const pokemon_species = await client.pokemon_species.load({ id: 'pokemon_species_id' })
+```lua
+local pokemon_species, err = client:PokemonSpecies():load({ id = "pokemon_species_id" })
 ```
 
 
 ### Type
 
-Create an instance: `const type = client.type`
+Create an instance: `local type = client:Type(nil)`
 
 #### Operations
 
@@ -436,8 +441,8 @@ Create an instance: `const type = client.type`
 
 #### Example: Load
 
-```ts
-const type = await client.type.load({ id: 'type_id' })
+```lua
+local type, err = client:Type():load({ id = "type_id" })
 ```
 
 
@@ -512,7 +517,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local ability = client:ability()
+local ability = client:Ability()
 ability:load({ id = "example_id" })
 
 -- ability:data_get() now returns the loaded ability data

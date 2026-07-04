@@ -101,7 +101,7 @@ Prepare a fetch definition without sending the request. Returns the
 ## AbilityEntity
 
 ```php
-$ability = $client->ability();
+$ability = $client->Ability();
 ```
 
 ### Fields
@@ -122,7 +122,7 @@ $ability = $client->ability();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->ability()->load(["id" => "ability_id"]);
+$result = $client->Ability()->load(["id" => "ability_id"]);
 ```
 
 ### Common Methods
@@ -158,7 +158,7 @@ Return the entity name.
 ## PaginatedResourceListEntity
 
 ```php
-$paginated_resource_list = $client->paginated_resource_list();
+$paginated_resource_list = $client->PaginatedResourceList();
 ```
 
 ### Common Methods
@@ -194,7 +194,7 @@ Return the entity name.
 ## PokemonEntity
 
 ```php
-$pokemon = $client->pokemon();
+$pokemon = $client->Pokemon();
 ```
 
 ### Fields
@@ -229,7 +229,7 @@ $pokemon = $client->pokemon();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->pokemon()->list([]);
+$results = $client->Pokemon()->list([]);
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -237,7 +237,7 @@ $results = $client->pokemon()->list([]);
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->pokemon()->load(["id" => "pokemon_id"]);
+$result = $client->Pokemon()->load(["id" => "pokemon_id"]);
 ```
 
 ### Common Methods
@@ -273,7 +273,7 @@ Return the entity name.
 ## PokemonSpeciesEntity
 
 ```php
-$pokemon_species = $client->pokemon_species();
+$pokemon_species = $client->PokemonSpecies();
 ```
 
 ### Fields
@@ -300,7 +300,7 @@ $pokemon_species = $client->pokemon_species();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->pokemon_species()->load(["id" => "pokemon_species_id"]);
+$result = $client->PokemonSpecies()->load(["id" => "pokemon_species_id"]);
 ```
 
 ### Common Methods
@@ -336,7 +336,7 @@ Return the entity name.
 ## TypeEntity
 
 ```php
-$type = $client->type();
+$type = $client->Type();
 ```
 
 ### Fields
@@ -358,7 +358,7 @@ $type = $client->type();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->type()->load(["id" => "type_id"]);
+$result = $client->Type()->load(["id" => "type_id"]);
 ```
 
 ### Common Methods
