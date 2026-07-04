@@ -13,6 +13,9 @@ require_relative 'config'
 require_relative 'feature/base_feature'
 require_relative 'features'
 
+# Load typed models (Struct value objects).
+require_relative 'Pokapi_types'
+
 
 class PokapiSDK
   attr_accessor :mode, :features, :options
@@ -131,7 +134,7 @@ class PokapiSDK
     end
 
     _, err = utility.prepare_auth.call(ctx)
-    return nil, err if err
+    raise err if err
 
     utility.make_fetch_def.call(ctx)
   end
@@ -139,8 +142,14 @@ class PokapiSDK
   def direct(fetchargs = {})
     utility = @_utility
 
-    fetchdef, err = prepare(fetchargs)
-    return { "ok" => false, "err" => err }, nil if err
+    # direct() is the raw-HTTP escape hatch: it always returns a result hash
+    # ({ "ok" => ..., ... }) and never raises. prepare() raises on error, so
+    # trap that and surface it in the hash.
+    begin
+      fetchdef = prepare(fetchargs)
+    rescue PokapiError => err
+      return { "ok" => false, "err" => err }
+    end
 
     fetchargs ||= {}
     ctrl = PokapiHelpers.to_map(VoxgigStruct.getprop(fetchargs, "ctrl")) || {}
@@ -153,13 +162,13 @@ class PokapiSDK
     url = fetchdef["url"] || ""
     fetched, fetch_err = utility.fetcher.call(ctx, url, fetchdef)
 
-    return { "ok" => false, "err" => fetch_err }, nil if fetch_err
+    return { "ok" => false, "err" => fetch_err } if fetch_err
 
     if fetched.nil?
       return {
         "ok" => false,
         "err" => ctx.make_error("direct_no_response", "response: undefined"),
-      }, nil
+      }
     end
 
     if fetched.is_a?(Hash)
@@ -189,40 +198,75 @@ class PokapiSDK
         "status" => status,
         "headers" => headers,
         "data" => json_data,
-      }, nil
+      }
     end
 
     return {
       "ok" => false,
       "err" => ctx.make_error("direct_invalid", "invalid response type"),
-    }, nil
+    }
   end
 
 
+  # Idiomatic facade: client.ability.list / client.ability.load({ "id" => ... })
+  def ability
+    require_relative 'entity/ability_entity'
+    @ability ||= AbilityEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.ability instead.
   def Ability(data = nil)
     require_relative 'entity/ability_entity'
     AbilityEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.paginated_resource_list.list / client.paginated_resource_list.load({ "id" => ... })
+  def paginated_resource_list
+    require_relative 'entity/paginated_resource_list_entity'
+    @paginated_resource_list ||= PaginatedResourceListEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.paginated_resource_list instead.
   def PaginatedResourceList(data = nil)
     require_relative 'entity/paginated_resource_list_entity'
     PaginatedResourceListEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.pokemon.list / client.pokemon.load({ "id" => ... })
+  def pokemon
+    require_relative 'entity/pokemon_entity'
+    @pokemon ||= PokemonEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.pokemon instead.
   def Pokemon(data = nil)
     require_relative 'entity/pokemon_entity'
     PokemonEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.pokemon_species.list / client.pokemon_species.load({ "id" => ... })
+  def pokemon_species
+    require_relative 'entity/pokemon_species_entity'
+    @pokemon_species ||= PokemonSpeciesEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.pokemon_species instead.
   def PokemonSpecies(data = nil)
     require_relative 'entity/pokemon_species_entity'
     PokemonSpeciesEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.type.list / client.type.load({ "id" => ... })
+  def type
+    require_relative 'entity/type_entity'
+    @type ||= TypeEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.type instead.
   def Type(data = nil)
     require_relative 'entity/type_entity'
     TypeEntity.new(self, data)

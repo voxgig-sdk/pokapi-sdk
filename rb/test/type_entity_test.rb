@@ -44,8 +44,7 @@ class TypeEntityTest < Minitest::Test
     type_ref01_match_dt0 = {
       "id" => type_ref01_data["id"],
     }
-    type_ref01_data_dt0_loaded, err = type_ref01_ent.load(type_ref01_match_dt0, nil)
-    assert_nil err
+    type_ref01_data_dt0_loaded = type_ref01_ent.load(type_ref01_match_dt0, nil)
     type_ref01_data_dt0_load_result = Helpers.to_map(type_ref01_data_dt0_loaded)
     assert !type_ref01_data_dt0_load_result.nil?
     assert_equal type_ref01_data_dt0_load_result["id"], type_ref01_data["id"]
@@ -86,7 +85,6 @@ def type_basic_setup(extra)
     "POKAPI_TEST_TYPE_ENTID" => idmap,
     "POKAPI_TEST_LIVE" => "FALSE",
     "POKAPI_TEST_EXPLAIN" => "FALSE",
-    "POKAPI_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -98,7 +96,6 @@ def type_basic_setup(extra)
   if env["POKAPI_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["POKAPI_APIKEY"],
       },
       extra || {},
     ])

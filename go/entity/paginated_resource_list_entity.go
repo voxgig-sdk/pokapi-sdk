@@ -85,6 +85,27 @@ func (e *PaginatedResourceListEntity) Match(args ...any) any {
 	return out
 }
 
+// DataTyped is the statically-typed accessor for this entity's data. With no
+// argument it returns the current data as an PaginatedResourceList; with an argument it
+// sets the data and returns the stored value. It delegates to the untyped Data
+// (identical runtime) and converts at the typed boundary.
+func (e *PaginatedResourceListEntity) DataTyped(data ...PaginatedResourceList) PaginatedResourceList {
+	if len(data) > 0 {
+		return typedFrom[PaginatedResourceList](e.Data(asMap(data[0])))
+	}
+	return typedFrom[PaginatedResourceList](e.Data())
+}
+
+// MatchTyped mirrors DataTyped for the entity's match filter. The match is a
+// partial of the entity, so it round-trips through PaginatedResourceList (all fields
+// optional at the wire level).
+func (e *PaginatedResourceListEntity) MatchTyped(match ...PaginatedResourceList) PaginatedResourceList {
+	if len(match) > 0 {
+		return typedFrom[PaginatedResourceList](e.Match(asMap(match[0])))
+	}
+	return typedFrom[PaginatedResourceList](e.Match())
+}
+
 func (e *PaginatedResourceListEntity) Load(_ map[string]any, _ map[string]any) (any, error) {
 	return core.UnsupportedOp("load", e.name)
 }

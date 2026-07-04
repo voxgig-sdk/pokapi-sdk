@@ -44,8 +44,7 @@ class PokemonSpeciesEntityTest < Minitest::Test
     pokemon_species_ref01_match_dt0 = {
       "id" => pokemon_species_ref01_data["id"],
     }
-    pokemon_species_ref01_data_dt0_loaded, err = pokemon_species_ref01_ent.load(pokemon_species_ref01_match_dt0, nil)
-    assert_nil err
+    pokemon_species_ref01_data_dt0_loaded = pokemon_species_ref01_ent.load(pokemon_species_ref01_match_dt0, nil)
     pokemon_species_ref01_data_dt0_load_result = Helpers.to_map(pokemon_species_ref01_data_dt0_loaded)
     assert !pokemon_species_ref01_data_dt0_load_result.nil?
     assert_equal pokemon_species_ref01_data_dt0_load_result["id"], pokemon_species_ref01_data["id"]
@@ -86,7 +85,6 @@ def pokemon_species_basic_setup(extra)
     "POKAPI_TEST_POKEMON_SPECIES_ENTID" => idmap,
     "POKAPI_TEST_LIVE" => "FALSE",
     "POKAPI_TEST_EXPLAIN" => "FALSE",
-    "POKAPI_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -98,7 +96,6 @@ def pokemon_species_basic_setup(extra)
   if env["POKAPI_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["POKAPI_APIKEY"],
       },
       extra || {},
     ])

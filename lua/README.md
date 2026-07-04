@@ -9,12 +9,9 @@ The Lua SDK for the Pokapi API — an entity-oriented client using Lua conventio
 
 
 ## Install
-```bash
-luarocks install voxgig-sdk-pokapi
-```
-
-If the module is not yet published, add the source directory to
-your `LUA_PATH`:
+This package is not yet published to LuaRocks. Install it from the
+GitHub release tag (`lua/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/pokapi-sdk/releases)),
+or add the source directory to your `LUA_PATH`:
 
 ```bash
 export LUA_PATH="path/to/lua/?.lua;path/to/lua/?/init.lua;;"
@@ -31,15 +28,13 @@ loading a specific record.
 ```lua
 local sdk = require("pokapi_sdk")
 
-local client = sdk.new({
-  apikey = os.getenv("POKAPI_APIKEY"),
-})
+local client = sdk.new()
 ```
 
-### 3. Load a ability
+### 3. Load an ability
 
 ```lua
-local result, err = client:Ability():load({ id = "example_id" })
+local result, err = client:ability():load({ id = "example_id" })
 if err then error(err) end
 print(result)
 ```
@@ -87,7 +82,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Pokapi():load({ id = "test01" })
+local result, err = client:ability():load({ id = "test01" })
 -- result contains mock response data
 ```
 
@@ -121,7 +116,6 @@ Create a `.env.local` file at the project root:
 
 ```
 POKAPI_TEST_LIVE=TRUE
-POKAPI_APIKEY=<your-key>
 ```
 
 Then run:
@@ -144,7 +138,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -305,7 +298,7 @@ API path: `/type/{idOrName}`
 
 ### Ability
 
-Create an instance: `const ability = client.Ability()`
+Create an instance: `const ability = client.ability`
 
 #### Operations
 
@@ -327,18 +320,18 @@ Create an instance: `const ability = client.Ability()`
 #### Example: Load
 
 ```ts
-const ability = await client.Ability().load({ id: 'ability_id' })
+const ability = await client.ability.load({ id: 'ability_id' })
 ```
 
 
 ### PaginatedResourceList
 
-Create an instance: `const paginated_resource_list = client.PaginatedResourceList()`
+Create an instance: `const paginated_resource_list = client.paginated_resource_list`
 
 
 ### Pokemon
 
-Create an instance: `const pokemon = client.Pokemon()`
+Create an instance: `const pokemon = client.pokemon`
 
 #### Operations
 
@@ -375,19 +368,19 @@ Create an instance: `const pokemon = client.Pokemon()`
 #### Example: Load
 
 ```ts
-const pokemon = await client.Pokemon().load({ id: 'pokemon_id' })
+const pokemon = await client.pokemon.load({ id: 'pokemon_id' })
 ```
 
 #### Example: List
 
 ```ts
-const pokemons = await client.Pokemon().list()
+const pokemons = await client.pokemon.list()
 ```
 
 
 ### PokemonSpecies
 
-Create an instance: `const pokemon_species = client.PokemonSpecies()`
+Create an instance: `const pokemon_species = client.pokemon_species`
 
 #### Operations
 
@@ -415,13 +408,13 @@ Create an instance: `const pokemon_species = client.PokemonSpecies()`
 #### Example: Load
 
 ```ts
-const pokemon_species = await client.PokemonSpecies().load({ id: 'pokemon_species_id' })
+const pokemon_species = await client.pokemon_species.load({ id: 'pokemon_species_id' })
 ```
 
 
 ### Type
 
-Create an instance: `const type = client.Type()`
+Create an instance: `const type = client.type`
 
 #### Operations
 
@@ -444,7 +437,7 @@ Create an instance: `const type = client.Type()`
 #### Example: Load
 
 ```ts
-const type = await client.Type().load({ id: 'type_id' })
+const type = await client.type.load({ id: 'type_id' })
 ```
 
 
@@ -519,11 +512,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local moon = client:Moon(nil)
-moon:load({ planet_id = "earth", id = "luna" }, nil)
+local ability = client:ability()
+ability:load({ id = "example_id" })
 
--- moon:data_get() now returns the loaded moon data
--- moon:match_get() returns the last match criteria
+-- ability:data_get() now returns the loaded ability data
+-- ability:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

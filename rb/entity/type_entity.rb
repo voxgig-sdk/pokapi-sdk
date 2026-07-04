@@ -45,6 +45,7 @@ class TypeEntity
     end
   end
 
+  # @return [Type, Hash] the current Type data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,12 +58,18 @@ class TypeEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Type fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
   end
 
   
+  # Load a single Type.
+  #
+  # @param reqmatch [TypeLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Type, Hash] the loaded Type; raises PokapiError on failure
   def load(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

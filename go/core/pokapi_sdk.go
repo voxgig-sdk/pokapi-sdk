@@ -245,26 +245,41 @@ func (sdk *PokapiSDK) Direct(fetchargs map[string]any) (map[string]any, error) {
 }
 
 
+// Ability returns a Ability entity bound to this client.
+// Idiomatic usage: client.Ability(nil).List(nil, nil) or
+// client.Ability(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *PokapiSDK) Ability(data map[string]any) PokapiEntity {
 	return NewAbilityEntityFunc(sdk, data)
 }
 
 
+// PaginatedResourceList returns a PaginatedResourceList entity bound to this client.
+// Idiomatic usage: client.PaginatedResourceList(nil).List(nil, nil) or
+// client.PaginatedResourceList(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *PokapiSDK) PaginatedResourceList(data map[string]any) PokapiEntity {
 	return NewPaginatedResourceListEntityFunc(sdk, data)
 }
 
 
+// Pokemon returns a Pokemon entity bound to this client.
+// Idiomatic usage: client.Pokemon(nil).List(nil, nil) or
+// client.Pokemon(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *PokapiSDK) Pokemon(data map[string]any) PokapiEntity {
 	return NewPokemonEntityFunc(sdk, data)
 }
 
 
+// PokemonSpecies returns a PokemonSpecies entity bound to this client.
+// Idiomatic usage: client.PokemonSpecies(nil).List(nil, nil) or
+// client.PokemonSpecies(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *PokapiSDK) PokemonSpecies(data map[string]any) PokapiEntity {
 	return NewPokemonSpeciesEntityFunc(sdk, data)
 }
 
 
+// Type returns a Type entity bound to this client.
+// Idiomatic usage: client.Type(nil).List(nil, nil) or
+// client.Type(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *PokapiSDK) Type(data map[string]any) PokapiEntity {
 	return NewTypeEntityFunc(sdk, data)
 }

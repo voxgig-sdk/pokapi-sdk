@@ -244,30 +244,95 @@ end
 
 
 
+-- Idiomatic facade: client:ability():list() / client:ability():load({ id = ... })
+function PokapiSDK:ability(data)
+  local EntityMod = require("entity.ability_entity")
+  if data == nil then
+    if self._ability == nil then
+      self._ability = EntityMod.new(self, nil)
+    end
+    return self._ability
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:ability() instead.
 function PokapiSDK:Ability(data)
   local EntityMod = require("entity.ability_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:paginated_resource_list():list() / client:paginated_resource_list():load({ id = ... })
+function PokapiSDK:paginated_resource_list(data)
+  local EntityMod = require("entity.paginated_resource_list_entity")
+  if data == nil then
+    if self._paginated_resource_list == nil then
+      self._paginated_resource_list = EntityMod.new(self, nil)
+    end
+    return self._paginated_resource_list
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:paginated_resource_list() instead.
 function PokapiSDK:PaginatedResourceList(data)
   local EntityMod = require("entity.paginated_resource_list_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:pokemon():list() / client:pokemon():load({ id = ... })
+function PokapiSDK:pokemon(data)
+  local EntityMod = require("entity.pokemon_entity")
+  if data == nil then
+    if self._pokemon == nil then
+      self._pokemon = EntityMod.new(self, nil)
+    end
+    return self._pokemon
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:pokemon() instead.
 function PokapiSDK:Pokemon(data)
   local EntityMod = require("entity.pokemon_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:pokemon_species():list() / client:pokemon_species():load({ id = ... })
+function PokapiSDK:pokemon_species(data)
+  local EntityMod = require("entity.pokemon_species_entity")
+  if data == nil then
+    if self._pokemon_species == nil then
+      self._pokemon_species = EntityMod.new(self, nil)
+    end
+    return self._pokemon_species
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:pokemon_species() instead.
 function PokapiSDK:PokemonSpecies(data)
   local EntityMod = require("entity.pokemon_species_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:type():list() / client:type():load({ id = ... })
+function PokapiSDK:type(data)
+  local EntityMod = require("entity.type_entity")
+  if data == nil then
+    if self._type == nil then
+      self._type = EntityMod.new(self, nil)
+    end
+    return self._type
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:type() instead.
 function PokapiSDK:Type(data)
   local EntityMod = require("entity.type_entity")
   return EntityMod.new(self, data)

@@ -9,9 +9,10 @@ The PHP SDK for the Pokapi API — an entity-oriented client using PHP conventio
 
 
 ## Install
-```bash
-composer require voxgig-sdk/pokapi
-```
+This package is not yet published to Packagist. Install it from the
+GitHub release tag (`php/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/pokapi-sdk/releases](https://github.com/voxgig-sdk/pokapi-sdk/releases)
 
 
 ## Tutorial: your first API call
@@ -25,17 +26,18 @@ loading a specific record.
 <?php
 require_once 'pokapi_sdk.php';
 
-$client = new PokapiSDK([
-    "apikey" => getenv("POKAPI_APIKEY"),
-]);
+$client = new PokapiSDK();
 ```
 
-### 3. Load a ability
+### 3. Load an ability
 
 ```php
-[$result, $err] = $client->Ability()->load(["id" => "example_id"]);
-if ($err) { throw new \Exception($err); }
-print_r($result);
+try {
+    $result = $client->ability()->load(["id" => "example_id"]);
+    print_r($result);
+} catch (\Exception $err) {
+    echo "Error: " . $err->getMessage();
+}
 ```
 
 
@@ -46,28 +48,31 @@ print_r($result);
 For endpoints not covered by entity methods:
 
 ```php
-[$result, $err] = $client->direct([
+// direct() is the raw-HTTP escape hatch: it returns a result array
+// (it does not throw). Branch on $result["ok"].
+$result = $client->direct([
     "path" => "/api/resource/{id}",
     "method" => "GET",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
+} else {
+    echo "Error: " . $result["err"]->getMessage();
 }
 ```
 
 ### Prepare a request without sending it
 
 ```php
-[$fetchdef, $err] = $client->prepare([
+// prepare() throws on error and returns the fetch definition.
+$fetchdef = $client->prepare([
     "path" => "/api/resource/{id}",
     "method" => "DELETE",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 echo $fetchdef["url"];
 echo $fetchdef["method"];
@@ -81,7 +86,7 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = PokapiSDK::test();
 
-[$result, $err] = $client->Pokapi()->load(["id" => "test01"]);
+$result = $client->ability()->load(["id" => "test01"]);
 // $result contains mock response data
 ```
 
@@ -116,7 +121,6 @@ Create a `.env.local` file at the project root:
 
 ```
 POKAPI_TEST_LIVE=TRUE
-POKAPI_APIKEY=<your-key>
 ```
 
 Then run:
@@ -139,7 +143,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -189,8 +192,12 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `[$result, $err]`. The first value is an
-`array` with these keys:
+Entity operations return the bare result data (an `array` for single-entity
+ops, a `list` for `list`) and throw on error. Wrap calls in
+`try`/`catch` to handle failures.
+
+The `direct()` escape hatch never throws — it returns a result `array`
+you branch on via `$result["ok"]`:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -300,7 +307,7 @@ API path: `/type/{idOrName}`
 
 ### Ability
 
-Create an instance: `const ability = client.Ability()`
+Create an instance: `const ability = client.ability`
 
 #### Operations
 
@@ -322,18 +329,18 @@ Create an instance: `const ability = client.Ability()`
 #### Example: Load
 
 ```ts
-const ability = await client.Ability().load({ id: 'ability_id' })
+const ability = await client.ability.load({ id: 'ability_id' })
 ```
 
 
 ### PaginatedResourceList
 
-Create an instance: `const paginated_resource_list = client.PaginatedResourceList()`
+Create an instance: `const paginated_resource_list = client.paginated_resource_list`
 
 
 ### Pokemon
 
-Create an instance: `const pokemon = client.Pokemon()`
+Create an instance: `const pokemon = client.pokemon`
 
 #### Operations
 
@@ -370,19 +377,19 @@ Create an instance: `const pokemon = client.Pokemon()`
 #### Example: Load
 
 ```ts
-const pokemon = await client.Pokemon().load({ id: 'pokemon_id' })
+const pokemon = await client.pokemon.load({ id: 'pokemon_id' })
 ```
 
 #### Example: List
 
 ```ts
-const pokemons = await client.Pokemon().list()
+const pokemons = await client.pokemon.list()
 ```
 
 
 ### PokemonSpecies
 
-Create an instance: `const pokemon_species = client.PokemonSpecies()`
+Create an instance: `const pokemon_species = client.pokemon_species`
 
 #### Operations
 
@@ -410,13 +417,13 @@ Create an instance: `const pokemon_species = client.PokemonSpecies()`
 #### Example: Load
 
 ```ts
-const pokemon_species = await client.PokemonSpecies().load({ id: 'pokemon_species_id' })
+const pokemon_species = await client.pokemon_species.load({ id: 'pokemon_species_id' })
 ```
 
 
 ### Type
 
-Create an instance: `const type = client.Type()`
+Create an instance: `const type = client.type`
 
 #### Operations
 
@@ -439,7 +446,7 @@ Create an instance: `const type = client.Type()`
 #### Example: Load
 
 ```ts
-const type = await client.Type().load({ id: 'type_id' })
+const type = await client.type.load({ id: 'type_id' })
 ```
 
 
@@ -514,11 +521,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$moon = $client->Moon();
-[$result, $err] = $moon->load(["planet_id" => "earth", "id" => "luna"]);
+$ability = $client->ability();
+$ability->load(["id" => "example_id"]);
 
-// $moon->dataGet() now returns the loaded moon data
-// $moon->matchGet() returns the last match criteria
+// $ability->dataGet() now returns the loaded ability data
+// $ability->matchGet() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

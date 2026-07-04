@@ -51,8 +51,7 @@ class TypeEntityTest extends TestCase
         $type_ref01_match_dt0 = [
             "id" => $type_ref01_data["id"],
         ];
-        [$type_ref01_data_dt0_loaded, $err] = $type_ref01_ent->load($type_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $type_ref01_data_dt0_loaded = $type_ref01_ent->load($type_ref01_match_dt0, null);
         $type_ref01_data_dt0_load_result = Helpers::to_map($type_ref01_data_dt0_loaded);
         $this->assertNotNull($type_ref01_data_dt0_load_result);
         $this->assertEquals($type_ref01_data_dt0_load_result["id"], $type_ref01_data["id"]);
@@ -89,7 +88,6 @@ function type_basic_setup($extra)
         "POKAPI_TEST_TYPE_ENTID" => $idmap,
         "POKAPI_TEST_LIVE" => "FALSE",
         "POKAPI_TEST_EXPLAIN" => "FALSE",
-        "POKAPI_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -101,7 +99,6 @@ function type_basic_setup($extra)
     if ($env["POKAPI_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["POKAPI_APIKEY"],
             ],
             $extra ?? [],
         ]);

@@ -19,7 +19,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `table` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -100,7 +99,7 @@ same parameters as `direct()`.
 ## AbilityEntity
 
 ```lua
-local ability = client:Ability(nil)
+local ability = client:ability(nil)
 ```
 
 ### Fields
@@ -121,7 +120,7 @@ local ability = client:Ability(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Ability():load({ id = "ability_id" })
+local result, err = client:ability():load({ id = "ability_id" })
 ```
 
 ### Common Methods
@@ -157,7 +156,7 @@ Return the entity name.
 ## PaginatedResourceListEntity
 
 ```lua
-local paginated_resource_list = client:PaginatedResourceList(nil)
+local paginated_resource_list = client:paginated_resource_list(nil)
 ```
 
 ### Common Methods
@@ -193,7 +192,7 @@ Return the entity name.
 ## PokemonEntity
 
 ```lua
-local pokemon = client:Pokemon(nil)
+local pokemon = client:pokemon(nil)
 ```
 
 ### Fields
@@ -228,7 +227,7 @@ local pokemon = client:Pokemon(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Pokemon():list()
+local results, err = client:pokemon():list()
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -236,7 +235,7 @@ local results, err = client:Pokemon():list()
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Pokemon():load({ id = "pokemon_id" })
+local result, err = client:pokemon():load({ id = "pokemon_id" })
 ```
 
 ### Common Methods
@@ -272,7 +271,7 @@ Return the entity name.
 ## PokemonSpeciesEntity
 
 ```lua
-local pokemon_species = client:PokemonSpecies(nil)
+local pokemon_species = client:pokemon_species(nil)
 ```
 
 ### Fields
@@ -299,7 +298,7 @@ local pokemon_species = client:PokemonSpecies(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:PokemonSpecies():load({ id = "pokemon_species_id" })
+local result, err = client:pokemon_species():load({ id = "pokemon_species_id" })
 ```
 
 ### Common Methods
@@ -335,7 +334,7 @@ Return the entity name.
 ## TypeEntity
 
 ```lua
-local type = client:Type(nil)
+local type = client:type(nil)
 ```
 
 ### Fields
@@ -357,7 +356,7 @@ local type = client:Type(nil)
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Type():load({ id = "type_id" })
+local result, err = client:type():load({ id = "type_id" })
 ```
 
 ### Common Methods

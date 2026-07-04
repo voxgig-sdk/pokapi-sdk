@@ -9,9 +9,12 @@ The TypeScript SDK for the Pokapi API — a type-safe, entity-oriented client wi
 
 
 ## Install
-```bash
-npm install @voxgig-sdk/pokapi
-```
+This package is not yet published to npm. Install it from the GitHub
+release tag (`ts/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/pokapi-sdk/releases](https://github.com/voxgig-sdk/pokapi-sdk/releases)
+
+
 ## Tutorial: your first API call
 
 This tutorial walks through creating a client, listing entities, and
@@ -20,17 +23,15 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { PokapiSDK } from 'pokapi'
+import { PokapiSDK } from '@voxgig-sdk/pokapi'
 
-const client = new PokapiSDK({
-  apikey: process.env.POKAPI_APIKEY,
-})
+const client = new PokapiSDK()
 ```
 
-### 3. Load a ability
+### 3. Load an ability
 
 ```ts
-const result = await client.Ability().load({ id: 'example_id' })
+const result = await client.ability.load({ id: 'example_id' })
 
 if (result.ok) {
   console.log(result.data)
@@ -79,7 +80,7 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = PokapiSDK.test()
 
-const result = await client.Planet().load({ id: 'test01' })
+const result = await client.ability.load({ id: 'test01' })
 // result.ok === true
 // result.data contains mock response data
 ```
@@ -87,7 +88,7 @@ const result = await client.Planet().load({ id: 'test01' })
 You can also use the instance method:
 
 ```ts
-const client = new PokapiSDK({ apikey: '...' })
+const client = new PokapiSDK()
 const testClient = client.tester()
 ```
 
@@ -96,7 +97,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Planet()
+const entity = client.ability
 
 // First call sets internal match
 await entity.load({ id: 'example' })
@@ -123,7 +124,6 @@ const logger = {
 }
 
 const client = new PokapiSDK({
-  apikey: '...',
   extend: [logger],
 })
 ```
@@ -134,7 +134,6 @@ Create a `.env.local` file at the project root:
 
 ```
 POKAPI_TEST_LIVE=TRUE
-POKAPI_APIKEY=<your-key>
 ```
 
 Then run:
@@ -152,7 +151,6 @@ cd ts && npm test
 
 ```ts
 new PokapiSDK(options?: {
-  apikey?: string
   base?: string
   prefix?: string
   suffix?: string
@@ -163,7 +161,6 @@ new PokapiSDK(options?: {
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -350,7 +347,7 @@ API path: `/type/{idOrName}`
 
 ### Ability
 
-Create an instance: `const ability = client.Ability()`
+Create an instance: `const ability = client.ability`
 
 #### Operations
 
@@ -372,18 +369,18 @@ Create an instance: `const ability = client.Ability()`
 #### Example: Load
 
 ```ts
-const ability = await client.Ability().load({ id: 'ability_id' })
+const ability = await client.ability.load({ id: 'ability_id' })
 ```
 
 
 ### PaginatedResourceList
 
-Create an instance: `const paginated_resource_list = client.PaginatedResourceList()`
+Create an instance: `const paginated_resource_list = client.paginated_resource_list`
 
 
 ### Pokemon
 
-Create an instance: `const pokemon = client.Pokemon()`
+Create an instance: `const pokemon = client.pokemon`
 
 #### Operations
 
@@ -420,19 +417,19 @@ Create an instance: `const pokemon = client.Pokemon()`
 #### Example: Load
 
 ```ts
-const pokemon = await client.Pokemon().load({ id: 'pokemon_id' })
+const pokemon = await client.pokemon.load({ id: 'pokemon_id' })
 ```
 
 #### Example: List
 
 ```ts
-const pokemons = await client.Pokemon().list()
+const pokemons = await client.pokemon.list()
 ```
 
 
 ### PokemonSpecies
 
-Create an instance: `const pokemon_species = client.PokemonSpecies()`
+Create an instance: `const pokemon_species = client.pokemon_species`
 
 #### Operations
 
@@ -460,13 +457,13 @@ Create an instance: `const pokemon_species = client.PokemonSpecies()`
 #### Example: Load
 
 ```ts
-const pokemon_species = await client.PokemonSpecies().load({ id: 'pokemon_species_id' })
+const pokemon_species = await client.pokemon_species.load({ id: 'pokemon_species_id' })
 ```
 
 
 ### Type
 
-Create an instance: `const type = client.Type()`
+Create an instance: `const type = client.type`
 
 #### Operations
 
@@ -489,7 +486,7 @@ Create an instance: `const type = client.Type()`
 #### Example: Load
 
 ```ts
-const type = await client.Type().load({ id: 'type_id' })
+const type = await client.type.load({ id: 'type_id' })
 ```
 
 
@@ -550,7 +547,7 @@ pokapi/
 Import the SDK from the package root:
 
 ```ts
-import { PokapiSDK } from 'pokapi'
+import { PokapiSDK } from '@voxgig-sdk/pokapi'
 ```
 
 ### Entity state
@@ -560,11 +557,11 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const moon = client.Moon()
-await moon.load({ planet_id: 'earth', id: 'luna' })
+const ability = client.ability
+await ability.load({ id: "example_id" })
 
-// moon.data() now returns the loaded moon data
-// moon.match() returns { planet_id: 'earth', id: 'luna' }
+// ability.data() now returns the loaded ability data
+// ability.match() returns { id: "example_id" }
 ```
 
 Call `make()` to create a fresh instance with the same configuration

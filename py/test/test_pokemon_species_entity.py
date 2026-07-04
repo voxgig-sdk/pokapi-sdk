@@ -51,8 +51,7 @@ class TestPokemonSpeciesEntity:
         pokemon_species_ref01_match_dt0 = {
             "id": pokemon_species_ref01_data["id"],
         }
-        pokemon_species_ref01_data_dt0_loaded, err = pokemon_species_ref01_ent.load(pokemon_species_ref01_match_dt0, None)
-        assert err is None
+        pokemon_species_ref01_data_dt0_loaded = pokemon_species_ref01_ent.load(pokemon_species_ref01_match_dt0, None)
         pokemon_species_ref01_data_dt0_load_result = helpers.to_map(pokemon_species_ref01_data_dt0_loaded)
         assert pokemon_species_ref01_data_dt0_load_result is not None
         assert pokemon_species_ref01_data_dt0_load_result["id"] == pokemon_species_ref01_data["id"]
@@ -95,7 +94,6 @@ def _pokemon_species_basic_setup(extra):
         "POKAPI_TEST_POKEMON_SPECIES_ENTID": idmap,
         "POKAPI_TEST_LIVE": "FALSE",
         "POKAPI_TEST_EXPLAIN": "FALSE",
-        "POKAPI_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -106,7 +104,6 @@ def _pokemon_species_basic_setup(extra):
     if env.get("POKAPI_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("POKAPI_APIKEY"),
             },
             extra or {},
         ])

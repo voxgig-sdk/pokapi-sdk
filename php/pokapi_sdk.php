@@ -103,7 +103,7 @@ class PokapiSDK
         return $this->_rootctx;
     }
 
-    public function prepare(array $fetchargs = []): array
+    public function prepare(array $fetchargs = []): mixed
     {
         $utility = $this->_utility;
         $fetchargs = $fetchargs ?? [];
@@ -149,19 +149,27 @@ class PokapiSDK
 
         [$_, $err] = ($utility->prepare_auth)($ctx);
         if ($err) {
-            return [null, $err];
+            return ($utility->make_error)($ctx, $err);
         }
 
-        return ($utility->make_fetch_def)($ctx);
+        [$fetchdef, $fd_err] = ($utility->make_fetch_def)($ctx);
+        if ($fd_err) {
+            return ($utility->make_error)($ctx, $fd_err);
+        }
+        return $fetchdef;
     }
 
-    public function direct(array $fetchargs = []): array
+    public function direct(array $fetchargs = []): mixed
     {
         $utility = $this->_utility;
 
-        [$fetchdef, $err] = $this->prepare($fetchargs);
-        if ($err) {
-            return [["ok" => false, "err" => $err], null];
+        // direct() is the raw-HTTP escape hatch: it never throws, it returns
+        // an {ok, err, ...} dict. prepare() now raises on error, so catch it
+        // and surface the failure through the dict instead.
+        try {
+            $fetchdef = $this->prepare($fetchargs);
+        } catch (\Throwable $err) {
+            return ["ok" => false, "err" => $err];
         }
 
         $fetchargs = $fetchargs ?? [];
@@ -176,14 +184,14 @@ class PokapiSDK
         [$fetched, $fetch_err] = ($utility->fetcher)($ctx, $url, $fetchdef);
 
         if ($fetch_err) {
-            return [["ok" => false, "err" => $fetch_err], null];
+            return ["ok" => false, "err" => $fetch_err];
         }
 
         if ($fetched === null) {
-            return [[
+            return [
                 "ok" => false,
                 "err" => $ctx->make_error("direct_no_response", "response: undefined"),
-            ], null];
+            ];
         }
 
         if (is_array($fetched)) {
@@ -208,52 +216,107 @@ class PokapiSDK
                 }
             }
 
-            return [[
+            return [
                 "ok" => $status >= 200 && $status < 300,
                 "status" => $status,
                 "headers" => Struct::getprop($fetched, "headers"),
                 "data" => $json_data,
-            ], null];
+            ];
         }
 
-        return [[
+        return [
             "ok" => false,
             "err" => $ctx->make_error("direct_invalid", "invalid response type"),
-        ], null];
+        ];
     }
 
 
-    public function Ability($data = null)
+    private $_ability = null;
+
+    // Idiomatic facade: $client->ability()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Ability() (PHP method
+    // names are case-insensitive).
+    public function ability($data = null)
     {
         require_once __DIR__ . '/entity/ability_entity.php';
+        if ($data === null) {
+            if ($this->_ability === null) {
+                $this->_ability = new AbilityEntity($this, null);
+            }
+            return $this->_ability;
+        }
         return new AbilityEntity($this, $data);
     }
 
 
-    public function PaginatedResourceList($data = null)
+    private $_paginated_resource_list = null;
+
+    // Idiomatic facade: $client->paginated_resource_list()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias PaginatedResourceList() (PHP method
+    // names are case-insensitive).
+    public function paginated_resource_list($data = null)
     {
         require_once __DIR__ . '/entity/paginated_resource_list_entity.php';
+        if ($data === null) {
+            if ($this->_paginated_resource_list === null) {
+                $this->_paginated_resource_list = new PaginatedResourceListEntity($this, null);
+            }
+            return $this->_paginated_resource_list;
+        }
         return new PaginatedResourceListEntity($this, $data);
     }
 
 
-    public function Pokemon($data = null)
+    private $_pokemon = null;
+
+    // Idiomatic facade: $client->pokemon()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Pokemon() (PHP method
+    // names are case-insensitive).
+    public function pokemon($data = null)
     {
         require_once __DIR__ . '/entity/pokemon_entity.php';
+        if ($data === null) {
+            if ($this->_pokemon === null) {
+                $this->_pokemon = new PokemonEntity($this, null);
+            }
+            return $this->_pokemon;
+        }
         return new PokemonEntity($this, $data);
     }
 
 
-    public function PokemonSpecies($data = null)
+    private $_pokemon_species = null;
+
+    // Idiomatic facade: $client->pokemon_species()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias PokemonSpecies() (PHP method
+    // names are case-insensitive).
+    public function pokemon_species($data = null)
     {
         require_once __DIR__ . '/entity/pokemon_species_entity.php';
+        if ($data === null) {
+            if ($this->_pokemon_species === null) {
+                $this->_pokemon_species = new PokemonSpeciesEntity($this, null);
+            }
+            return $this->_pokemon_species;
+        }
         return new PokemonSpeciesEntity($this, $data);
     }
 
 
-    public function Type($data = null)
+    private $_type = null;
+
+    // Idiomatic facade: $client->type()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Type() (PHP method
+    // names are case-insensitive).
+    public function type($data = null)
     {
         require_once __DIR__ . '/entity/type_entity.php';
+        if ($data === null) {
+            if ($this->_type === null) {
+                $this->_type = new TypeEntity($this, null);
+            }
+            return $this->_type;
+        }
         return new TypeEntity($this, $data);
     }
 

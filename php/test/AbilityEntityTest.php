@@ -51,8 +51,7 @@ class AbilityEntityTest extends TestCase
         $ability_ref01_match_dt0 = [
             "id" => $ability_ref01_data["id"],
         ];
-        [$ability_ref01_data_dt0_loaded, $err] = $ability_ref01_ent->load($ability_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $ability_ref01_data_dt0_loaded = $ability_ref01_ent->load($ability_ref01_match_dt0, null);
         $ability_ref01_data_dt0_load_result = Helpers::to_map($ability_ref01_data_dt0_loaded);
         $this->assertNotNull($ability_ref01_data_dt0_load_result);
         $this->assertEquals($ability_ref01_data_dt0_load_result["id"], $ability_ref01_data["id"]);
@@ -89,7 +88,6 @@ function ability_basic_setup($extra)
         "POKAPI_TEST_ABILITY_ENTID" => $idmap,
         "POKAPI_TEST_LIVE" => "FALSE",
         "POKAPI_TEST_EXPLAIN" => "FALSE",
-        "POKAPI_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -101,7 +99,6 @@ function ability_basic_setup($extra)
     if ($env["POKAPI_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["POKAPI_APIKEY"],
             ],
             $extra ?? [],
         ]);

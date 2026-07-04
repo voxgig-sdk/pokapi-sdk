@@ -144,16 +144,23 @@ class PokapiSDK:
 
         _, err = utility.prepare_auth(ctx)
         if err is not None:
-            return None, err
+            raise err
 
-        return utility.make_fetch_def(ctx)
+        fetchdef, err = utility.make_fetch_def(ctx)
+        if err is not None:
+            raise err
+
+        return fetchdef
 
     def direct(self, fetchargs=None):
         utility = self._utility
 
-        fetchdef, err = self.prepare(fetchargs)
-        if err is not None:
-            return {"ok": False, "err": err}, None
+        try:
+            fetchdef = self.prepare(fetchargs)
+        except Exception as err:
+            # direct() is the raw-HTTP escape hatch: it never raises, it
+            # returns a result object callers branch on via result["ok"].
+            return {"ok": False, "err": err}
 
         if fetchargs is None:
             fetchargs = {}
@@ -170,13 +177,13 @@ class PokapiSDK:
         fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
         if fetch_err is not None:
-            return {"ok": False, "err": fetch_err}, None
+            return {"ok": False, "err": fetch_err}
 
         if fetched is None:
             return {
                 "ok": False,
                 "err": ctx.make_error("direct_no_response", "response: undefined"),
-            }, None
+            }
 
         if isinstance(fetched, dict):
             status = helpers.to_int(vs.getprop(fetched, "status"))
@@ -205,35 +212,90 @@ class PokapiSDK:
                 "status": status,
                 "headers": headers,
                 "data": json_data,
-            }, None
+            }
 
         return {
             "ok": False,
             "err": ctx.make_error("direct_invalid", "invalid response type"),
-        }, None
+        }
 
+
+    @property
+    def ability(self):
+        """Idiomatic facade: client.ability.list() / client.ability.load({"id": ...})."""
+        from entity.ability_entity import AbilityEntity
+        cached = getattr(self, "_ability", None)
+        if cached is None:
+            cached = AbilityEntity(self, None)
+            self._ability = cached
+        return cached
 
     def Ability(self, data=None):
+        # Deprecated: use client.ability instead.
         from entity.ability_entity import AbilityEntity
         return AbilityEntity(self, data)
 
 
+    @property
+    def paginated_resource_list(self):
+        """Idiomatic facade: client.paginated_resource_list.list() / client.paginated_resource_list.load({"id": ...})."""
+        from entity.paginated_resource_list_entity import PaginatedResourceListEntity
+        cached = getattr(self, "_paginated_resource_list", None)
+        if cached is None:
+            cached = PaginatedResourceListEntity(self, None)
+            self._paginated_resource_list = cached
+        return cached
+
     def PaginatedResourceList(self, data=None):
+        # Deprecated: use client.paginated_resource_list instead.
         from entity.paginated_resource_list_entity import PaginatedResourceListEntity
         return PaginatedResourceListEntity(self, data)
 
 
+    @property
+    def pokemon(self):
+        """Idiomatic facade: client.pokemon.list() / client.pokemon.load({"id": ...})."""
+        from entity.pokemon_entity import PokemonEntity
+        cached = getattr(self, "_pokemon", None)
+        if cached is None:
+            cached = PokemonEntity(self, None)
+            self._pokemon = cached
+        return cached
+
     def Pokemon(self, data=None):
+        # Deprecated: use client.pokemon instead.
         from entity.pokemon_entity import PokemonEntity
         return PokemonEntity(self, data)
 
 
+    @property
+    def pokemon_species(self):
+        """Idiomatic facade: client.pokemon_species.list() / client.pokemon_species.load({"id": ...})."""
+        from entity.pokemon_species_entity import PokemonSpeciesEntity
+        cached = getattr(self, "_pokemon_species", None)
+        if cached is None:
+            cached = PokemonSpeciesEntity(self, None)
+            self._pokemon_species = cached
+        return cached
+
     def PokemonSpecies(self, data=None):
+        # Deprecated: use client.pokemon_species instead.
         from entity.pokemon_species_entity import PokemonSpeciesEntity
         return PokemonSpeciesEntity(self, data)
 
 
+    @property
+    def type(self):
+        """Idiomatic facade: client.type.list() / client.type.load({"id": ...})."""
+        from entity.type_entity import TypeEntity
+        cached = getattr(self, "_type", None)
+        if cached is None:
+            cached = TypeEntity(self, None)
+            self._type = cached
+        return cached
+
     def Type(self, data=None):
+        # Deprecated: use client.type instead.
         from entity.type_entity import TypeEntity
         return TypeEntity(self, data)
 

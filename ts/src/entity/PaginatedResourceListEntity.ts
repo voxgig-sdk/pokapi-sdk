@@ -14,9 +14,12 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  PaginatedResourceList,
+} from '../PokapiTypes'
 
 // TODO: needs Entity superclass
-class PaginatedResourceListEntity extends PokapiEntityBase {
+class PaginatedResourceListEntity extends PokapiEntityBase<PaginatedResourceList> {
 
   constructor(client: PokapiSDK, entopts: any) {
     super(client, entopts)

@@ -18,7 +18,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `object` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -158,7 +157,7 @@ Alias for `PokapiSDK.test()`.
 ## AbilityEntity
 
 ```ts
-const ability = client.Ability()
+const ability = client.ability
 ```
 
 ### Fields
@@ -179,7 +178,7 @@ const ability = client.Ability()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Ability().load({ id: 'ability_id' })
+const result = await client.ability.load({ id: 'ability_id' })
 ```
 
 ### Common Methods
@@ -213,7 +212,7 @@ Return a copy of the entity options.
 ## PaginatedResourceListEntity
 
 ```ts
-const paginated_resource_list = client.PaginatedResourceList()
+const paginated_resource_list = client.paginated_resource_list
 ```
 
 ### Common Methods
@@ -247,7 +246,7 @@ Return a copy of the entity options.
 ## PokemonEntity
 
 ```ts
-const pokemon = client.Pokemon()
+const pokemon = client.pokemon
 ```
 
 ### Fields
@@ -282,7 +281,7 @@ const pokemon = client.Pokemon()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Pokemon().list()
+const results = await client.pokemon.list()
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -290,7 +289,7 @@ const results = await client.Pokemon().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Pokemon().load({ id: 'pokemon_id' })
+const result = await client.pokemon.load({ id: 'pokemon_id' })
 ```
 
 ### Common Methods
@@ -324,7 +323,7 @@ Return a copy of the entity options.
 ## PokemonSpeciesEntity
 
 ```ts
-const pokemon_species = client.PokemonSpecies()
+const pokemon_species = client.pokemon_species
 ```
 
 ### Fields
@@ -351,7 +350,7 @@ const pokemon_species = client.PokemonSpecies()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.PokemonSpecies().load({ id: 'pokemon_species_id' })
+const result = await client.pokemon_species.load({ id: 'pokemon_species_id' })
 ```
 
 ### Common Methods
@@ -385,7 +384,7 @@ Return a copy of the entity options.
 ## TypeEntity
 
 ```ts
-const type = client.Type()
+const type = client.type
 ```
 
 ### Fields
@@ -407,7 +406,7 @@ const type = client.Type()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Type().load({ id: 'type_id' })
+const result = await client.type.load({ id: 'type_id' })
 ```
 
 ### Common Methods

@@ -44,8 +44,7 @@ class AbilityEntityTest < Minitest::Test
     ability_ref01_match_dt0 = {
       "id" => ability_ref01_data["id"],
     }
-    ability_ref01_data_dt0_loaded, err = ability_ref01_ent.load(ability_ref01_match_dt0, nil)
-    assert_nil err
+    ability_ref01_data_dt0_loaded = ability_ref01_ent.load(ability_ref01_match_dt0, nil)
     ability_ref01_data_dt0_load_result = Helpers.to_map(ability_ref01_data_dt0_loaded)
     assert !ability_ref01_data_dt0_load_result.nil?
     assert_equal ability_ref01_data_dt0_load_result["id"], ability_ref01_data["id"]
@@ -86,7 +85,6 @@ def ability_basic_setup(extra)
     "POKAPI_TEST_ABILITY_ENTID" => idmap,
     "POKAPI_TEST_LIVE" => "FALSE",
     "POKAPI_TEST_EXPLAIN" => "FALSE",
-    "POKAPI_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -98,7 +96,6 @@ def ability_basic_setup(extra)
   if env["POKAPI_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["POKAPI_APIKEY"],
       },
       extra || {},
     ])

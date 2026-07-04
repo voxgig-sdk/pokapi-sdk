@@ -51,8 +51,7 @@ class TestTypeEntity:
         type_ref01_match_dt0 = {
             "id": type_ref01_data["id"],
         }
-        type_ref01_data_dt0_loaded, err = type_ref01_ent.load(type_ref01_match_dt0, None)
-        assert err is None
+        type_ref01_data_dt0_loaded = type_ref01_ent.load(type_ref01_match_dt0, None)
         type_ref01_data_dt0_load_result = helpers.to_map(type_ref01_data_dt0_loaded)
         assert type_ref01_data_dt0_load_result is not None
         assert type_ref01_data_dt0_load_result["id"] == type_ref01_data["id"]
@@ -95,7 +94,6 @@ def _type_basic_setup(extra):
         "POKAPI_TEST_TYPE_ENTID": idmap,
         "POKAPI_TEST_LIVE": "FALSE",
         "POKAPI_TEST_EXPLAIN": "FALSE",
-        "POKAPI_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -106,7 +104,6 @@ def _type_basic_setup(extra):
     if env.get("POKAPI_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("POKAPI_APIKEY"),
             },
             extra or {},
         ])

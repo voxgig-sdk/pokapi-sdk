@@ -51,8 +51,7 @@ class PokemonSpeciesEntityTest extends TestCase
         $pokemon_species_ref01_match_dt0 = [
             "id" => $pokemon_species_ref01_data["id"],
         ];
-        [$pokemon_species_ref01_data_dt0_loaded, $err] = $pokemon_species_ref01_ent->load($pokemon_species_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $pokemon_species_ref01_data_dt0_loaded = $pokemon_species_ref01_ent->load($pokemon_species_ref01_match_dt0, null);
         $pokemon_species_ref01_data_dt0_load_result = Helpers::to_map($pokemon_species_ref01_data_dt0_loaded);
         $this->assertNotNull($pokemon_species_ref01_data_dt0_load_result);
         $this->assertEquals($pokemon_species_ref01_data_dt0_load_result["id"], $pokemon_species_ref01_data["id"]);
@@ -89,7 +88,6 @@ function pokemon_species_basic_setup($extra)
         "POKAPI_TEST_POKEMON_SPECIES_ENTID" => $idmap,
         "POKAPI_TEST_LIVE" => "FALSE",
         "POKAPI_TEST_EXPLAIN" => "FALSE",
-        "POKAPI_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -101,7 +99,6 @@ function pokemon_species_basic_setup($extra)
     if ($env["POKAPI_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["POKAPI_APIKEY"],
             ],
             $extra ?? [],
         ]);

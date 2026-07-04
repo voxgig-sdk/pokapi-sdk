@@ -117,14 +117,12 @@ func pokemon_speciesDirectSetup(mockres any) *pokemon_speciesDirectSetupResult {
 	env := envOverride(map[string]any{
 		"POKAPI_TEST_POKEMON_SPECIES_ENTID": map[string]any{},
 		"POKAPI_TEST_LIVE":    "FALSE",
-		"POKAPI_APIKEY":       "NONE",
 	})
 
 	live := env["POKAPI_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
-			"apikey": env["POKAPI_APIKEY"],
 		}
 		client := sdk.NewPokapiSDK(mergedOpts)
 

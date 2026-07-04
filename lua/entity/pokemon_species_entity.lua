@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch PokemonSpeciesLoadMatch
+---@param ctrl? table
+---@return PokemonSpecies
+---@return string? err
 function PokemonSpeciesEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

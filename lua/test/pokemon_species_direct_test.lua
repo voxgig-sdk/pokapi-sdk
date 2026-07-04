@@ -72,14 +72,12 @@ function pokemon_species_direct_setup(mockres)
   local env = runner.env_override({
     ["POKAPI_TEST_POKEMON_SPECIES_ENTID"] = {},
     ["POKAPI_TEST_LIVE"] = "FALSE",
-    ["POKAPI_APIKEY"] = "NONE",
   })
 
   local live = env["POKAPI_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {
-      apikey = env["POKAPI_APIKEY"],
     }
     local client = sdk.new(merged_opts)
     return {

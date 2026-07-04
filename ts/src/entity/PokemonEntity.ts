@@ -14,9 +14,14 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Pokemon,
+  PokemonLoadMatch,
+  PokemonListMatch,
+} from '../PokapiTypes'
 
 // TODO: needs Entity superclass
-class PokemonEntity extends PokapiEntityBase {
+class PokemonEntity extends PokapiEntityBase<Pokemon> {
 
   constructor(client: PokapiSDK, entopts: any) {
     super(client, entopts)
@@ -32,7 +37,7 @@ class PokemonEntity extends PokapiEntityBase {
 
 
 
-  async load(this: any, reqmatch?: any, ctrl?: Control) {
+  async load(this: any, reqmatch?: PokemonLoadMatch, ctrl?: Control): Promise<Pokemon> {
 
     const utility = this._utility
 
@@ -136,14 +141,16 @@ class PokemonEntity extends PokapiEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Pokemon> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: PokemonListMatch, ctrl?: Control): Promise<Pokemon[]> {
 
     const utility = this._utility
 
@@ -243,7 +250,9 @@ class PokemonEntity extends PokapiEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Pokemon[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

@@ -14,9 +14,13 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Ability,
+  AbilityLoadMatch,
+} from '../PokapiTypes'
 
 // TODO: needs Entity superclass
-class AbilityEntity extends PokapiEntityBase {
+class AbilityEntity extends PokapiEntityBase<Ability> {
 
   constructor(client: PokapiSDK, entopts: any) {
     super(client, entopts)
@@ -32,7 +36,7 @@ class AbilityEntity extends PokapiEntityBase {
 
 
 
-  async load(this: any, reqmatch?: any, ctrl?: Control) {
+  async load(this: any, reqmatch?: AbilityLoadMatch, ctrl?: Control): Promise<Ability> {
 
     const utility = this._utility
 
@@ -136,7 +140,9 @@ class AbilityEntity extends PokapiEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Ability> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

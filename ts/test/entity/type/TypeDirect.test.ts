@@ -80,14 +80,12 @@ function directSetup(mockres?: any) {
   const env = envOverride({
     'POKAPI_TEST_TYPE_ENTID': {},
     'POKAPI_TEST_LIVE': 'FALSE',
-    'POKAPI_APIKEY': 'NONE',
   })
 
   const live = 'TRUE' === env.POKAPI_TEST_LIVE
 
   if (live) {
     const client = new PokapiSDK({
-      apikey: env.POKAPI_APIKEY,
     })
 
     let idmap: any = env['POKAPI_TEST_TYPE_ENTID']

@@ -45,6 +45,7 @@ class PaginatedResourceListEntity
     end
   end
 
+  # @return [PaginatedResourceList, Hash] the current PaginatedResourceList data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,6 +58,7 @@ class PaginatedResourceListEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of PaginatedResourceList fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)

@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch AbilityLoadMatch
+---@param ctrl? table
+---@return Ability
+---@return string? err
 function AbilityEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
