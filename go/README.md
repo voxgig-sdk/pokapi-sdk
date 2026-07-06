@@ -4,6 +4,8 @@
 
 The Golang SDK for the Pokapi API — an entity-oriented client using standard Go conventions. No generics required; data flows as `map[string]any`.
 
+It exposes the API as capitalised, semantic **Entities** — e.g. `client.Ability(nil)` — each with the same small set of operations (`List`, `Load`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -49,12 +51,41 @@ func main() {
     client := sdk.New()
 
     // Load a single ability — the value is the loaded record.
-    ability, err := client.Ability(nil).Load(map[string]any{"id": "example_id"}, nil)
+    ability, err := client.Ability(nil).Load(map[string]any{"id": "example"}, nil)
     if err != nil {
         panic(err)
     }
     fmt.Println(ability)
 }
+```
+
+
+## Error handling
+
+Every entity operation returns `(value, error)`. Check `err` before
+using the value — there is no exception to catch:
+
+```go
+ability, err := client.Ability(nil).Load(map[string]any{"id": "example_id"}, nil)
+if err != nil {
+    // handle err
+    return
+}
+_ = ability
+```
+
+`Direct` follows the same `(value, error)` convention:
+
+```go
+result, err := client.Direct(map[string]any{
+    "path":   "/api/resource/{id}",
+    "method": "GET",
+    "params": map[string]any{"id": "example_id"},
+})
+if err != nil {
+    // handle err
+}
+_ = result
 ```
 
 
@@ -110,7 +141,7 @@ ability, err := client.Ability(nil).Load(
 if err != nil {
     panic(err)
 }
-fmt.Println(ability) // the loaded mock data
+fmt.Println(ability) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -201,9 +232,6 @@ All entities implement the `PokapiEntity` interface.
 | --- | --- | --- |
 | `Load` | `(reqmatch, ctrl map[string]any) (any, error)` | Load a single entity by match criteria. |
 | `List` | `(reqmatch, ctrl map[string]any) (any, error)` | List entities matching the criteria. |
-| `Create` | `(reqdata, ctrl map[string]any) (any, error)` | Create a new entity. |
-| `Update` | `(reqdata, ctrl map[string]any) (any, error)` | Update an existing entity. |
-| `Remove` | `(reqmatch, ctrl map[string]any) (any, error)` | Remove an entity. |
 | `Data` | `(args ...any) any` | Get or set entity data. |
 | `Match` | `(args ...any) any` | Get or set entity match criteria. |
 | `Make` | `() Entity` | Create a new instance with the same options. |
@@ -216,7 +244,7 @@ operation's data **directly** — there is no wrapper:
 
 | Operation | `value` |
 | --- | --- |
-| `Load` / `Create` / `Update` / `Remove` | the entity record (`map[string]any`) |
+| `Load` | the entity record (`map[string]any`) |
 | `List` | a `[]any` of entity records |
 
 Check `err` first, then use the value directly (or the typed
@@ -225,7 +253,7 @@ slice):
 
     ability, err := client.Ability(nil).Load(map[string]any{"id": "example_id"}, nil)
     if err != nil { /* handle */ }
-    // ability is the loaded record
+    // ability is the returned record
 
 Only `Direct()` returns a response envelope — a `map[string]any` with
 `"ok"`, `"status"`, `"headers"`, and `"data"` keys.
@@ -341,12 +369,12 @@ Create an instance: `ability := client.Ability(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `effect_entry` | ``$ARRAY`` |  |
-| `generation` | ``$OBJECT`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_main_series` | ``$BOOLEAN`` |  |
-| `name` | ``$STRING`` |  |
-| `pokemon` | ``$ARRAY`` |  |
+| `effect_entry` | `[]any` |  |
+| `generation` | `map[string]any` |  |
+| `id` | `int` |  |
+| `is_main_series` | `bool` |  |
+| `name` | `string` |  |
+| `pokemon` | `[]any` |  |
 
 #### Example: Load
 
@@ -379,26 +407,26 @@ Create an instance: `pokemon := client.Pokemon(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `ability` | ``$ARRAY`` |  |
-| `base_experience` | ``$INTEGER`` |  |
-| `form` | ``$ARRAY`` |  |
-| `game_index` | ``$ARRAY`` |  |
-| `height` | ``$INTEGER`` |  |
-| `held_item` | ``$ARRAY`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_default` | ``$BOOLEAN`` |  |
-| `location_area` | ``$OBJECT`` |  |
-| `location_area_encounter` | ``$STRING`` |  |
-| `mof` | ``$ARRAY`` |  |
-| `name` | ``$STRING`` |  |
-| `order` | ``$INTEGER`` |  |
-| `species` | ``$OBJECT`` |  |
-| `sprite` | ``$OBJECT`` |  |
-| `stat` | ``$ARRAY`` |  |
-| `type` | ``$ARRAY`` |  |
-| `url` | ``$STRING`` |  |
-| `version_detail` | ``$ARRAY`` |  |
-| `weight` | ``$INTEGER`` |  |
+| `ability` | `[]any` |  |
+| `base_experience` | `int` |  |
+| `form` | `[]any` |  |
+| `game_index` | `[]any` |  |
+| `height` | `int` |  |
+| `held_item` | `[]any` |  |
+| `id` | `int` |  |
+| `is_default` | `bool` |  |
+| `location_area` | `map[string]any` |  |
+| `location_area_encounter` | `string` |  |
+| `mof` | `[]any` |  |
+| `name` | `string` |  |
+| `order` | `int` |  |
+| `species` | `map[string]any` |  |
+| `sprite` | `map[string]any` |  |
+| `stat` | `[]any` |  |
+| `type` | `[]any` |  |
+| `url` | `string` |  |
+| `version_detail` | `[]any` |  |
+| `weight` | `int` |  |
 
 #### Example: Load
 
@@ -435,18 +463,18 @@ Create an instance: `pokemon_species := client.PokemonSpecies(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `base_happiness` | ``$INTEGER`` |  |
-| `capture_rate` | ``$INTEGER`` |  |
-| `forms_switchable` | ``$BOOLEAN`` |  |
-| `gender_rate` | ``$INTEGER`` |  |
-| `has_gender_difference` | ``$BOOLEAN`` |  |
-| `hatch_counter` | ``$INTEGER`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_baby` | ``$BOOLEAN`` |  |
-| `is_legendary` | ``$BOOLEAN`` |  |
-| `is_mythical` | ``$BOOLEAN`` |  |
-| `name` | ``$STRING`` |  |
-| `order` | ``$INTEGER`` |  |
+| `base_happiness` | `int` |  |
+| `capture_rate` | `int` |  |
+| `forms_switchable` | `bool` |  |
+| `gender_rate` | `int` |  |
+| `has_gender_difference` | `bool` |  |
+| `hatch_counter` | `int` |  |
+| `id` | `int` |  |
+| `is_baby` | `bool` |  |
+| `is_legendary` | `bool` |  |
+| `is_mythical` | `bool` |  |
+| `name` | `string` |  |
+| `order` | `int` |  |
 
 #### Example: Load
 
@@ -461,7 +489,7 @@ fmt.Println(pokemon_species) // the loaded record
 
 ### Type
 
-Create an instance: `type := client.Type(nil)`
+Create an instance: `type_ := client.Type(nil)`
 
 #### Operations
 
@@ -473,31 +501,35 @@ Create an instance: `type := client.Type(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `damage_relation` | ``$OBJECT`` |  |
-| `game_index` | ``$ARRAY`` |  |
-| `generation` | ``$OBJECT`` |  |
-| `id` | ``$INTEGER`` |  |
-| `move_damage_class` | ``$OBJECT`` |  |
-| `name` | ``$STRING`` |  |
-| `pokemon` | ``$ARRAY`` |  |
+| `damage_relation` | `map[string]any` |  |
+| `game_index` | `[]any` |  |
+| `generation` | `map[string]any` |  |
+| `id` | `int` |  |
+| `move_damage_class` | `map[string]any` |  |
+| `name` | `string` |  |
+| `pokemon` | `[]any` |  |
 
 #### Example: Load
 
 ```go
-type, err := client.Type(nil).Load(map[string]any{"id": "type_id"}, nil)
+type_, err := client.Type(nil).Load(map[string]any{"id": "type_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(type) // the loaded record
+fmt.Println(type_) // the loaded record
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -514,9 +546,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller. An unexpected panic triggers the
-`PreUnexpected` hook.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -564,7 +596,7 @@ stores the returned data and match criteria internally.
 ability := client.Ability(nil)
 ability.Load(map[string]any{"id": "example_id"}, nil)
 
-// ability.Data() now returns the loaded ability data
+// ability.Data() now returns the ability data from the last load
 // ability.Match() returns the last match criteria
 ```
 

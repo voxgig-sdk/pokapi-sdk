@@ -103,12 +103,12 @@ ability = client.Ability()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `effect_entry` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_main_series` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `effect_entry` | `list` | No |  |
+| `generation` | `dict` | No |  |
+| `id` | `int` | No |  |
+| `is_main_series` | `bool` | No |  |
+| `name` | `str` | No |  |
+| `pokemon` | `list` | No |  |
 
 ### Operations
 
@@ -194,35 +194,35 @@ pokemon = client.Pokemon()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `ability` | ``$ARRAY`` | No |  |
-| `base_experience` | ``$INTEGER`` | No |  |
-| `form` | ``$ARRAY`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `height` | ``$INTEGER`` | No |  |
-| `held_item` | ``$ARRAY`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_default` | ``$BOOLEAN`` | No |  |
-| `location_area` | ``$OBJECT`` | No |  |
-| `location_area_encounter` | ``$STRING`` | No |  |
-| `mof` | ``$ARRAY`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
-| `species` | ``$OBJECT`` | No |  |
-| `sprite` | ``$OBJECT`` | No |  |
-| `stat` | ``$ARRAY`` | No |  |
-| `type` | ``$ARRAY`` | No |  |
-| `url` | ``$STRING`` | No |  |
-| `version_detail` | ``$ARRAY`` | No |  |
-| `weight` | ``$INTEGER`` | No |  |
+| `ability` | `list` | No |  |
+| `base_experience` | `int` | No |  |
+| `form` | `list` | No |  |
+| `game_index` | `list` | No |  |
+| `height` | `int` | No |  |
+| `held_item` | `list` | No |  |
+| `id` | `int` | No |  |
+| `is_default` | `bool` | No |  |
+| `location_area` | `dict` | No |  |
+| `location_area_encounter` | `str` | No |  |
+| `mof` | `list` | No |  |
+| `name` | `str` | No |  |
+| `order` | `int` | No |  |
+| `species` | `dict` | No |  |
+| `sprite` | `dict` | No |  |
+| `stat` | `list` | No |  |
+| `type` | `list` | No |  |
+| `url` | `str` | No |  |
+| `version_detail` | `list` | No |  |
+| `weight` | `int` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Pokemon().list({})
+results = client.Pokemon().list()
 for pokemon in results:
     print(pokemon)
 ```
@@ -274,18 +274,18 @@ pokemon_species = client.PokemonSpecies()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `base_happiness` | ``$INTEGER`` | No |  |
-| `capture_rate` | ``$INTEGER`` | No |  |
-| `forms_switchable` | ``$BOOLEAN`` | No |  |
-| `gender_rate` | ``$INTEGER`` | No |  |
-| `has_gender_difference` | ``$BOOLEAN`` | No |  |
-| `hatch_counter` | ``$INTEGER`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_baby` | ``$BOOLEAN`` | No |  |
-| `is_legendary` | ``$BOOLEAN`` | No |  |
-| `is_mythical` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
+| `base_happiness` | `int` | No |  |
+| `capture_rate` | `int` | No |  |
+| `forms_switchable` | `bool` | No |  |
+| `gender_rate` | `int` | No |  |
+| `has_gender_difference` | `bool` | No |  |
+| `hatch_counter` | `int` | No |  |
+| `id` | `int` | No |  |
+| `is_baby` | `bool` | No |  |
+| `is_legendary` | `bool` | No |  |
+| `is_mythical` | `bool` | No |  |
+| `name` | `str` | No |  |
+| `order` | `int` | No |  |
 
 ### Operations
 
@@ -336,13 +336,13 @@ type = client.Type()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `damage_relation` | ``$OBJECT`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `move_damage_class` | ``$OBJECT`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `damage_relation` | `dict` | No |  |
+| `game_index` | `list` | No |  |
+| `generation` | `dict` | No |  |
+| `id` | `int` | No |  |
+| `move_damage_class` | `dict` | No |  |
+| `name` | `str` | No |  |
+| `pokemon` | `list` | No |  |
 
 ### Operations
 

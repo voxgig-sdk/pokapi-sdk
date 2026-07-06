@@ -113,12 +113,12 @@ ability := client.Ability(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `effect_entry` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_main_series` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `effect_entry` | `[]any` | No |  |
+| `generation` | `map[string]any` | No |  |
+| `id` | `int` | No |  |
+| `is_main_series` | `bool` | No |  |
+| `name` | `string` | No |  |
+| `pokemon` | `[]any` | No |  |
 
 ### Operations
 
@@ -194,26 +194,26 @@ pokemon := client.Pokemon(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `ability` | ``$ARRAY`` | No |  |
-| `base_experience` | ``$INTEGER`` | No |  |
-| `form` | ``$ARRAY`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `height` | ``$INTEGER`` | No |  |
-| `held_item` | ``$ARRAY`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_default` | ``$BOOLEAN`` | No |  |
-| `location_area` | ``$OBJECT`` | No |  |
-| `location_area_encounter` | ``$STRING`` | No |  |
-| `mof` | ``$ARRAY`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
-| `species` | ``$OBJECT`` | No |  |
-| `sprite` | ``$OBJECT`` | No |  |
-| `stat` | ``$ARRAY`` | No |  |
-| `type` | ``$ARRAY`` | No |  |
-| `url` | ``$STRING`` | No |  |
-| `version_detail` | ``$ARRAY`` | No |  |
-| `weight` | ``$INTEGER`` | No |  |
+| `ability` | `[]any` | No |  |
+| `base_experience` | `int` | No |  |
+| `form` | `[]any` | No |  |
+| `game_index` | `[]any` | No |  |
+| `height` | `int` | No |  |
+| `held_item` | `[]any` | No |  |
+| `id` | `int` | No |  |
+| `is_default` | `bool` | No |  |
+| `location_area` | `map[string]any` | No |  |
+| `location_area_encounter` | `string` | No |  |
+| `mof` | `[]any` | No |  |
+| `name` | `string` | No |  |
+| `order` | `int` | No |  |
+| `species` | `map[string]any` | No |  |
+| `sprite` | `map[string]any` | No |  |
+| `stat` | `[]any` | No |  |
+| `type` | `[]any` | No |  |
+| `url` | `string` | No |  |
+| `version_detail` | `[]any` | No |  |
+| `weight` | `int` | No |  |
 
 ### Operations
 
@@ -267,18 +267,18 @@ pokemon_species := client.PokemonSpecies(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `base_happiness` | ``$INTEGER`` | No |  |
-| `capture_rate` | ``$INTEGER`` | No |  |
-| `forms_switchable` | ``$BOOLEAN`` | No |  |
-| `gender_rate` | ``$INTEGER`` | No |  |
-| `has_gender_difference` | ``$BOOLEAN`` | No |  |
-| `hatch_counter` | ``$INTEGER`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_baby` | ``$BOOLEAN`` | No |  |
-| `is_legendary` | ``$BOOLEAN`` | No |  |
-| `is_mythical` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
+| `base_happiness` | `int` | No |  |
+| `capture_rate` | `int` | No |  |
+| `forms_switchable` | `bool` | No |  |
+| `gender_rate` | `int` | No |  |
+| `has_gender_difference` | `bool` | No |  |
+| `hatch_counter` | `int` | No |  |
+| `id` | `int` | No |  |
+| `is_baby` | `bool` | No |  |
+| `is_legendary` | `bool` | No |  |
+| `is_mythical` | `bool` | No |  |
+| `name` | `string` | No |  |
+| `order` | `int` | No |  |
 
 ### Operations
 
@@ -324,13 +324,13 @@ type := client.Type(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `damage_relation` | ``$OBJECT`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `move_damage_class` | ``$OBJECT`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `damage_relation` | `map[string]any` | No |  |
+| `game_index` | `[]any` | No |  |
+| `generation` | `map[string]any` | No |  |
+| `id` | `int` | No |  |
+| `move_damage_class` | `map[string]any` | No |  |
+| `name` | `string` | No |  |
+| `pokemon` | `[]any` | No |  |
 
 ### Operations
 

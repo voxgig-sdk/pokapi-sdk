@@ -4,6 +4,11 @@
 
 The TypeScript SDK for the Pokapi API — a type-safe, entity-oriented client with full async/await support.
 
+The API is exposed as capitalised, semantic **Entities** — e.g.
+`client.Ability()` — each with a small set of operations (`list`, `load`)
+instead of raw URL paths and query parameters. This keeps the surface
+predictable and low-friction for both humans and AI agents.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -38,6 +43,35 @@ try {
   console.log(ability)
 } catch (err) {
   console.error('load failed:', err)
+}
+```
+
+
+## Error handling
+
+Entity operations reject on failure, so wrap them in `try` / `catch`:
+
+```ts
+try {
+  const ability = await client.Ability().load({ id: "example_id" })
+  console.log(ability)
+} catch (err) {
+  console.error('load failed:', err)
+}
+```
+
+The low-level `direct()` method does **not** throw — it returns the
+value or an `Error`, so check the result before using it:
+
+```ts
+const result = await client.direct({
+  path: '/api/resource/{id}',
+  method: 'GET',
+  params: { id: 'example_id' },
+})
+
+if (result instanceof Error) {
+  throw result
 }
 ```
 
@@ -105,12 +139,12 @@ Entity instances remember their last match and data:
 ```ts
 const entity = client.Ability()
 
-// First call sets internal match
+// First call runs the operation and stores its result
 await entity.load({ id: 'example' })
 
-// Subsequent calls reuse the stored match
+// Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data.id) // 'example'
+console.log(data.id)
 ```
 
 ### Add custom middleware
@@ -204,11 +238,8 @@ All entities share the same interface.
 | --- | --- | --- |
 | `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria. |
 | `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria. |
-| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity. |
-| `update` | `update(reqdata?, ctrl?): Promise<Entity>` | Update an existing entity. |
-| `remove` | `remove(reqmatch?, ctrl?): Promise<void>` | Remove an entity. |
-| `data` | `data(data?): any` | Get or set entity data. |
-| `match` | `match(match?): any` | Get or set entity match criteria. |
+| `data` | `data(data?: Partial<Entity>): Entity` | Get or set entity data. |
+| `match` | `match(match?: Partial<Entity>): Partial<Entity>` | Get or set entity match criteria. |
 | `make` | `make(): Entity` | Create a new instance with the same options. |
 | `client` | `client(): PokapiSDK` | Return the parent SDK client. |
 | `entopts` | `entopts(): object` | Return a copy of the entity options. |
@@ -218,10 +249,9 @@ All entities share the same interface.
 Entity operations resolve to the entity data directly — there is no
 result envelope:
 
-- `load`, `create` and `update` resolve to a single entity object.
+- `load` resolves to a single entity object.
 - `list` resolves to an **array** of entity objects (iterate it directly;
   there is no `.data` and no `.ok`).
-- `remove` resolves to `void`.
 
 On a failed request these methods **throw**, so wrap calls in
 `try`/`catch` to handle errors. Only `direct()` returns the result
@@ -366,12 +396,12 @@ Create an instance: `const ability = client.Ability()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `effect_entry` | ``$ARRAY`` |  |
-| `generation` | ``$OBJECT`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_main_series` | ``$BOOLEAN`` |  |
-| `name` | ``$STRING`` |  |
-| `pokemon` | ``$ARRAY`` |  |
+| `effect_entry` | `any[]` |  |
+| `generation` | `Record<string, any>` |  |
+| `id` | `number` |  |
+| `is_main_series` | `boolean` |  |
+| `name` | `string` |  |
+| `pokemon` | `any[]` |  |
 
 #### Example: Load
 
@@ -400,26 +430,26 @@ Create an instance: `const pokemon = client.Pokemon()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `ability` | ``$ARRAY`` |  |
-| `base_experience` | ``$INTEGER`` |  |
-| `form` | ``$ARRAY`` |  |
-| `game_index` | ``$ARRAY`` |  |
-| `height` | ``$INTEGER`` |  |
-| `held_item` | ``$ARRAY`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_default` | ``$BOOLEAN`` |  |
-| `location_area` | ``$OBJECT`` |  |
-| `location_area_encounter` | ``$STRING`` |  |
-| `mof` | ``$ARRAY`` |  |
-| `name` | ``$STRING`` |  |
-| `order` | ``$INTEGER`` |  |
-| `species` | ``$OBJECT`` |  |
-| `sprite` | ``$OBJECT`` |  |
-| `stat` | ``$ARRAY`` |  |
-| `type` | ``$ARRAY`` |  |
-| `url` | ``$STRING`` |  |
-| `version_detail` | ``$ARRAY`` |  |
-| `weight` | ``$INTEGER`` |  |
+| `ability` | `any[]` |  |
+| `base_experience` | `number` |  |
+| `form` | `any[]` |  |
+| `game_index` | `any[]` |  |
+| `height` | `number` |  |
+| `held_item` | `any[]` |  |
+| `id` | `number` |  |
+| `is_default` | `boolean` |  |
+| `location_area` | `Record<string, any>` |  |
+| `location_area_encounter` | `string` |  |
+| `mof` | `any[]` |  |
+| `name` | `string` |  |
+| `order` | `number` |  |
+| `species` | `Record<string, any>` |  |
+| `sprite` | `Record<string, any>` |  |
+| `stat` | `any[]` |  |
+| `type` | `any[]` |  |
+| `url` | `string` |  |
+| `version_detail` | `any[]` |  |
+| `weight` | `number` |  |
 
 #### Example: Load
 
@@ -448,18 +478,18 @@ Create an instance: `const pokemon_species = client.PokemonSpecies()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `base_happiness` | ``$INTEGER`` |  |
-| `capture_rate` | ``$INTEGER`` |  |
-| `forms_switchable` | ``$BOOLEAN`` |  |
-| `gender_rate` | ``$INTEGER`` |  |
-| `has_gender_difference` | ``$BOOLEAN`` |  |
-| `hatch_counter` | ``$INTEGER`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_baby` | ``$BOOLEAN`` |  |
-| `is_legendary` | ``$BOOLEAN`` |  |
-| `is_mythical` | ``$BOOLEAN`` |  |
-| `name` | ``$STRING`` |  |
-| `order` | ``$INTEGER`` |  |
+| `base_happiness` | `number` |  |
+| `capture_rate` | `number` |  |
+| `forms_switchable` | `boolean` |  |
+| `gender_rate` | `number` |  |
+| `has_gender_difference` | `boolean` |  |
+| `hatch_counter` | `number` |  |
+| `id` | `number` |  |
+| `is_baby` | `boolean` |  |
+| `is_legendary` | `boolean` |  |
+| `is_mythical` | `boolean` |  |
+| `name` | `string` |  |
+| `order` | `number` |  |
 
 #### Example: Load
 
@@ -482,13 +512,13 @@ Create an instance: `const type = client.Type()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `damage_relation` | ``$OBJECT`` |  |
-| `game_index` | ``$ARRAY`` |  |
-| `generation` | ``$OBJECT`` |  |
-| `id` | ``$INTEGER`` |  |
-| `move_damage_class` | ``$OBJECT`` |  |
-| `name` | ``$STRING`` |  |
-| `pokemon` | ``$ARRAY`` |  |
+| `damage_relation` | `Record<string, any>` |  |
+| `game_index` | `any[]` |  |
+| `generation` | `Record<string, any>` |  |
+| `id` | `number` |  |
+| `move_damage_class` | `Record<string, any>` |  |
+| `name` | `string` |  |
+| `pokemon` | `any[]` |  |
 
 #### Example: Load
 
@@ -497,12 +527,16 @@ const type = await client.Type().load({ id: 'type_id' })
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -519,11 +553,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller.
-
-An unexpected exception triggers the `PreUnexpected` hook before
-propagating.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -567,7 +599,7 @@ calls on the same instance can rely on this state.
 const ability = client.Ability()
 await ability.load({ id: "example_id" })
 
-// ability.data() now returns the loaded ability data
+// ability.data() now returns the ability data from the last `load`
 // ability.match() returns { id: "example_id" }
 ```
 

@@ -16,7 +16,6 @@ go build -o pokapi-cli ./...
 
 ```sh
 # One-shot: arguments form a single AQL expression
-./pokapi-cli list ability
 ./pokapi-cli load 1 ability
 ./pokapi-cli load '{id:1}' ability
 
@@ -30,7 +29,6 @@ go build -o pokapi-cli ./...
 |----------|----------------------------------------------|----------------------------|
 | `list`   | `[entity]` · `[query entity]`                | List records               |
 | `load`   | `[entity]` · `[query entity]`                | Load a single record       |
-| `update` | `[entity]` · `[query entity]`                | Update a record            |
 
 `query` is either a Map (`{id:1}`) or a Scalar (`1`, treated as `{id:1}`).
 `entity` is one of the SDK's entity names (auto-quoted as an atom).

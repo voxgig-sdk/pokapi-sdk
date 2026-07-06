@@ -221,31 +221,31 @@ class PokapiSDK:
 
 
     def Ability(self, data=None) -> "AbilityEntity":
-        """Entity factory: client.Ability().list({}) / client.Ability().load({"id": ...})."""
+        """Entity factory: client.Ability().list() / client.Ability().load({"id": ...})."""
         from entity.ability_entity import AbilityEntity
         return AbilityEntity(self, data)
 
 
     def PaginatedResourceList(self, data=None) -> "PaginatedResourceListEntity":
-        """Entity factory: client.PaginatedResourceList().list({}) / client.PaginatedResourceList().load({"id": ...})."""
+        """Entity factory: client.PaginatedResourceList().list() / client.PaginatedResourceList().load({"id": ...})."""
         from entity.paginated_resource_list_entity import PaginatedResourceListEntity
         return PaginatedResourceListEntity(self, data)
 
 
     def Pokemon(self, data=None) -> "PokemonEntity":
-        """Entity factory: client.Pokemon().list({}) / client.Pokemon().load({"id": ...})."""
+        """Entity factory: client.Pokemon().list() / client.Pokemon().load({"id": ...})."""
         from entity.pokemon_entity import PokemonEntity
         return PokemonEntity(self, data)
 
 
     def PokemonSpecies(self, data=None) -> "PokemonSpeciesEntity":
-        """Entity factory: client.PokemonSpecies().list({}) / client.PokemonSpecies().load({"id": ...})."""
+        """Entity factory: client.PokemonSpecies().list() / client.PokemonSpecies().load({"id": ...})."""
         from entity.pokemon_species_entity import PokemonSpeciesEntity
         return PokemonSpeciesEntity(self, data)
 
 
     def Type(self, data=None) -> "TypeEntity":
-        """Entity factory: client.Type().list({}) / client.Type().load({"id": ...})."""
+        """Entity factory: client.Type().list() / client.Type().load({"id": ...})."""
         from entity.type_entity import TypeEntity
         return TypeEntity(self, data)
 

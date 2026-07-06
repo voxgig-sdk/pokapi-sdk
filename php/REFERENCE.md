@@ -61,11 +61,11 @@ Create a new `PokemonSpeciesEntity` instance. Pass `null` for no initial data.
 
 Create a new `TypeEntity` instance. Pass `null` for no initial data.
 
-#### `optionsMap(): array`
+#### `options_map(): array`
 
 Return a deep copy of the current SDK options.
 
-#### `getUtility(): ProjectNameUtility`
+#### `get_utility(): PokapiUtility`
 
 Return a copy of the SDK utility object.
 
@@ -108,12 +108,12 @@ $ability = $client->Ability();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `effect_entry` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_main_series` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `effect_entry` | `array` | No |  |
+| `generation` | `array` | No |  |
+| `id` | `int` | No |  |
+| `is_main_series` | `bool` | No |  |
+| `name` | `string` | No |  |
+| `pokemon` | `array` | No |  |
 
 ### Operations
 
@@ -127,19 +127,19 @@ $result = $client->Ability()->load(["id" => "ability_id"]);
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -148,7 +148,7 @@ Set the entity match criteria.
 Create a new `AbilityEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -163,19 +163,19 @@ $paginated_resource_list = $client->PaginatedResourceList();
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -184,7 +184,7 @@ Set the entity match criteria.
 Create a new `PaginatedResourceListEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -201,35 +201,35 @@ $pokemon = $client->Pokemon();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `ability` | ``$ARRAY`` | No |  |
-| `base_experience` | ``$INTEGER`` | No |  |
-| `form` | ``$ARRAY`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `height` | ``$INTEGER`` | No |  |
-| `held_item` | ``$ARRAY`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_default` | ``$BOOLEAN`` | No |  |
-| `location_area` | ``$OBJECT`` | No |  |
-| `location_area_encounter` | ``$STRING`` | No |  |
-| `mof` | ``$ARRAY`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
-| `species` | ``$OBJECT`` | No |  |
-| `sprite` | ``$OBJECT`` | No |  |
-| `stat` | ``$ARRAY`` | No |  |
-| `type` | ``$ARRAY`` | No |  |
-| `url` | ``$STRING`` | No |  |
-| `version_detail` | ``$ARRAY`` | No |  |
-| `weight` | ``$INTEGER`` | No |  |
+| `ability` | `array` | No |  |
+| `base_experience` | `int` | No |  |
+| `form` | `array` | No |  |
+| `game_index` | `array` | No |  |
+| `height` | `int` | No |  |
+| `held_item` | `array` | No |  |
+| `id` | `int` | No |  |
+| `is_default` | `bool` | No |  |
+| `location_area` | `array` | No |  |
+| `location_area_encounter` | `string` | No |  |
+| `mof` | `array` | No |  |
+| `name` | `string` | No |  |
+| `order` | `int` | No |  |
+| `species` | `array` | No |  |
+| `sprite` | `array` | No |  |
+| `stat` | `array` | No |  |
+| `type` | `array` | No |  |
+| `url` | `string` | No |  |
+| `version_detail` | `array` | No |  |
+| `weight` | `int` | No |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->Pokemon()->list([]);
+$results = $client->Pokemon()->list();
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -242,19 +242,19 @@ $result = $client->Pokemon()->load(["id" => "pokemon_id"]);
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -263,7 +263,7 @@ Set the entity match criteria.
 Create a new `PokemonEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -280,18 +280,18 @@ $pokemon_species = $client->PokemonSpecies();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `base_happiness` | ``$INTEGER`` | No |  |
-| `capture_rate` | ``$INTEGER`` | No |  |
-| `forms_switchable` | ``$BOOLEAN`` | No |  |
-| `gender_rate` | ``$INTEGER`` | No |  |
-| `has_gender_difference` | ``$BOOLEAN`` | No |  |
-| `hatch_counter` | ``$INTEGER`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_baby` | ``$BOOLEAN`` | No |  |
-| `is_legendary` | ``$BOOLEAN`` | No |  |
-| `is_mythical` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
+| `base_happiness` | `int` | No |  |
+| `capture_rate` | `int` | No |  |
+| `forms_switchable` | `bool` | No |  |
+| `gender_rate` | `int` | No |  |
+| `has_gender_difference` | `bool` | No |  |
+| `hatch_counter` | `int` | No |  |
+| `id` | `int` | No |  |
+| `is_baby` | `bool` | No |  |
+| `is_legendary` | `bool` | No |  |
+| `is_mythical` | `bool` | No |  |
+| `name` | `string` | No |  |
+| `order` | `int` | No |  |
 
 ### Operations
 
@@ -305,19 +305,19 @@ $result = $client->PokemonSpecies()->load(["id" => "pokemon_species_id"]);
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -326,7 +326,7 @@ Set the entity match criteria.
 Create a new `PokemonSpeciesEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -343,13 +343,13 @@ $type = $client->Type();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `damage_relation` | ``$OBJECT`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `move_damage_class` | ``$OBJECT`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `damage_relation` | `array` | No |  |
+| `game_index` | `array` | No |  |
+| `generation` | `array` | No |  |
+| `id` | `int` | No |  |
+| `move_damage_class` | `array` | No |  |
+| `name` | `string` | No |  |
+| `pokemon` | `array` | No |  |
 
 ### Operations
 
@@ -363,19 +363,19 @@ $result = $client->Type()->load(["id" => "type_id"]);
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -384,7 +384,7 @@ Set the entity match criteria.
 Create a new `TypeEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 

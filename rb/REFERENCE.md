@@ -8,7 +8,7 @@ Complete API reference for the Pokapi Ruby SDK.
 ### Constructor
 
 ```ruby
-require_relative 'pokapi_sdk'
+require_relative 'Pokapi_sdk'
 
 client = PokapiSDK.new(options)
 ```
@@ -109,12 +109,12 @@ ability = client.Ability
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `effect_entry` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_main_series` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `effect_entry` | `Array` | No |  |
+| `generation` | `Hash` | No |  |
+| `id` | `Integer` | No |  |
+| `is_main_series` | `Boolean` | No |  |
+| `name` | `String` | No |  |
+| `pokemon` | `Array` | No |  |
 
 ### Operations
 
@@ -202,35 +202,35 @@ pokemon = client.Pokemon
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `ability` | ``$ARRAY`` | No |  |
-| `base_experience` | ``$INTEGER`` | No |  |
-| `form` | ``$ARRAY`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `height` | ``$INTEGER`` | No |  |
-| `held_item` | ``$ARRAY`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_default` | ``$BOOLEAN`` | No |  |
-| `location_area` | ``$OBJECT`` | No |  |
-| `location_area_encounter` | ``$STRING`` | No |  |
-| `mof` | ``$ARRAY`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
-| `species` | ``$OBJECT`` | No |  |
-| `sprite` | ``$OBJECT`` | No |  |
-| `stat` | ``$ARRAY`` | No |  |
-| `type` | ``$ARRAY`` | No |  |
-| `url` | ``$STRING`` | No |  |
-| `version_detail` | ``$ARRAY`` | No |  |
-| `weight` | ``$INTEGER`` | No |  |
+| `ability` | `Array` | No |  |
+| `base_experience` | `Integer` | No |  |
+| `form` | `Array` | No |  |
+| `game_index` | `Array` | No |  |
+| `height` | `Integer` | No |  |
+| `held_item` | `Array` | No |  |
+| `id` | `Integer` | No |  |
+| `is_default` | `Boolean` | No |  |
+| `location_area` | `Hash` | No |  |
+| `location_area_encounter` | `String` | No |  |
+| `mof` | `Array` | No |  |
+| `name` | `String` | No |  |
+| `order` | `Integer` | No |  |
+| `species` | `Hash` | No |  |
+| `sprite` | `Hash` | No |  |
+| `stat` | `Array` | No |  |
+| `type` | `Array` | No |  |
+| `url` | `String` | No |  |
+| `version_detail` | `Array` | No |  |
+| `weight` | `Integer` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Pokemon.list(nil)
+results = client.Pokemon.list
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -281,18 +281,18 @@ pokemon_species = client.PokemonSpecies
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `base_happiness` | ``$INTEGER`` | No |  |
-| `capture_rate` | ``$INTEGER`` | No |  |
-| `forms_switchable` | ``$BOOLEAN`` | No |  |
-| `gender_rate` | ``$INTEGER`` | No |  |
-| `has_gender_difference` | ``$BOOLEAN`` | No |  |
-| `hatch_counter` | ``$INTEGER`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `is_baby` | ``$BOOLEAN`` | No |  |
-| `is_legendary` | ``$BOOLEAN`` | No |  |
-| `is_mythical` | ``$BOOLEAN`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `order` | ``$INTEGER`` | No |  |
+| `base_happiness` | `Integer` | No |  |
+| `capture_rate` | `Integer` | No |  |
+| `forms_switchable` | `Boolean` | No |  |
+| `gender_rate` | `Integer` | No |  |
+| `has_gender_difference` | `Boolean` | No |  |
+| `hatch_counter` | `Integer` | No |  |
+| `id` | `Integer` | No |  |
+| `is_baby` | `Boolean` | No |  |
+| `is_legendary` | `Boolean` | No |  |
+| `is_mythical` | `Boolean` | No |  |
+| `name` | `String` | No |  |
+| `order` | `Integer` | No |  |
 
 ### Operations
 
@@ -344,13 +344,13 @@ type = client.Type
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `damage_relation` | ``$OBJECT`` | No |  |
-| `game_index` | ``$ARRAY`` | No |  |
-| `generation` | ``$OBJECT`` | No |  |
-| `id` | ``$INTEGER`` | No |  |
-| `move_damage_class` | ``$OBJECT`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `pokemon` | ``$ARRAY`` | No |  |
+| `damage_relation` | `Hash` | No |  |
+| `game_index` | `Array` | No |  |
+| `generation` | `Hash` | No |  |
+| `id` | `Integer` | No |  |
+| `move_damage_class` | `Hash` | No |  |
+| `name` | `String` | No |  |
+| `pokemon` | `Array` | No |  |
 
 ### Operations
 

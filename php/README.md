@@ -4,6 +4,8 @@
 
 The PHP SDK for the Pokapi API — an entity-oriented client using PHP conventions.
 
+The SDK exposes the API as capitalised, semantic **Entities** — for example `$client->Ability()` — with named operations (`list`/`load`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -42,6 +44,37 @@ try {
 ```
 
 
+## Error handling
+
+Entity operations throw a `\Throwable` on failure, so wrap them in
+`try` / `catch`:
+
+```php
+try {
+    $ability = $client->Ability()->load(["id" => "example_id"]);
+} catch (\Throwable $err) {
+    echo "Error: " . $err->getMessage();
+}
+```
+
+`direct()` does **not** throw — it returns the result array. Branch on
+`ok`; on failure `status` holds the HTTP status (for error responses) and
+`err` holds a transport error, so read both defensively:
+
+```php
+$result = $client->direct([
+    "path" => "/api/resource/{id}",
+    "method" => "GET",
+    "params" => ["id" => "example_id"],
+]);
+
+if (! $result["ok"]) {
+    $err = $result["err"] ?? null;
+    echo "request failed: " . ($err ? $err->getMessage() : "HTTP " . $result["status"]);
+}
+```
+
+
 ## How-to guides
 
 ### Make a direct HTTP request
@@ -61,7 +94,10 @@ if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
 } else {
-    echo "Error: " . $result["err"]->getMessage();
+    // On an HTTP error status there is no err (only a transport failure sets
+    // it), so fall back to the status code.
+    $err = $result["err"] ?? null;
+    echo "Error: " . ($err ? $err->getMessage() : "HTTP " . $result["status"]);
 }
 ```
 
@@ -90,7 +126,7 @@ $client = PokapiSDK::test([
     "entity" => ["ability" => ["test01" => ["id" => "test01"]]],
 ]);
 
-// load() returns the bare mock record (throws on error).
+// Entity ops return the bare mock record (throws on error).
 $ability = $client->Ability()->load(["id" => "test01"]);
 print_r($ability);
 ```
@@ -184,10 +220,7 @@ All entities share the same interface.
 | Method | Signature | Description |
 | --- | --- | --- |
 | `load` | `($reqmatch, $ctrl): array` | Load a single entity by match criteria. |
-| `list` | `($reqmatch, $ctrl): array` | List entities matching the criteria. |
-| `create` | `($reqdata, $ctrl): array` | Create a new entity. |
-| `update` | `($reqdata, $ctrl): array` | Update an existing entity. |
-| `remove` | `($reqmatch, $ctrl): array` | Remove an entity. |
+| `list` | `(?array $reqmatch = null, $ctrl): array` | List entities matching the criteria (call with no argument to list all). |
 | `data_get` | `(): array` | Get entity data. |
 | `data_set` | `($data): void` | Set entity data. |
 | `match_get` | `(): array` | Get entity match criteria. |
@@ -324,12 +357,12 @@ Create an instance: `$ability = $client->Ability();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `effect_entry` | ``$ARRAY`` |  |
-| `generation` | ``$OBJECT`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_main_series` | ``$BOOLEAN`` |  |
-| `name` | ``$STRING`` |  |
-| `pokemon` | ``$ARRAY`` |  |
+| `effect_entry` | `array` |  |
+| `generation` | `array` |  |
+| `id` | `int` |  |
+| `is_main_series` | `bool` |  |
+| `name` | `string` |  |
+| `pokemon` | `array` |  |
 
 #### Example: Load
 
@@ -359,26 +392,26 @@ Create an instance: `$pokemon = $client->Pokemon();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `ability` | ``$ARRAY`` |  |
-| `base_experience` | ``$INTEGER`` |  |
-| `form` | ``$ARRAY`` |  |
-| `game_index` | ``$ARRAY`` |  |
-| `height` | ``$INTEGER`` |  |
-| `held_item` | ``$ARRAY`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_default` | ``$BOOLEAN`` |  |
-| `location_area` | ``$OBJECT`` |  |
-| `location_area_encounter` | ``$STRING`` |  |
-| `mof` | ``$ARRAY`` |  |
-| `name` | ``$STRING`` |  |
-| `order` | ``$INTEGER`` |  |
-| `species` | ``$OBJECT`` |  |
-| `sprite` | ``$OBJECT`` |  |
-| `stat` | ``$ARRAY`` |  |
-| `type` | ``$ARRAY`` |  |
-| `url` | ``$STRING`` |  |
-| `version_detail` | ``$ARRAY`` |  |
-| `weight` | ``$INTEGER`` |  |
+| `ability` | `array` |  |
+| `base_experience` | `int` |  |
+| `form` | `array` |  |
+| `game_index` | `array` |  |
+| `height` | `int` |  |
+| `held_item` | `array` |  |
+| `id` | `int` |  |
+| `is_default` | `bool` |  |
+| `location_area` | `array` |  |
+| `location_area_encounter` | `string` |  |
+| `mof` | `array` |  |
+| `name` | `string` |  |
+| `order` | `int` |  |
+| `species` | `array` |  |
+| `sprite` | `array` |  |
+| `stat` | `array` |  |
+| `type` | `array` |  |
+| `url` | `string` |  |
+| `version_detail` | `array` |  |
+| `weight` | `int` |  |
 
 #### Example: Load
 
@@ -409,18 +442,18 @@ Create an instance: `$pokemon_species = $client->PokemonSpecies();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `base_happiness` | ``$INTEGER`` |  |
-| `capture_rate` | ``$INTEGER`` |  |
-| `forms_switchable` | ``$BOOLEAN`` |  |
-| `gender_rate` | ``$INTEGER`` |  |
-| `has_gender_difference` | ``$BOOLEAN`` |  |
-| `hatch_counter` | ``$INTEGER`` |  |
-| `id` | ``$INTEGER`` |  |
-| `is_baby` | ``$BOOLEAN`` |  |
-| `is_legendary` | ``$BOOLEAN`` |  |
-| `is_mythical` | ``$BOOLEAN`` |  |
-| `name` | ``$STRING`` |  |
-| `order` | ``$INTEGER`` |  |
+| `base_happiness` | `int` |  |
+| `capture_rate` | `int` |  |
+| `forms_switchable` | `bool` |  |
+| `gender_rate` | `int` |  |
+| `has_gender_difference` | `bool` |  |
+| `hatch_counter` | `int` |  |
+| `id` | `int` |  |
+| `is_baby` | `bool` |  |
+| `is_legendary` | `bool` |  |
+| `is_mythical` | `bool` |  |
+| `name` | `string` |  |
+| `order` | `int` |  |
 
 #### Example: Load
 
@@ -444,13 +477,13 @@ Create an instance: `$type = $client->Type();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `damage_relation` | ``$OBJECT`` |  |
-| `game_index` | ``$ARRAY`` |  |
-| `generation` | ``$OBJECT`` |  |
-| `id` | ``$INTEGER`` |  |
-| `move_damage_class` | ``$OBJECT`` |  |
-| `name` | ``$STRING`` |  |
-| `pokemon` | ``$ARRAY`` |  |
+| `damage_relation` | `array` |  |
+| `game_index` | `array` |  |
+| `generation` | `array` |  |
+| `id` | `int` |  |
+| `move_damage_class` | `array` |  |
+| `name` | `string` |  |
+| `pokemon` | `array` |  |
 
 #### Example: Load
 
@@ -460,12 +493,16 @@ $type = $client->Type()->load(["id" => "type_id"]);
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -482,8 +519,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller as the second element in the return array.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -534,8 +572,8 @@ stores the returned data and match criteria internally.
 $ability = $client->Ability();
 $ability->load(["id" => "example_id"]);
 
-// $ability->dataGet() now returns the loaded ability data
-// $ability->matchGet() returns the last match criteria
+// $ability->data_get() now returns the ability data from the last load
+// $ability->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration
