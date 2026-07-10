@@ -60,8 +60,27 @@ class PokemonLoadMatch(TypedDict):
     id: str
 
 
-class PokemonListMatch(TypedDict):
+class PokemonListMatch(TypedDict, total=False):
+    ability: list
+    base_experience: int
+    form: list
+    game_index: list
+    height: int
+    held_item: list
     id: int
+    is_default: bool
+    location_area: dict
+    location_area_encounter: str
+    mof: list
+    name: str
+    order: int
+    species: dict
+    sprite: dict
+    stat: list
+    type: list
+    url: str
+    version_detail: list
+    weight: int
 
 
 class PokemonSpecies(TypedDict, total=False):

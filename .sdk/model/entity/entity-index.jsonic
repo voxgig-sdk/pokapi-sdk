@@ -1,7 +1,0 @@
-# Entity Models
-
-@"ability.jsonic"
-@"paginated_resource_list.jsonic"
-@"pokemon.jsonic"
-@"pokemon_species.jsonic"
-@"type.jsonic"

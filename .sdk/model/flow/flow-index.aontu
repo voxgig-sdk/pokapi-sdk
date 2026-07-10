@@ -1,0 +1,7 @@
+# Flows
+
+@"BasicAbilityFlow.aontu"
+@"BasicPaginatedResourceListFlow.aontu"
+@"BasicPokemonFlow.aontu"
+@"BasicPokemonSpeciesFlow.aontu"
+@"BasicTypeFlow.aontu"

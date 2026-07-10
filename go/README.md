@@ -51,7 +51,7 @@ func main() {
     client := sdk.New()
 
     // Load a single ability — the value is the loaded record.
-    ability, err := client.Ability(nil).Load(map[string]any{"id": "example"}, nil)
+    ability, err := client.Ability(nil).Load(map[string]any{"id": "example_id"}, nil)
     if err != nil {
         panic(err)
     }
@@ -389,7 +389,7 @@ fmt.Println(ability) // the loaded record
 
 ### PaginatedResourceList
 
-Create an instance: `paginated_resource_list := client.PaginatedResourceList(nil)`
+Create an instance: `paginatedResourceList := client.PaginatedResourceList(nil)`
 
 
 ### Pokemon
@@ -451,7 +451,7 @@ fmt.Println(pokemons) // the array of records
 
 ### PokemonSpecies
 
-Create an instance: `pokemon_species := client.PokemonSpecies(nil)`
+Create an instance: `pokemonSpecies := client.PokemonSpecies(nil)`
 
 #### Operations
 
@@ -479,11 +479,11 @@ Create an instance: `pokemon_species := client.PokemonSpecies(nil)`
 #### Example: Load
 
 ```go
-pokemon_species, err := client.PokemonSpecies(nil).Load(map[string]any{"id": "pokemon_species_id"}, nil)
+pokemonSpecies, err := client.PokemonSpecies(nil).Load(map[string]any{"id": "pokemon_species_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(pokemon_species) // the loaded record
+fmt.Println(pokemonSpecies) // the loaded record
 ```
 
 

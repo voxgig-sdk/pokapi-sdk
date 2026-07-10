@@ -107,6 +107,7 @@ same parameters as `Direct()`.
 
 ```go
 ability := client.Ability(nil)
+fmt.Println(ability.GetName()) // "ability"
 ```
 
 ### Fields
@@ -128,6 +129,10 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Ability(nil).Load(map[string]any{"id": "ability_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -157,7 +162,8 @@ Return the entity name.
 ## PaginatedResourceListEntity
 
 ```go
-paginated_resource_list := client.PaginatedResourceList(nil)
+paginatedResourceList := client.PaginatedResourceList(nil)
+fmt.Println(paginatedResourceList.GetName()) // "paginated_resource_list"
 ```
 
 ### Common Methods
@@ -188,6 +194,7 @@ Return the entity name.
 
 ```go
 pokemon := client.Pokemon(nil)
+fmt.Println(pokemon.GetName()) // "pokemon"
 ```
 
 ### Fields
@@ -223,6 +230,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Pokemon(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -231,6 +242,10 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Pokemon(nil).Load(map[string]any{"id": "pokemon_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -260,7 +275,8 @@ Return the entity name.
 ## PokemonSpeciesEntity
 
 ```go
-pokemon_species := client.PokemonSpecies(nil)
+pokemonSpecies := client.PokemonSpecies(nil)
+fmt.Println(pokemonSpecies.GetName()) // "pokemon_species"
 ```
 
 ### Fields
@@ -288,6 +304,10 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.PokemonSpecies(nil).Load(map[string]any{"id": "pokemon_species_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -317,7 +337,8 @@ Return the entity name.
 ## TypeEntity
 
 ```go
-type := client.Type(nil)
+type_ := client.Type(nil)
+fmt.Println(type_.GetName()) // "type"
 ```
 
 ### Fields
@@ -340,6 +361,10 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Type(nil).Load(map[string]any{"id": "type_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods

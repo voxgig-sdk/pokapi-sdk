@@ -49,7 +49,26 @@ export interface PokemonLoadMatch {
 }
 
 export interface PokemonListMatch {
-  id: number
+  ability?: any[]
+  base_experience?: number
+  form?: any[]
+  game_index?: any[]
+  height?: number
+  held_item?: any[]
+  id?: number
+  is_default?: boolean
+  location_area?: Record<string, any>
+  location_area_encounter?: string
+  mof?: any[]
+  name?: string
+  order?: number
+  species?: Record<string, any>
+  sprite?: Record<string, any>
+  stat?: any[]
+  type?: any[]
+  url?: string
+  version_detail?: any[]
+  weight?: number
 }
 
 export interface PokemonSpecies {

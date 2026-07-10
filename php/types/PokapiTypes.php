@@ -68,7 +68,26 @@ class PokemonLoadMatch
 /** Request payload for Pokemon#list. */
 class PokemonListMatch
 {
-    public int $id;
+    public ?array $ability = null;
+    public ?int $base_experience = null;
+    public ?array $form = null;
+    public ?array $game_index = null;
+    public ?int $height = null;
+    public ?array $held_item = null;
+    public ?int $id = null;
+    public ?bool $is_default = null;
+    public ?array $location_area = null;
+    public ?string $location_area_encounter = null;
+    public ?array $mof = null;
+    public ?string $name = null;
+    public ?int $order = null;
+    public ?array $species = null;
+    public ?array $sprite = null;
+    public ?array $stat = null;
+    public ?array $type = null;
+    public ?string $url = null;
+    public ?array $version_detail = null;
+    public ?int $weight = null;
 }
 
 /** PokemonSpecies entity data model. */

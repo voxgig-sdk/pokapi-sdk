@@ -1,7 +1,0 @@
-# Flows
-
-@"BasicAbilityFlow.jsonic"
-@"BasicPaginatedResourceListFlow.jsonic"
-@"BasicPokemonFlow.jsonic"
-@"BasicPokemonSpeciesFlow.jsonic"
-@"BasicTypeFlow.jsonic"

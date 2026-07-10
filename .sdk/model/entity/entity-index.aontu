@@ -1,0 +1,7 @@
+# Entity Models
+
+@"ability.aontu"
+@"paginated_resource_list.aontu"
+@"pokemon.aontu"
+@"pokemon_species.aontu"
+@"type.aontu"

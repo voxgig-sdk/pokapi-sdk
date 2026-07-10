@@ -45,7 +45,26 @@
 ---@field id string
 
 ---@class PokemonListMatch
----@field id number
+---@field ability? table
+---@field base_experience? number
+---@field form? table
+---@field game_index? table
+---@field height? number
+---@field held_item? table
+---@field id? number
+---@field is_default? boolean
+---@field location_area? table
+---@field location_area_encounter? string
+---@field mof? table
+---@field name? string
+---@field order? number
+---@field species? table
+---@field sprite? table
+---@field stat? table
+---@field type? table
+---@field url? string
+---@field version_detail? table
+---@field weight? number
 
 ---@class PokemonSpecies
 ---@field base_happiness? number

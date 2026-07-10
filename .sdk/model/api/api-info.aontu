@@ -20,9 +20,9 @@ main: {
           url: "https://pokeapi.co/api/v2"
         }
       ]
+      summary: "An open RESTful API for Pokémon data."
       title: "PokéAPI"
       version: "2.0.0"
+      website: "https://pokeapi.co"
     }
   }
-}
-

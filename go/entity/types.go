@@ -58,7 +58,26 @@ type PokemonLoadMatch struct {
 
 // PokemonListMatch is the typed request payload for Pokemon.ListTyped.
 type PokemonListMatch struct {
-	Id int `json:"id"`
+	Ability *[]any `json:"ability,omitempty"`
+	BaseExperience *int `json:"base_experience,omitempty"`
+	Form *[]any `json:"form,omitempty"`
+	GameIndex *[]any `json:"game_index,omitempty"`
+	Height *int `json:"height,omitempty"`
+	HeldItem *[]any `json:"held_item,omitempty"`
+	Id *int `json:"id,omitempty"`
+	IsDefault *bool `json:"is_default,omitempty"`
+	LocationArea *map[string]any `json:"location_area,omitempty"`
+	LocationAreaEncounter *string `json:"location_area_encounter,omitempty"`
+	Mof *[]any `json:"mof,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Order *int `json:"order,omitempty"`
+	Species *map[string]any `json:"species,omitempty"`
+	Sprite *map[string]any `json:"sprite,omitempty"`
+	Stat *[]any `json:"stat,omitempty"`
+	Type *[]any `json:"type,omitempty"`
+	Url *string `json:"url,omitempty"`
+	VersionDetail *[]any `json:"version_detail,omitempty"`
+	Weight *int `json:"weight,omitempty"`
 }
 
 // PokemonSpecies is the typed data model for the pokemon_species entity.

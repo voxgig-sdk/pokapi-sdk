@@ -146,10 +146,86 @@ PokemonLoadMatch = Struct.new(
 
 # Request payload for Pokemon#list.
 #
+# @!attribute [rw] ability
+#   @return [Array, nil]
+#
+# @!attribute [rw] base_experience
+#   @return [Integer, nil]
+#
+# @!attribute [rw] form
+#   @return [Array, nil]
+#
+# @!attribute [rw] game_index
+#   @return [Array, nil]
+#
+# @!attribute [rw] height
+#   @return [Integer, nil]
+#
+# @!attribute [rw] held_item
+#   @return [Array, nil]
+#
 # @!attribute [rw] id
-#   @return [Integer]
+#   @return [Integer, nil]
+#
+# @!attribute [rw] is_default
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] location_area
+#   @return [Hash, nil]
+#
+# @!attribute [rw] location_area_encounter
+#   @return [String, nil]
+#
+# @!attribute [rw] mof
+#   @return [Array, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] order
+#   @return [Integer, nil]
+#
+# @!attribute [rw] species
+#   @return [Hash, nil]
+#
+# @!attribute [rw] sprite
+#   @return [Hash, nil]
+#
+# @!attribute [rw] stat
+#   @return [Array, nil]
+#
+# @!attribute [rw] type
+#   @return [Array, nil]
+#
+# @!attribute [rw] url
+#   @return [String, nil]
+#
+# @!attribute [rw] version_detail
+#   @return [Array, nil]
+#
+# @!attribute [rw] weight
+#   @return [Integer, nil]
 PokemonListMatch = Struct.new(
+  :ability,
+  :base_experience,
+  :form,
+  :game_index,
+  :height,
+  :held_item,
   :id,
+  :is_default,
+  :location_area,
+  :location_area_encounter,
+  :mof,
+  :name,
+  :order,
+  :species,
+  :sprite,
+  :stat,
+  :type,
+  :url,
+  :version_detail,
+  :weight,
   keyword_init: true
 )
 
