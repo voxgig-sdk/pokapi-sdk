@@ -1,4 +1,4 @@
--- ProjectName SDK exists test
+-- Pokapi SDK exists test
 
 local sdk = require("pokapi_sdk")
 
